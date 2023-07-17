@@ -1,37 +1,65 @@
 const fs = require('fs');
+const puppeteer = require('puppeteer');
 const cheerio = require('cheerio');
 const ObjectsToCsv = require('objects-to-csv');
 
+(async () => {
+  try {
+    // Launch Puppeteer and open a new page
+    const browser = await puppeteer.launch();
+    const page = await browser.newPage();
 
-const list_type = 'wants'
+    // Navigate to the web page
+    await page.goto('https://mustapp.com/@subhransu/want');
 
-// Read the HTML file
-fs.readFile('input/movies_wants.html', 'utf8', (err, html) => {
-  if (err) {
-    console.error(err);
-    return;
-  }
+    // Scroll to the bottom of the page
+    await autoScroll(page);
 
-  // Load the HTML into Cheerio
-  const $ = cheerio.load(html);
+    // Get the HTML content of the whole page
+    const html = await page.content();
 
-  // Extract the poster__title values
-  const titles = [];
-  $('.poster__title').each((index, element) => {
-    titles.push($(element).text());
-  });
+    // Close the browser
+    await browser.close();
 
-  // Prepare the data as an array of objects
-  const data = titles.map((title) => ({ title }));
+    // Load the HTML into Cheerio
+    const $ = cheerio.load(html);
 
-  // Convert the data to CSV
-  const csv = new ObjectsToCsv(data);
+    // Extract the poster__title values
+    const titles = [];
+    $('.poster__title').each((index, element) => {
+      titles.push($(element).text());
+    });
 
-  // Save the CSV file
-  csv.toDisk(`${list_type}.csv`, { allColumns: true }).then(() => {
+    // Prepare the data as an array of objects
+    const data = titles.map((title) => ({ title }));
+
+    // Convert the data to CSV
+    const csv = new ObjectsToCsv(data);
+
+    // Save the CSV file
+    await csv.toDisk('titles.csv', { allColumns: true });
     console.log('CSV file saved successfully.');
-  }).catch((error) => {
-    console.error('Error saving CSV file:', error);
-  });
-});
+  } catch (error) {
+    console.error('Error:', error);
+  }
+})();
 
+// Function to scroll to the bottom of the page
+async function autoScroll(page) {
+  await page.evaluate(async () => {
+    await new Promise((resolve) => {
+      let totalHeight = 0;
+      const distance = 100;
+      const timer = setInterval(() => {
+        const scrollHeight = document.body.scrollHeight;
+        window.scrollBy(0, distance);
+        totalHeight += distance;
+
+        if (totalHeight >= scrollHeight) {
+          clearInterval(timer);
+          resolve();
+        }
+      }, 100);
+    });
+  });
+}
