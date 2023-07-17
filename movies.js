@@ -1,6 +1,4 @@
-const fs = require('fs');
 const puppeteer = require('puppeteer');
-const cheerio = require('cheerio');
 const ObjectsToCsv = require('objects-to-csv');
 
 (async () => {
@@ -9,40 +7,53 @@ const ObjectsToCsv = require('objects-to-csv');
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
 
-    // Navigate to the web page
-    await page.goto('https://mustapp.com/@subhransu/want');
-
-    // Scroll to the bottom of the page
+    // Fetch the watched list
+    const watchedUrl = 'https://mustapp.com/@subhransu/watched';
+    await page.goto(watchedUrl);
     await autoScroll(page);
+    const watchedHtml = await page.content();
+    const watchedTitles = extractTitles(watchedHtml);
 
-    // Get the HTML content of the whole page
-    const html = await page.content();
+    // Fetch the wants list
+    const wantsUrl = 'https://mustapp.com/@subhransu/wants';
+    await page.goto(wantsUrl);
+    await autoScroll(page);
+    const wantsHtml = await page.content();
+    const wantsTitles = extractTitles(wantsHtml);
+
+    // Save watched titles to a file
+    await saveTitlesToFile(watchedTitles, 'watched_titles.csv');
+
+    // Save wants titles to a file
+    await saveTitlesToFile(wantsTitles, 'wants_titles.csv');
+
+    console.log('Titles saved successfully.');
 
     // Close the browser
     await browser.close();
-
-    // Load the HTML into Cheerio
-    const $ = cheerio.load(html);
-
-    // Extract the poster__title values
-    const titles = [];
-    $('.poster__title').each((index, element) => {
-      titles.push($(element).text());
-    });
-
-    // Prepare the data as an array of objects
-    const data = titles.map((title) => ({ title }));
-
-    // Convert the data to CSV
-    const csv = new ObjectsToCsv(data);
-
-    // Save the CSV file
-    await csv.toDisk('titles.csv', { allColumns: true });
-    console.log('CSV file saved successfully.');
   } catch (error) {
     console.error('Error:', error);
   }
 })();
+
+// Function to extract the titles from the HTML
+function extractTitles(html) {
+  const cheerio = require('cheerio');
+  const $ = cheerio.load(html);
+  const titles = [];
+  $('.poster__title').each((index, element) => {
+    titles.push($(element).text());
+  });
+  return titles;
+}
+
+// Function to save titles to a file
+async function saveTitlesToFile(titles, filename) {
+  const data = titles.map((title) => ({ title }));
+  const csv = new ObjectsToCsv(data);
+  await csv.toDisk(filename, { allColumns: true });
+}
+
 
 // Function to scroll to the bottom of the page
 async function autoScroll(page) {
