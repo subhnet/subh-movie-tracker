@@ -21,11 +21,21 @@ const ObjectsToCsv = require('objects-to-csv');
     const wantsHtml = await page.content();
     const wantsTitles = extractTitles(wantsHtml);
 
+    // Fetch the wants list
+    const showsUrl = 'https://mustapp.com/@subhransu/shows';
+    await page.goto(showsUrl);
+    await autoScroll(page);
+    const showsHtml = await page.content();
+    const showsTitles = extractTitles(showsHtml);
+
     // Save watched titles to a file
     await saveTitlesToFile(watchedTitles, 'watched_titles.csv');
 
     // Save wants titles to a file
     await saveTitlesToFile(wantsTitles, 'wants_titles.csv');
+
+    // Save wants titles to a file
+    await saveTitlesToFile(showsTitles, 'shows_titles.csv');
 
     console.log('Titles saved successfully.');
 
