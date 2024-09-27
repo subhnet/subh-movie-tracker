@@ -81,9 +81,10 @@ function extractTitles(html) {
 // Function to save titles and ratings to a file
 async function saveTitlesToFile(titlesAndRatings, filename) {
   // Map data to have title as first column and ratingStars as second column
-  const data = titlesAndRatings.map(({ title, ratingStars }) => ({
+  console.log(titlesAndRatings);
+  const data = titlesAndRatings.map(({ title, rateStars }) => ({
     title,
-    ratingStars: ratingStars || 'N/A' // Ensure 'N/A' if ratingStars is not available
+    rateStars: rateStars || 'N/A' // Ensure 'N/A' if ratingStars is not available
   }));
 
   // Convert data to CSV
