@@ -5,7 +5,7 @@ const ObjectsToCsv = require('objects-to-csv');
   try {
     // Launch Puppeteer and open a new page
     const browser = await puppeteer.launch(
-      { headless: false }
+      // { headless: false }
     );
     const page = await browser.newPage();
     page.setDefaultNavigationTimeout(60000 * 3); // Set timeout to 60 seconds (60000 ms)
