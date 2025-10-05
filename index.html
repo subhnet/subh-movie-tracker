@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🎬 Movie Tracker Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <style>
         * {
             margin: 0;
@@ -111,58 +112,17 @@
             border-bottom: 2px solid #e0e0e0;
         }
         
-        .distribution {
+        .chart-container {
             background: #f8f9fa;
             padding: 30px;
             border-radius: 15px;
             margin-top: 20px;
-        }
-        
-        .bar-chart {
-            display: flex;
-            align-items: flex-end;
-            justify-content: space-around;
-            height: 250px;
-            padding: 20px 0;
-            border-bottom: 2px solid #ddd;
-        }
-        
-        .bar-item {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: flex-end;
-            margin: 0 5px;
-        }
-        
-        .bar {
-            width: 100%;
-            background: linear-gradient(to top, #667eea, #764ba2);
-            border-radius: 5px 5px 0 0;
-            transition: all 0.3s ease;
             position: relative;
-            min-height: 3px;
+            height: 400px;
         }
         
-        .bar:hover {
-            opacity: 0.8;
-        }
-        
-        .bar-value {
-            position: absolute;
-            top: -25px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-weight: bold;
-            color: #667eea;
-            font-size: 0.9em;
-        }
-        
-        .bar-label {
-            margin-top: 10px;
-            font-weight: bold;
-            color: #666;
+        canvas {
+            max-height: 350px !important;
         }
         
         .table-container {
@@ -244,7 +204,7 @@
     <div class="container">
         <header>
             <h1>🎬 Movie Tracker Dashboard</h1>
-            <p class="timestamp">Generated: 5/10/2025, 11:23:21 am</p>
+            <p class="timestamp">Generated: 5/10/2025, 11:26:50 am</p>
         </header>
         
         <div class="stats-grid">
@@ -281,80 +241,15 @@
         
         <div class="section">
             <h2>📊 Watched Movies - Rating Distribution</h2>
-            <div class="distribution">
-                <div class="bar-chart">
-                    
-      <div class="bar-item">
-        <div class="bar" style="height: 9.75609756097561%;">
-          <span class="bar-value">20</span>
+            <div class="chart-container">
+                <canvas id="ratingChart"></canvas>
+            </div>
         </div>
-        <div class="bar-label">10★</div>
-      </div>
-    
-      <div class="bar-item">
-        <div class="bar" style="height: 17.073170731707318%;">
-          <span class="bar-value">35</span>
-        </div>
-        <div class="bar-label">9★</div>
-      </div>
-    
-      <div class="bar-item">
-        <div class="bar" style="height: 69.7560975609756%;">
-          <span class="bar-value">143</span>
-        </div>
-        <div class="bar-label">8★</div>
-      </div>
-    
-      <div class="bar-item">
-        <div class="bar" style="height: 100%;">
-          <span class="bar-value">205</span>
-        </div>
-        <div class="bar-label">7★</div>
-      </div>
-    
-      <div class="bar-item">
-        <div class="bar" style="height: 57.56097560975609%;">
-          <span class="bar-value">118</span>
-        </div>
-        <div class="bar-label">6★</div>
-      </div>
-    
-      <div class="bar-item">
-        <div class="bar" style="height: 17.560975609756095%;">
-          <span class="bar-value">36</span>
-        </div>
-        <div class="bar-label">5★</div>
-      </div>
-    
-      <div class="bar-item">
-        <div class="bar" style="height: 4.878048780487805%;">
-          <span class="bar-value">10</span>
-        </div>
-        <div class="bar-label">4★</div>
-      </div>
-    
-      <div class="bar-item">
-        <div class="bar" style="height: 2.4390243902439024%;">
-          <span class="bar-value">5</span>
-        </div>
-        <div class="bar-label">3★</div>
-      </div>
-    
-      <div class="bar-item">
-        <div class="bar" style="height: 2%;">
-          <span class="bar-value">1</span>
-        </div>
-        <div class="bar-label">2★</div>
-      </div>
-    
-      <div class="bar-item">
-        <div class="bar" style="height: 2%;">
-          <span class="bar-value">1</span>
-        </div>
-        <div class="bar-label">1★</div>
-      </div>
-    
-                </div>
+        
+        <div class="section">
+            <h2>📺 TV Shows - Rating Distribution</h2>
+            <div class="chart-container">
+                <canvas id="showsChart"></canvas>
             </div>
         </div>
         
@@ -727,5 +622,125 @@
             <p>Total Content Tracked: 853</p>
         </footer>
     </div>
+    
+    <script>
+        // Rating Distribution Chart for Movies
+        const ratingCtx = document.getElementById('ratingChart').getContext('2d');
+        new Chart(ratingCtx, {
+            type: 'bar',
+            data: {
+                labels: ["10★","9★","8★","7★","6★","5★","4★","3★","2★","1★"],
+                datasets: [{
+                    label: 'Number of Movies',
+                    data: [20,35,143,205,118,36,10,5,1,1],
+                    backgroundColor: 'rgba(102, 126, 234, 0.8)',
+                    borderColor: 'rgba(102, 126, 234, 1)',
+                    borderWidth: 2,
+                    borderRadius: 8,
+                    hoverBackgroundColor: 'rgba(118, 75, 162, 0.9)'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                        titleFont: { size: 14, weight: 'bold' },
+                        bodyFont: { size: 13 },
+                        padding: 12,
+                        cornerRadius: 8,
+                        callbacks: {
+                            label: function(context) {
+                                return context.parsed.y + ' movies';
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            stepSize: 20,
+                            font: { size: 12 }
+                        },
+                        grid: {
+                            color: 'rgba(0, 0, 0, 0.05)'
+                        }
+                    },
+                    x: {
+                        ticks: {
+                            font: { size: 13, weight: 'bold' }
+                        },
+                        grid: {
+                            display: false
+                        }
+                    }
+                }
+            }
+        });
+        
+        // Rating Distribution Chart for TV Shows
+        const showsCtx = document.getElementById('showsChart').getContext('2d');
+        new Chart(showsCtx, {
+            type: 'bar',
+            data: {
+                labels: ["10★","9★","8★","7★","6★","5★","4★","3★","2★","1★"],
+                datasets: [{
+                    label: 'Number of Shows',
+                    data: [2,6,20,23,17,2,0,0,1,1],
+                    backgroundColor: 'rgba(79, 172, 254, 0.8)',
+                    borderColor: 'rgba(79, 172, 254, 1)',
+                    borderWidth: 2,
+                    borderRadius: 8,
+                    hoverBackgroundColor: 'rgba(0, 242, 254, 0.9)'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                        titleFont: { size: 14, weight: 'bold' },
+                        bodyFont: { size: 13 },
+                        padding: 12,
+                        cornerRadius: 8,
+                        callbacks: {
+                            label: function(context) {
+                                return context.parsed.y + ' shows';
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            stepSize: 10,
+                            font: { size: 12 }
+                        },
+                        grid: {
+                            color: 'rgba(0, 0, 0, 0.05)'
+                        }
+                    },
+                    x: {
+                        ticks: {
+                            font: { size: 13, weight: 'bold' }
+                        },
+                        grid: {
+                            display: false
+                        }
+                    }
+                }
+            }
+        });
+    </script>
 </body>
 </html>

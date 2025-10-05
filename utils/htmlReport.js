@@ -73,10 +73,10 @@ function calculateStats(data) {
 }
 
 function generateHtml(data) {
-  const maxDistribution = Math.max(
-    ...Object.values(data.watched.stats.distribution),
-    ...Object.values(data.shows.stats.distribution)
-  );
+  // Prepare chart data
+  const ratingLabels = ['10★', '9★', '8★', '7★', '6★', '5★', '4★', '3★', '2★', '1★'];
+  const watchedDistribution = [10, 9, 8, 7, 6, 5, 4, 3, 2, 1].map(r => data.watched.stats.distribution[r] || 0);
+  const showsDistribution = [10, 9, 8, 7, 6, 5, 4, 3, 2, 1].map(r => data.shows.stats.distribution[r] || 0);
 
   return `<!DOCTYPE html>
 <html lang="en">
@@ -84,6 +84,7 @@ function generateHtml(data) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🎬 Movie Tracker Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <style>
         * {
             margin: 0;
@@ -191,58 +192,17 @@ function generateHtml(data) {
             border-bottom: 2px solid #e0e0e0;
         }
         
-        .distribution {
+        .chart-container {
             background: #f8f9fa;
             padding: 30px;
             border-radius: 15px;
             margin-top: 20px;
-        }
-        
-        .bar-chart {
-            display: flex;
-            align-items: flex-end;
-            justify-content: space-around;
-            height: 250px;
-            padding: 20px 0;
-            border-bottom: 2px solid #ddd;
-        }
-        
-        .bar-item {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: flex-end;
-            margin: 0 5px;
-        }
-        
-        .bar {
-            width: 100%;
-            background: linear-gradient(to top, #667eea, #764ba2);
-            border-radius: 5px 5px 0 0;
-            transition: all 0.3s ease;
             position: relative;
-            min-height: 3px;
+            height: 400px;
         }
         
-        .bar:hover {
-            opacity: 0.8;
-        }
-        
-        .bar-value {
-            position: absolute;
-            top: -25px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-weight: bold;
-            color: #667eea;
-            font-size: 0.9em;
-        }
-        
-        .bar-label {
-            margin-top: 10px;
-            font-weight: bold;
-            color: #666;
+        canvas {
+            max-height: 350px !important;
         }
         
         .table-container {
@@ -361,10 +321,15 @@ function generateHtml(data) {
         
         <div class="section">
             <h2>📊 Watched Movies - Rating Distribution</h2>
-            <div class="distribution">
-                <div class="bar-chart">
-                    ${generateBarChart(data.watched.stats.distribution, maxDistribution)}
-                </div>
+            <div class="chart-container">
+                <canvas id="ratingChart"></canvas>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>📺 TV Shows - Rating Distribution</h2>
+            <div class="chart-container">
+                <canvas id="showsChart"></canvas>
             </div>
         </div>
         
@@ -387,33 +352,128 @@ function generateHtml(data) {
             <p>Total Content Tracked: ${data.watched.stats.total + data.wants.stats.total + data.shows.stats.total}</p>
         </footer>
     </div>
+    
+    <script>
+        // Rating Distribution Chart for Movies
+        const ratingCtx = document.getElementById('ratingChart').getContext('2d');
+        new Chart(ratingCtx, {
+            type: 'bar',
+            data: {
+                labels: ${JSON.stringify(ratingLabels)},
+                datasets: [{
+                    label: 'Number of Movies',
+                    data: ${JSON.stringify(watchedDistribution)},
+                    backgroundColor: 'rgba(102, 126, 234, 0.8)',
+                    borderColor: 'rgba(102, 126, 234, 1)',
+                    borderWidth: 2,
+                    borderRadius: 8,
+                    hoverBackgroundColor: 'rgba(118, 75, 162, 0.9)'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                        titleFont: { size: 14, weight: 'bold' },
+                        bodyFont: { size: 13 },
+                        padding: 12,
+                        cornerRadius: 8,
+                        callbacks: {
+                            label: function(context) {
+                                return context.parsed.y + ' movies';
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            stepSize: 20,
+                            font: { size: 12 }
+                        },
+                        grid: {
+                            color: 'rgba(0, 0, 0, 0.05)'
+                        }
+                    },
+                    x: {
+                        ticks: {
+                            font: { size: 13, weight: 'bold' }
+                        },
+                        grid: {
+                            display: false
+                        }
+                    }
+                }
+            }
+        });
+        
+        // Rating Distribution Chart for TV Shows
+        const showsCtx = document.getElementById('showsChart').getContext('2d');
+        new Chart(showsCtx, {
+            type: 'bar',
+            data: {
+                labels: ${JSON.stringify(ratingLabels)},
+                datasets: [{
+                    label: 'Number of Shows',
+                    data: ${JSON.stringify(showsDistribution)},
+                    backgroundColor: 'rgba(79, 172, 254, 0.8)',
+                    borderColor: 'rgba(79, 172, 254, 1)',
+                    borderWidth: 2,
+                    borderRadius: 8,
+                    hoverBackgroundColor: 'rgba(0, 242, 254, 0.9)'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                        titleFont: { size: 14, weight: 'bold' },
+                        bodyFont: { size: 13 },
+                        padding: 12,
+                        cornerRadius: 8,
+                        callbacks: {
+                            label: function(context) {
+                                return context.parsed.y + ' shows';
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            stepSize: 10,
+                            font: { size: 12 }
+                        },
+                        grid: {
+                            color: 'rgba(0, 0, 0, 0.05)'
+                        }
+                    },
+                    x: {
+                        ticks: {
+                            font: { size: 13, weight: 'bold' }
+                        },
+                        grid: {
+                            display: false
+                        }
+                    }
+                }
+            }
+        });
+    </script>
 </body>
 </html>`;
-}
-
-function generateBarChart(distribution, maxValue) {
-  const ratings = [10, 9, 8, 7, 6, 5, 4, 3, 2, 1];
-  
-  return ratings.map(rating => {
-    const count = distribution[rating] || 0;
-    let displayHeight = 0;
-    
-    if (count > 0 && maxValue > 0) {
-      // Calculate percentage height based on the count relative to max
-      const percentage = (count / maxValue) * 100;
-      // Use minimum of 2% only for very small counts, to keep bars visible but proportional
-      displayHeight = percentage < 2 ? 2 : percentage;
-    }
-    
-    return `
-      <div class="bar-item">
-        <div class="bar" style="height: ${displayHeight}%;">
-          ${count > 0 ? `<span class="bar-value">${count}</span>` : ''}
-        </div>
-        <div class="bar-label">${rating}★</div>
-      </div>
-    `;
-  }).join('');
 }
 
 function generateTopRatedTable(data) {
