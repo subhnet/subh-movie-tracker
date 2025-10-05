@@ -27,6 +27,7 @@ export default function TopRatedTable({ title, movies }: TopRatedTableProps) {
           <thead>
             <tr className="border-b-2 border-gray-200">
               <th className="px-6 py-4 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">#</th>
+              <th className="px-6 py-4 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">Poster</th>
               <th className="px-6 py-4 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">Title</th>
               <th className="px-6 py-4 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">Rating</th>
               <th className="px-6 py-4 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">Watched Date</th>
@@ -40,6 +41,20 @@ export default function TopRatedTable({ title, movies }: TopRatedTableProps) {
                 className="hover:bg-primary-50/50 transition-colors"
               >
                 <td className="px-6 py-4 text-gray-500 font-medium text-sm">{index + 1}</td>
+                <td className="px-6 py-4">
+                  {movie.poster_url ? (
+                    <img 
+                      src={movie.poster_url} 
+                      alt={movie.title}
+                      className="w-12 h-16 object-cover rounded shadow-md"
+                      loading="lazy"
+                    />
+                  ) : (
+                    <div className="w-12 h-16 bg-gray-200 rounded flex items-center justify-center text-xl">
+                      🎬
+                    </div>
+                  )}
+                </td>
                 <td className="px-6 py-4 font-semibold text-gray-900 text-base">{movie.title}</td>
                 <td className="px-6 py-4">
                   <span className="inline-flex items-center bg-gradient-to-r from-amber-400 to-orange-500 text-white px-3 py-1.5 rounded-lg text-sm font-bold shadow-sm">

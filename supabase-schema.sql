@@ -21,6 +21,7 @@ CREATE TABLE movies (
   rating VARCHAR(10),
   tags TEXT,
   type VARCHAR(20) NOT NULL CHECK (type IN ('watched', 'want', 'show')),
+  poster_url TEXT,
   created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );

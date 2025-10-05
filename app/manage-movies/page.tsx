@@ -12,6 +12,7 @@ interface Movie {
   rating: string
   tags: string
   type: string
+  poster_url?: string | null
   created_at?: string
 }
 
@@ -62,7 +63,7 @@ export default function ManageMoviesPage() {
     }
   }
 
-  const handleAddMovie = async (movieData: { title: string; rating: string; tags: string; type: string }) => {
+  const handleAddMovie = async (movieData: { title: string; rating: string; tags: string; type: string; posterUrl?: string }) => {
     if (!user) return
 
     const response = await fetch('/api/user-movies', {

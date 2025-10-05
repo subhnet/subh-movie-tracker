@@ -8,6 +8,7 @@ interface Movie {
   rating: string
   tags: string
   type: string
+  poster_url?: string | null
   created_at?: string
 }
 
@@ -156,6 +157,20 @@ export default function MovieList({ movies, onMoveMovie, onUpdateMovie, onDelete
           ) : (
             // View mode
             <div className="flex items-start justify-between gap-4">
+              {/* Poster thumbnail */}
+              {movie.poster_url ? (
+                <img 
+                  src={movie.poster_url} 
+                  alt={movie.title}
+                  className="w-16 h-24 object-cover rounded flex-shrink-0 shadow-lg"
+                  loading="lazy"
+                />
+              ) : (
+                <div className="w-16 h-24 bg-white/5 rounded flex items-center justify-center flex-shrink-0 text-3xl">
+                  🎬
+                </div>
+              )}
+              
               <div className="flex-1 min-w-0">
                 <h3 className="text-white font-semibold text-lg mb-1 truncate">
                   {movie.title}
