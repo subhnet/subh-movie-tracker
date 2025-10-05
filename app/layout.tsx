@@ -3,8 +3,8 @@ import './globals.css'
 import Navbar from './components/Navbar'
 
 export const metadata: Metadata = {
-  title: '🎬 Movie Tracker Dashboard',
-  description: 'Personal movie tracking with AI-powered recommendations',
+  title: 'CineVault - Your Personal Movie Collection',
+  description: 'Track, organize, and discover your favorite movies and TV shows with intelligent recommendations',
 }
 
 export default function RootLayout({

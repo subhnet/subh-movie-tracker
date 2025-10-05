@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import StarRating from './StarRating'
 
 interface Movie {
   id: string
@@ -112,45 +113,47 @@ export default function MovieList({ movies, onMoveMovie, onUpdateMovie, onDelete
         >
           {editingId === movie.id ? (
             // Edit mode
-            <div className="space-y-3">
-              <input
-                type="text"
-                value={editForm.title}
-                onChange={(e) => setEditForm({ ...editForm, title: e.target.value })}
-                className="w-full px-3 py-2 bg-white/10 border border-white/20 rounded text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="Title"
-              />
-              <div className="grid grid-cols-2 gap-3">
+            <div className="space-y-4">
+              <div>
+                <label className="block text-white/70 text-sm mb-1">Title</label>
                 <input
-                  type="number"
-                  min="0"
-                  max="10"
-                  step="0.1"
-                  value={editForm.rating}
-                  onChange={(e) => setEditForm({ ...editForm, rating: e.target.value })}
-                  className="px-3 py-2 bg-white/10 border border-white/20 rounded text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  placeholder="Rating"
+                  type="text"
+                  value={editForm.title}
+                  onChange={(e) => setEditForm({ ...editForm, title: e.target.value })}
+                  className="w-full px-3 py-2 bg-white/10 border border-white/20 rounded text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  placeholder="Title"
                 />
+              </div>
+              <div>
+                <label className="block text-white/70 text-sm mb-2">Rating</label>
+                <StarRating
+                  rating={editForm.rating}
+                  onChange={(newRating) => setEditForm({ ...editForm, rating: newRating })}
+                  size="sm"
+                />
+              </div>
+              <div>
+                <label className="block text-white/70 text-sm mb-1">Tags</label>
                 <input
                   type="text"
                   value={editForm.tags}
                   onChange={(e) => setEditForm({ ...editForm, tags: e.target.value })}
-                  className="px-3 py-2 bg-white/10 border border-white/20 rounded text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  placeholder="Tags"
+                  className="w-full px-3 py-2 bg-white/10 border border-white/20 rounded text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  placeholder="Tags (comma separated)"
                 />
               </div>
               <div className="flex gap-2 justify-end">
                 <button
                   onClick={handleCancelEdit}
-                  className="px-3 py-1 text-sm bg-white/10 hover:bg-white/20 text-white rounded transition-colors"
+                  className="px-4 py-2 text-sm bg-white/10 hover:bg-white/20 text-white rounded transition-colors"
                 >
                   Cancel
                 </button>
                 <button
                   onClick={() => handleSaveEdit(movie.id)}
-                  className="px-3 py-1 text-sm bg-blue-600 hover:bg-blue-700 text-white rounded transition-colors"
+                  className="px-4 py-2 text-sm bg-blue-600 hover:bg-blue-700 text-white rounded transition-colors"
                 >
-                  Save
+                  Save Changes
                 </button>
               </div>
             </div>

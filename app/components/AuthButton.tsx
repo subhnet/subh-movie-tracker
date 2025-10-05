@@ -27,9 +27,13 @@ export default function AuthButton() {
   if (user) {
     return (
       <div className="relative flex items-center space-x-3">
-        <span className="text-white/90 text-sm font-medium">
+        {/* Clickable Username - Links to Manage Movies */}
+        <Link
+          href="/manage-movies"
+          className="text-white/90 text-sm font-medium hover:text-white hover:bg-white/10 px-3 py-2 rounded-lg transition-all duration-200 flex items-center gap-2"
+        >
           👤 {user.username}
-        </span>
+        </Link>
         
         {/* Dropdown Button */}
         <div className="relative">
@@ -37,7 +41,6 @@ export default function AuthButton() {
             onClick={() => setDropdownOpen(!dropdownOpen)}
             className="text-white font-medium px-4 py-2 rounded-lg bg-white/20 hover:bg-white/30 transition-all duration-200 flex items-center gap-2"
           >
-            Menu
             <svg 
               className={`w-4 h-4 transition-transform ${dropdownOpen ? 'rotate-180' : ''}`} 
               fill="none" 

@@ -2,6 +2,7 @@
 
 import { useState, memo } from 'react'
 import OptimizedImage from './OptimizedImage'
+import StarRating from './StarRating'
 
 interface Movie {
   id: string
@@ -52,30 +53,34 @@ const MovieCard = memo(({
   if (isEditing) {
     return (
       <div className="bg-white/5 backdrop-blur-sm rounded-lg border border-white/10 p-4 space-y-3">
-        <input
-          type="text"
-          value={editForm.title}
-          onChange={(e) => onEditFormChange('title', e.target.value)}
-          className="w-full px-2 py-1 bg-white/10 border border-white/20 rounded text-white text-sm placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          placeholder="Title"
-        />
-        <input
-          type="number"
-          min="0"
-          max="10"
-          step="0.1"
-          value={editForm.rating}
-          onChange={(e) => onEditFormChange('rating', e.target.value)}
-          className="w-full px-2 py-1 bg-white/10 border border-white/20 rounded text-white text-sm placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          placeholder="Rating"
-        />
-        <input
-          type="text"
-          value={editForm.tags}
-          onChange={(e) => onEditFormChange('tags', e.target.value)}
-          className="w-full px-2 py-1 bg-white/10 border border-white/20 rounded text-white text-sm placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          placeholder="Tags"
-        />
+        <div>
+          <label className="block text-white/60 text-xs mb-1">Title</label>
+          <input
+            type="text"
+            value={editForm.title}
+            onChange={(e) => onEditFormChange('title', e.target.value)}
+            className="w-full px-2 py-1 bg-white/10 border border-white/20 rounded text-white text-sm placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="Title"
+          />
+        </div>
+        <div>
+          <label className="block text-white/60 text-xs mb-1">Rating</label>
+          <StarRating
+            rating={editForm.rating}
+            onChange={(newRating) => onEditFormChange('rating', newRating)}
+            size="sm"
+          />
+        </div>
+        <div>
+          <label className="block text-white/60 text-xs mb-1">Tags</label>
+          <input
+            type="text"
+            value={editForm.tags}
+            onChange={(e) => onEditFormChange('tags', e.target.value)}
+            className="w-full px-2 py-1 bg-white/10 border border-white/20 rounded text-white text-sm placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="Tags"
+          />
+        </div>
         <div className="flex gap-2">
           <button
             onClick={onCancelEdit}

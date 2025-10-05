@@ -90,10 +90,16 @@ export default function RatingChart({ title, distribution, color }: RatingChartP
   }
 
   return (
-    <div className="bg-white/95 backdrop-blur-sm rounded-2xl p-6 shadow-xl border border-white/20">
-      <h2 className="text-2xl font-bold text-gray-800 mb-6">{title}</h2>
-      <div className="h-80">
-        <Bar data={data} options={options} />
+    <div className="relative group">
+      <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 via-purple-500/10 to-pink-500/10 rounded-2xl blur-xl group-hover:blur-2xl transition-all duration-300"></div>
+      <div className="relative bg-gradient-to-br from-white/95 to-white/80 backdrop-blur-xl rounded-2xl p-8 shadow-xl border border-white/30">
+        <div className="flex items-center gap-3 mb-6">
+          <div className="h-1 w-8 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full"></div>
+          <h2 className="text-xl font-bold bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent">{title}</h2>
+        </div>
+        <div className="h-80">
+          <Bar data={data} options={options} />
+        </div>
       </div>
     </div>
   )

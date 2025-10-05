@@ -20,6 +20,7 @@ interface Movie {
 
 type TabType = 'watched' | 'want' | 'show'
 type ViewMode = 'list' | 'grid'
+type SortOption = 'title-asc' | 'title-desc' | 'rating-asc' | 'rating-desc' | 'date-asc' | 'date-desc'
 
 export default function ManageMoviesPage() {
   const router = useRouter()
@@ -32,6 +33,7 @@ export default function ManageMoviesPage() {
   const [viewMode, setViewMode] = useState<ViewMode>('grid')
   const [currentPage, setCurrentPage] = useState(1)
   const [itemsPerPage, setItemsPerPage] = useState(24) // 24 for grid (6x4), adjustable
+  const [sortBy, setSortBy] = useState<SortOption>('date-desc')
 
   // Load view preference from localStorage
   useEffect(() => {
@@ -184,15 +186,36 @@ export default function ManageMoviesPage() {
   const getFilteredMovies = () => {
     const filteredByType = movies.filter(m => m.type === activeTab)
     
-    if (!searchQuery.trim()) {
-      return filteredByType
+    let filtered = filteredByType
+    if (searchQuery.trim()) {
+      const query = searchQuery.toLowerCase()
+      filtered = filteredByType.filter(m => 
+        m.title.toLowerCase().includes(query) ||
+        m.tags?.toLowerCase().includes(query)
+      )
     }
 
-    const query = searchQuery.toLowerCase()
-    return filteredByType.filter(m => 
-      m.title.toLowerCase().includes(query) ||
-      m.tags?.toLowerCase().includes(query)
-    )
+    // Apply sorting
+    const sorted = [...filtered].sort((a, b) => {
+      switch (sortBy) {
+        case 'title-asc':
+          return a.title.localeCompare(b.title)
+        case 'title-desc':
+          return b.title.localeCompare(a.title)
+        case 'rating-asc':
+          return (parseFloat(a.rating) || 0) - (parseFloat(b.rating) || 0)
+        case 'rating-desc':
+          return (parseFloat(b.rating) || 0) - (parseFloat(a.rating) || 0)
+        case 'date-asc':
+          return (a.created_at || '').localeCompare(b.created_at || '')
+        case 'date-desc':
+          return (b.created_at || '').localeCompare(a.created_at || '')
+        default:
+          return 0
+      }
+    })
+
+    return sorted
   }
 
   // Pagination logic with useMemo for performance
@@ -201,11 +224,11 @@ export default function ManageMoviesPage() {
     const startIndex = (currentPage - 1) * itemsPerPage
     const endIndex = startIndex + itemsPerPage
     return filtered.slice(startIndex, endIndex)
-  }, [movies, activeTab, searchQuery, currentPage, itemsPerPage])
+  }, [movies, activeTab, searchQuery, currentPage, itemsPerPage, sortBy])
 
   const totalFilteredMovies = useMemo(() => {
     return getFilteredMovies().length
-  }, [movies, activeTab, searchQuery])
+  }, [movies, activeTab, searchQuery, sortBy])
 
   const totalPages = Math.ceil(totalFilteredMovies / itemsPerPage)
 
@@ -262,6 +285,23 @@ export default function ManageMoviesPage() {
             placeholder="Search movies by title or tags..."
             className="flex-1 min-w-[200px] px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
+          
+          {/* Sort by selector */}
+          <select
+            value={sortBy}
+            onChange={(e) => {
+              setSortBy(e.target.value as SortOption)
+              setCurrentPage(1)
+            }}
+            className="px-3 py-2 bg-white/10 border border-white/20 rounded-lg text-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
+            <option value="date-desc" className="bg-gray-900">Newest First</option>
+            <option value="date-asc" className="bg-gray-900">Oldest First</option>
+            <option value="title-asc" className="bg-gray-900">Title (A-Z)</option>
+            <option value="title-desc" className="bg-gray-900">Title (Z-A)</option>
+            <option value="rating-desc" className="bg-gray-900">Rating (High-Low)</option>
+            <option value="rating-asc" className="bg-gray-900">Rating (Low-High)</option>
+          </select>
           
           {/* Items per page selector */}
           <select
@@ -380,6 +420,7 @@ export default function ManageMoviesPage() {
         onClose={() => setIsAddModalOpen(false)}
         onAdd={handleAddMovie}
         defaultType={activeTab}
+        existingMovies={movies.map(m => ({ title: m.title, type: m.type }))}
       />
     </div>
   )
