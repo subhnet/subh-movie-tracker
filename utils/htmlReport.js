@@ -393,11 +393,18 @@ function generateHtml(data) {
 
 function generateBarChart(distribution, maxValue) {
   const ratings = [10, 9, 8, 7, 6, 5, 4, 3, 2, 1];
+  
   return ratings.map(rating => {
     const count = distribution[rating] || 0;
-    const height = maxValue > 0 ? (count / maxValue) * 100 : 0;
-    // Only show bar if count > 0, use actual height for proper visualization
-    const displayHeight = count > 0 ? Math.max(height, 3) : 0;
+    let displayHeight = 0;
+    
+    if (count > 0 && maxValue > 0) {
+      // Calculate percentage height based on the count relative to max
+      const percentage = (count / maxValue) * 100;
+      // Use minimum of 2% only for very small counts, to keep bars visible but proportional
+      displayHeight = percentage < 2 ? 2 : percentage;
+    }
+    
     return `
       <div class="bar-item">
         <div class="bar" style="height: ${displayHeight}%;">
