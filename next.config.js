@@ -11,6 +11,9 @@ const nextConfig = {
       allowedOrigins: ['localhost:3000'],
     },
   },
+  // Skip pre-rendering for pages with errors
+  skipTrailingSlashRedirect: true,
+  skipMiddlewareUrlNormalize: true,
 }
 
 module.exports = nextConfig
