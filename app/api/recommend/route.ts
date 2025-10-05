@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import OpenAI from 'openai'
 import { getDashboardData } from '@/lib/csv-reader'
+import { supabase } from '@/lib/supabase'
 
 // Movie type definition
 interface Movie {
@@ -27,13 +28,23 @@ export async function POST(request: Request) {
     // Get user's movie data (from database if userId provided, otherwise CSV)
     let data: { watched: Movie[], wants: Movie[], shows: Movie[] }
     if (userId) {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/api/user-movies?userId=${userId}`)
-      const result = await response.json()
-      data = {
-        watched: result.watched || [],
-        wants: result.want || [],
-        shows: result.shows || []
+      // Fetch directly from Supabase instead of making HTTP call
+      const { data: movies, error } = await supabase
+        .from('movies')
+        .select('*')
+        .eq('user_id', userId)
+      
+      if (error) {
+        console.error('Error fetching user movies:', error)
+        throw new Error('Failed to fetch user movies')
       }
+
+      // Group movies by type
+      const watched = movies?.filter((m: any) => m.type === 'watched') || []
+      const wants = movies?.filter((m: any) => m.type === 'want') || []
+      const shows = movies?.filter((m: any) => m.type === 'show') || []
+
+      data = { watched, wants, shows }
     } else {
       const csvData = await getDashboardData()
       data = {
