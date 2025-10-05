@@ -12,12 +12,12 @@ const csv = require('csvtojson');
 
 // Supabase configuration from environment variables
 const supabaseUrl = process.env.SUPABASE_URL;
-const supabaseServiceKey = process.env.SUPABASE_SERVICE_KEY; // Service role key for admin access
+const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY; // Service role key for admin access
 const targetUsername = process.env.MUST_USERNAME || 'subhransu';
 
 if (!supabaseUrl || !supabaseServiceKey) {
   console.log('⚠️  Supabase not configured. Skipping database sync.');
-  console.log('   To enable: Add SUPABASE_URL and SUPABASE_SERVICE_KEY to GitHub Secrets');
+  console.log('   To enable: Add SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY to GitHub Secrets');
   process.exit(0);
 }
 

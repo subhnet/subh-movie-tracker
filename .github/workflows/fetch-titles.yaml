@@ -41,7 +41,7 @@ jobs:
       - name: Sync to Supabase Database
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
-          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
           MUST_USERNAME: subhransu
         run: node utils/sync-to-supabase.js
 
