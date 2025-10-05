@@ -128,3 +128,6 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+# Movie Tracker backups (keep old CSVs locally but not in git)
+backups/
