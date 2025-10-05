@@ -221,7 +221,6 @@ function generateHtml(data) {
             background: linear-gradient(to top, #667eea, #764ba2);
             border-radius: 5px 5px 0 0;
             transition: all 0.3s ease;
-            min-height: 5px;
             position: relative;
         }
         
