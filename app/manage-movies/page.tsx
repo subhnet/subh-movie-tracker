@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { getUser } from '@/lib/auth'
 import MovieList from '../components/MovieList'
+import MovieGrid from '../components/MovieGrid'
 import AddMovieModal from '../components/AddMovieModal'
 
 interface Movie {
@@ -17,6 +18,7 @@ interface Movie {
 }
 
 type TabType = 'watched' | 'want' | 'show'
+type ViewMode = 'list' | 'grid'
 
 export default function ManageMoviesPage() {
   const router = useRouter()
@@ -26,6 +28,21 @@ export default function ManageMoviesPage() {
   const [activeTab, setActiveTab] = useState<TabType>('watched')
   const [isAddModalOpen, setIsAddModalOpen] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
+  const [viewMode, setViewMode] = useState<ViewMode>('grid')
+
+  // Load view preference from localStorage
+  useEffect(() => {
+    const savedViewMode = localStorage.getItem('movieViewMode') as ViewMode
+    if (savedViewMode) {
+      setViewMode(savedViewMode)
+    }
+  }, [])
+
+  // Save view preference to localStorage
+  const handleViewModeChange = (mode: ViewMode) => {
+    setViewMode(mode)
+    localStorage.setItem('movieViewMode', mode)
+  }
 
   useEffect(() => {
     const currentUser = getUser()
@@ -207,15 +224,47 @@ export default function ManageMoviesPage() {
         </button>
       </header>
 
-      {/* Search Bar */}
+      {/* Search Bar and View Toggle */}
       <div className="bg-white/5 backdrop-blur-sm rounded-lg border border-white/10 p-4">
-        <input
-          type="text"
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          placeholder="Search movies by title or tags..."
-          className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
+        <div className="flex gap-4 items-center">
+          <input
+            type="text"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            placeholder="Search movies by title or tags..."
+            className="flex-1 px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+          
+          {/* View Toggle */}
+          <div className="flex gap-2 bg-white/10 rounded-lg p-1">
+            <button
+              onClick={() => handleViewModeChange('grid')}
+              className={`px-4 py-2 rounded transition-colors ${
+                viewMode === 'grid'
+                  ? 'bg-blue-600 text-white'
+                  : 'text-white/70 hover:text-white'
+              }`}
+              title="Grid view"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
+              </svg>
+            </button>
+            <button
+              onClick={() => handleViewModeChange('list')}
+              className={`px-4 py-2 rounded transition-colors ${
+                viewMode === 'list'
+                  ? 'bg-blue-600 text-white'
+                  : 'text-white/70 hover:text-white'
+              }`}
+              title="List view"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            </button>
+          </div>
+        </div>
       </div>
 
       {/* Tabs */}
@@ -240,7 +289,7 @@ export default function ManageMoviesPage() {
         </div>
       </div>
 
-      {/* Movie List */}
+      {/* Movie Display */}
       <div className="bg-white/5 backdrop-blur-sm rounded-lg border border-white/10 p-6">
         <div className="mb-4 flex justify-between items-center">
           <h2 className="text-xl font-bold text-white">
@@ -253,13 +302,23 @@ export default function ManageMoviesPage() {
           )}
         </div>
         
-        <MovieList
-          movies={filteredMovies}
-          onMoveMovie={handleMoveMovie}
-          onUpdateMovie={handleUpdateMovie}
-          onDeleteMovie={handleDeleteMovie}
-          currentType={activeTab}
-        />
+        {viewMode === 'grid' ? (
+          <MovieGrid
+            movies={filteredMovies}
+            onMoveMovie={handleMoveMovie}
+            onUpdateMovie={handleUpdateMovie}
+            onDeleteMovie={handleDeleteMovie}
+            currentType={activeTab}
+          />
+        ) : (
+          <MovieList
+            movies={filteredMovies}
+            onMoveMovie={handleMoveMovie}
+            onUpdateMovie={handleUpdateMovie}
+            onDeleteMovie={handleDeleteMovie}
+            currentType={activeTab}
+          />
+        )}
       </div>
 
       {/* Add Movie Modal */}
