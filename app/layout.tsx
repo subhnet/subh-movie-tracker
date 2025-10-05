@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import './globals.css'
 import Link from 'next/link'
+import AuthButton from './components/AuthButton'
 
 export const metadata: Metadata = {
   title: '🎬 Movie Tracker Dashboard',
@@ -22,7 +23,7 @@ export default function RootLayout({
                 <span className="text-3xl">🎬</span>
                 <span className="text-white font-bold text-xl tracking-tight">Movie Tracker</span>
               </Link>
-              <div className="flex space-x-2">
+              <div className="flex items-center space-x-2">
                 <Link 
                   href="/" 
                   className="text-white font-medium px-4 py-2 rounded-lg hover:bg-white/20 transition-all duration-200"
@@ -35,6 +36,7 @@ export default function RootLayout({
                 >
                   AI Recommendations
                 </Link>
+                <AuthButton />
               </div>
             </div>
           </div>
