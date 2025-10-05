@@ -37,17 +37,17 @@ export default function RecommendationsPage() {
 
   return (
     <div className="max-w-5xl mx-auto">
-      <header className="text-center mb-8">
-        <h1 className="text-4xl md:text-5xl font-bold text-white mb-2">
+      <header className="text-center mb-10">
+        <h1 className="text-4xl md:text-5xl font-bold text-white mb-3 drop-shadow-lg">
           🤖 AI Movie Recommendations
         </h1>
-        <p className="text-white/80">
-          Powered by OpenAI GPT-4 • Personalized to your taste
+        <p className="text-white/90 text-lg drop-shadow">
+          Powered by OpenRouter • Personalized to your taste
         </p>
       </header>
 
-      <div className="bg-white rounded-2xl p-6 shadow-xl mb-8">
-        <h2 className="text-2xl font-bold text-gray-800 mb-4">
+      <div className="bg-white/95 backdrop-blur-sm rounded-2xl p-6 shadow-xl border border-white/20 mb-8">
+        <h2 className="text-2xl font-bold text-gray-800 mb-6">
           What would you like?
         </h2>
         
@@ -108,9 +108,9 @@ export default function RecommendationsPage() {
               <div className="mt-2 text-sm">
                 <p>To enable AI recommendations:</p>
                 <ol className="list-decimal ml-5 mt-1">
-                  <li>Get an API key from <a href="https://platform.openai.com" target="_blank" rel="noopener noreferrer" className="underline">OpenAI</a></li>
+                  <li>Get an API key from <a href="https://openrouter.ai" target="_blank" rel="noopener noreferrer" className="underline font-semibold">OpenRouter</a></li>
                   <li>Create a <code className="bg-red-100 px-1 rounded">.env.local</code> file</li>
-                  <li>Add: <code className="bg-red-100 px-1 rounded">OPENAI_API_KEY=your-key-here</code></li>
+                  <li>Add: <code className="bg-red-100 px-1 rounded">OPENROUTER_API_KEY=your-key-here</code></li>
                   <li>Restart the dev server</li>
                 </ol>
               </div>
@@ -121,13 +121,13 @@ export default function RecommendationsPage() {
 
       {recommendations.length > 0 && (
         <div className="space-y-4">
-          <h2 className="text-2xl font-bold text-white mb-4">
+          <h2 className="text-2xl font-bold text-white mb-6 drop-shadow">
             Your Personalized Recommendations
           </h2>
           {recommendations.map((rec, index) => (
             <div 
               key={index}
-              className="bg-white rounded-2xl p-6 shadow-xl hover:shadow-2xl transition-all"
+              className="bg-white/95 backdrop-blur-sm rounded-2xl p-6 shadow-xl border border-white/20 hover:shadow-2xl transition-all hover:scale-[1.01]"
             >
               <div className="flex items-start justify-between">
                 <div className="flex-1">

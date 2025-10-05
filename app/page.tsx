@@ -9,12 +9,12 @@ export default async function Dashboard() {
   const data = await getDashboardData()
 
   return (
-    <div className="max-w-7xl mx-auto">
-      <header className="text-center mb-8">
-        <h1 className="text-4xl md:text-5xl font-bold text-white mb-2">
+    <div className="max-w-7xl mx-auto space-y-8">
+      <header className="text-center mb-10">
+        <h1 className="text-4xl md:text-5xl font-bold text-white mb-3 drop-shadow-lg">
           🎬 Movie Tracker Dashboard
         </h1>
-        <p className="text-white/80">
+        <p className="text-white/90 text-lg drop-shadow">
           Last Updated: {new Date().toLocaleString()}
         </p>
       </header>
@@ -25,7 +25,7 @@ export default async function Dashboard() {
         shows={data.showsStats}
       />
 
-      <div className="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <RatingChart 
           title="🍿 Watched Movies Distribution"
           distribution={data.watchedStats.distribution}
@@ -38,19 +38,15 @@ export default async function Dashboard() {
         />
       </div>
 
-      <div className="mt-8">
-        <TopRatedTable 
-          title="🌟 Top Rated Movies (8+ Stars)"
-          movies={data.watched.filter(m => parseFloat(m.rating) >= 8)}
-        />
-      </div>
+      <TopRatedTable 
+        title="🌟 Top Rated Movies (8+ Stars)"
+        movies={data.watched.filter(m => parseFloat(m.rating) >= 8)}
+      />
 
-      <div className="mt-8">
-        <TopRatedTable 
-          title="📺 Top Rated Shows"
-          movies={data.shows.filter(m => parseFloat(m.rating) >= 8)}
-        />
-      </div>
+      <TopRatedTable 
+        title="📺 Top Rated Shows"
+        movies={data.shows.filter(m => parseFloat(m.rating) >= 8)}
+      />
     </div>
   )
 }

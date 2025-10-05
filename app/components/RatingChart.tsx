@@ -90,8 +90,8 @@ export default function RatingChart({ title, distribution, color }: RatingChartP
   }
 
   return (
-    <div className="bg-white rounded-2xl p-6 shadow-xl">
-      <h2 className="text-2xl font-bold text-gray-800 mb-4">{title}</h2>
+    <div className="bg-white/95 backdrop-blur-sm rounded-2xl p-6 shadow-xl border border-white/20">
+      <h2 className="text-2xl font-bold text-gray-800 mb-6">{title}</h2>
       <div className="h-80">
         <Bar data={data} options={options} />
       </div>

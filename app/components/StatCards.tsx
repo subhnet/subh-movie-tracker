@@ -14,49 +14,55 @@ export default function StatCards({ watched, wants, shows }: StatCardsProps) {
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
       {/* Watched Movies Card */}
-      <div className="bg-gradient-to-br from-primary-500 to-primary-700 rounded-2xl p-6 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-1">
+      <div className="bg-white/95 backdrop-blur-sm rounded-2xl p-6 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-[1.02] border border-white/20">
         <div className="flex items-center mb-4">
-          <span className="text-3xl mr-3">🍿</span>
-          <h3 className="text-white text-xl font-semibold">Watched Movies</h3>
+          <span className="text-4xl mr-3">🍿</span>
+          <h3 className="text-gray-800 text-xl font-bold">Watched Movies</h3>
         </div>
-        <div className="text-white">
-          <div className="text-5xl font-bold mb-2">{watched.total}</div>
-          <p className="text-white/80 text-sm mb-4">Total Movies Watched</p>
-          <div className="flex justify-between text-sm pt-4 border-t border-white/20">
-            <span>Rated: {watched.rated}</span>
-            <span>Avg: {watched.avgRating}★</span>
+        <div>
+          <div className="text-6xl font-bold mb-2 bg-gradient-to-br from-primary-600 to-primary-700 bg-clip-text text-transparent">
+            {watched.total}
+          </div>
+          <p className="text-gray-600 text-sm mb-4 font-medium">Total Movies Watched</p>
+          <div className="flex justify-between text-sm pt-4 border-t border-gray-200">
+            <span className="text-gray-700 font-medium">Rated: <span className="font-bold text-primary-600">{watched.rated}</span></span>
+            <span className="text-gray-700 font-medium">Avg: <span className="font-bold text-primary-600">{watched.avgRating}★</span></span>
           </div>
         </div>
       </div>
 
       {/* Want to Watch Card */}
-      <div className="bg-gradient-to-br from-pink-500 to-rose-600 rounded-2xl p-6 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-1">
+      <div className="bg-white/95 backdrop-blur-sm rounded-2xl p-6 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-[1.02] border border-white/20">
         <div className="flex items-center mb-4">
-          <span className="text-3xl mr-3">📝</span>
-          <h3 className="text-white text-xl font-semibold">Want to Watch</h3>
+          <span className="text-4xl mr-3">📝</span>
+          <h3 className="text-gray-800 text-xl font-bold">Want to Watch</h3>
         </div>
-        <div className="text-white">
-          <div className="text-5xl font-bold mb-2">{wants.total}</div>
-          <p className="text-white/80 text-sm mb-4">Movies on Watchlist</p>
-          <div className="flex justify-between text-sm pt-4 border-t border-white/20">
-            <span>Pre-rated: {wants.rated}</span>
-            <span>{completionRate}% Complete</span>
+        <div>
+          <div className="text-6xl font-bold mb-2 bg-gradient-to-br from-pink-600 to-rose-600 bg-clip-text text-transparent">
+            {wants.total}
+          </div>
+          <p className="text-gray-600 text-sm mb-4 font-medium">Movies on Watchlist</p>
+          <div className="flex justify-between text-sm pt-4 border-t border-gray-200">
+            <span className="text-gray-700 font-medium">Pre-rated: <span className="font-bold text-pink-600">{wants.rated}</span></span>
+            <span className="text-gray-700 font-medium"><span className="font-bold text-pink-600">{completionRate}%</span> Complete</span>
           </div>
         </div>
       </div>
 
       {/* TV Shows Card */}
-      <div className="bg-gradient-to-br from-cyan-500 to-blue-600 rounded-2xl p-6 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-1">
+      <div className="bg-white/95 backdrop-blur-sm rounded-2xl p-6 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-[1.02] border border-white/20">
         <div className="flex items-center mb-4">
-          <span className="text-3xl mr-3">📺</span>
-          <h3 className="text-white text-xl font-semibold">TV Shows</h3>
+          <span className="text-4xl mr-3">📺</span>
+          <h3 className="text-gray-800 text-xl font-bold">TV Shows</h3>
         </div>
-        <div className="text-white">
-          <div className="text-5xl font-bold mb-2">{shows.total}</div>
-          <p className="text-white/80 text-sm mb-4">TV Shows Tracked</p>
-          <div className="flex justify-between text-sm pt-4 border-t border-white/20">
-            <span>Rated: {shows.rated}</span>
-            <span>Avg: {shows.avgRating}★</span>
+        <div>
+          <div className="text-6xl font-bold mb-2 bg-gradient-to-br from-cyan-600 to-blue-600 bg-clip-text text-transparent">
+            {shows.total}
+          </div>
+          <p className="text-gray-600 text-sm mb-4 font-medium">TV Shows Tracked</p>
+          <div className="flex justify-between text-sm pt-4 border-t border-gray-200">
+            <span className="text-gray-700 font-medium">Rated: <span className="font-bold text-cyan-600">{shows.rated}</span></span>
+            <span className="text-gray-700 font-medium">Avg: <span className="font-bold text-cyan-600">{shows.avgRating}★</span></span>
           </div>
         </div>
       </div>
