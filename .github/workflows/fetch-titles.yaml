@@ -32,7 +32,7 @@ jobs:
           echo "FETCH_WANTS=true" >> .env
           echo "FETCH_SHOWS=true" >> .env
           echo "GENERATE_STATS=true" >> .env
-          echo "GENERATE_HTML_REPORT=true" >> .env
+          echo "GENERATE_HTML_REPORT=false" >> .env
           echo "CREATE_BACKUP=false" >> .env
 
       - name: Fetch Titles and Generate Reports
@@ -41,5 +41,5 @@ jobs:
       - name: Commit and Push Changes
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: "🎬 Updated titles and generated reports"
-          file_pattern: "*.csv STATS.md index.html"
+          commit_message: "🎬 Updated movie titles and stats"
+          file_pattern: "*.csv STATS.md"
