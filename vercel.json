@@ -1,14 +1,4 @@
 {
-  "rewrites": [
-    {
-      "source": "/",
-      "destination": "/index.html"
-    },
-    {
-      "source": "/dashboard",
-      "destination": "/movie-dashboard.html"
-    }
-  ],
   "headers": [
     {
       "source": "/(.*)",

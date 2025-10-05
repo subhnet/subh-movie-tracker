@@ -8,9 +8,7 @@ Your dashboard will be live at: **https://subh-movie-tracker.vercel.app/**
 
 ## ✨ What You Get
 
-- **Live URL**: `https://subh-movie-tracker.vercel.app/`
-- **Auto-redirect**: Landing page → Dashboard (3 seconds)
-- **Direct access**: `https://subh-movie-tracker.vercel.app/movie-dashboard.html`
+- **Live URL**: `https://subh-movie-tracker.vercel.app/` (shows dashboard directly)
 - **Stats page**: `https://subh-movie-tracker.vercel.app/STATS.md`
 - **GitHub Integration**: Auto-deploys when you push to GitHub
 - **Free hosting**: Vercel's free tier is perfect for this
@@ -77,8 +75,7 @@ vercel --prod
 ### File Structure
 ```
 subh-movie-tracker/
-├── index.html                    # Landing page (auto-redirects)
-├── movie-dashboard.html          # Main dashboard
+├── index.html                    # Dashboard (main page)
 ├── STATS.md                      # Statistics report
 ├── watched_titles.csv            # Data files
 ├── wants_titles.csv
@@ -92,7 +89,7 @@ subh-movie-tracker/
 ```
 GitHub Actions (daily):
   ↓ Runs script
-  ↓ Updates CSVs + STATS.md + movie-dashboard.html
+  ↓ Updates CSVs + STATS.md + index.html
   ↓ Commits to GitHub
   ↓
 Vercel (automatically):
@@ -105,9 +102,7 @@ Vercel (automatically):
 
 | URL | Shows |
 |-----|-------|
-| `https://subh-movie-tracker.vercel.app/` | Landing page (redirects to dashboard) |
-| `https://subh-movie-tracker.vercel.app/movie-dashboard.html` | Main dashboard |
-| `https://subh-movie-tracker.vercel.app/dashboard` | Also dashboard (via vercel.json) |
+| `https://subh-movie-tracker.vercel.app/` | Dashboard (main page) |
 | `https://subh-movie-tracker.vercel.app/STATS.md` | Statistics report |
 
 ---
@@ -118,10 +113,6 @@ The `vercel.json` file configures:
 
 ```json
 {
-  "rewrites": [
-    { "source": "/", "destination": "/index.html" },
-    { "source": "/dashboard", "destination": "/movie-dashboard.html" }
-  ],
   "headers": [
     {
       "source": "/(.*)",
@@ -137,8 +128,7 @@ The `vercel.json` file configures:
 ```
 
 **What this does:**
-- ✅ Routes `/` to `index.html` (landing page)
-- ✅ Routes `/dashboard` to `movie-dashboard.html` (cleaner URL)
+- ✅ Routes `/` to `index.html` (dashboard) automatically
 - ✅ Disables caching so updates show immediately
 
 ---
@@ -157,34 +147,11 @@ Your Vercel site will **automatically update daily** with fresh data! 🎉
 
 ---
 
-## 🎨 Landing Page Behavior
+## 🎨 Simple & Direct
 
 When someone visits `https://subh-movie-tracker.vercel.app/`:
 
-1. **Landing page shows** (3 seconds):
-   - Project overview
-   - Key statistics
-   - "View Dashboard" button
-
-2. **Auto-redirects** to dashboard after 3 seconds
-   - Or click button to go immediately
-
-3. **Dashboard loads** with all your movie data
-
-### Change Redirect Time
-
-Edit `index.html`:
-```javascript
-// Change 3000 to desired milliseconds
-setTimeout(function() {
-    window.location.href = '/movie-dashboard.html';
-}, 3000); // 3 seconds
-```
-
-Or disable auto-redirect (keep landing page):
-```javascript
-// Comment out or remove the setTimeout
-```
+**They see your dashboard immediately!** No redirects, no waiting. Just the beautiful dashboard with all your movie data.
 
 ---
 

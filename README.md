@@ -20,7 +20,7 @@ A comprehensive personal movie tracking system that scrapes data from Must app, 
   - Watching patterns by month/year
   - Completion rates
   - Tag analysis
-- **HTML Dashboard**: Beautiful visual report (`movie-dashboard.html`)
+- **HTML Dashboard**: Beautiful visual report (`index.html`)
   - Interactive charts
   - Rating distribution graphs
   - Top-rated tables
@@ -84,7 +84,7 @@ This will:
 2. Back up existing CSV files
 3. Update CSV files (preserving your notes/tags)
 4. Generate statistics (STATS.md)
-5. Create HTML dashboard (movie-dashboard.html)
+5. Create HTML dashboard (index.html)
 
 #### Generate Statistics Only
 ```bash
@@ -103,7 +103,7 @@ Creates/updates `STATS.md` with:
 npm run report
 ```
 
-Creates/updates `movie-dashboard.html` - open in browser to view beautiful visualizations.
+Creates/updates `index.html` - open in browser to view beautiful visualizations.
 
 ## 📁 Files Structure
 
@@ -117,7 +117,7 @@ subh-movie-tracker/
 ├── wants_titles.csv         # Movies you want to watch
 ├── shows_titles.csv         # TV shows you're tracking
 ├── STATS.md                 # Generated statistics report
-├── movie-dashboard.html     # Generated HTML dashboard
+├── index.html               # Generated HTML dashboard
 ├── backups/                 # Timestamped backups (not in git)
 └── utils/
     ├── analytics.js         # Statistics generation

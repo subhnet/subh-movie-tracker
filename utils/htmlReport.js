@@ -22,8 +22,8 @@ async function generateHtmlReport() {
     });
 
     // Save to file
-    await fs.writeFile('movie-dashboard.html', html);
-    console.log('✅ HTML dashboard saved to movie-dashboard.html');
+    await fs.writeFile('index.html', html);
+    console.log('✅ HTML dashboard saved to index.html');
   } catch (error) {
     console.error('Error generating HTML report:', error);
     throw error;

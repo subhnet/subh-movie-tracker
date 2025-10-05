@@ -1,14 +1,14 @@
 # 🎬 Movie Tracker Statistics
 
-*Last Updated: 5/10/2025, 9:31:58 am*
+*Last Updated: 5/10/2025, 10:31:44 am*
 
 ---
 
 ## 🍿 Watched Movies
 
-- **Total Watched:** 579
+- **Total Watched:** 574
 - **Rated:** 574
-- **Unrated:** 5
+- **Unrated:** 0
 - **Average Rating:** 7.04/10
 
 ### Rating Distribution
@@ -39,17 +39,17 @@
 
 ### 📅 Watching Patterns
 
-- **Movies with watch dates:** 579
-- **Most active month:** 2025-10 (579 movies)
+- **Movies with watch dates:** 574
+- **Most active month:** 2025-10 (574 movies)
 
 **By Year:**
-- 2025: 579 movies
+- 2025: 574 movies
 
 ## 📝 Want to Watch
 
-- **Total on Watchlist:** 191
+- **Total on Watchlist:** 186
 - **Pre-rated:** 0
-- **Completion Rate:** 75.2%
+- **Completion Rate:** 75.5%
 
 ### Recently Added to Watchlist
 
@@ -61,7 +61,7 @@
 
 ## 📺 TV Shows
 
-- **Total Shows:** 98
+- **Total Shows:** 93
 - **Rated:** 72
 - **Average Rating:** 7.08/10
 
@@ -75,10 +75,10 @@
 
 ## 📊 Overall Summary
 
-- **Total Tracked Content:** 868
-- **Movies Watched:** 579
-- **Movies to Watch:** 191
-- **TV Shows:** 98
+- **Total Tracked Content:** 853
+- **Movies Watched:** 574
+- **Movies to Watch:** 186
+- **TV Shows:** 93
 - **Overall Average Rating:** 7.04/10
 
 ---

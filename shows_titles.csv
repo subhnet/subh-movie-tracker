@@ -1,91 +1,94 @@
-rateStars,title
-N/A,Secret Level
-7,Marvel's The Punisher
-N/A,Pill
-6,The Boys
-N/A,Normal People
-8,Shōgun
-7,INVINCIBLE
-N/A,House
-7,"Love, Death & Robots"
-6,The Sandman
-7,Mr. Robot
-N/A,The Railway Men - The Untold Story of Bhopal 1984
-8,Paatal Lok
-6,Rick and Morty
-N/A,The Hunt for Veerappan
-8,The Witcher
-9,Panchayat
-N/A,Rise of Empires: Ottoman
-N/A,The Sopranos
-8,The Last of Us
-7,Curb Your Enthusiasm
-6,Wednesday
-N/A,Hellbound
-6,TVF Tripling
-N/A,Indian Predator: The Diary of a Serial Killer
-7,House of the Dragon
-N/A,Naruto
-N/A,Demon Slayer: Kimetsu no Yaiba
-7,Only Murders in the Building
-6,The Terminal List
-8,Stranger Things
-N/A,Peaky Blinders
-8,Gullak
-8,True Detective
-N/A,The Office
-7,Peacemaker
-7,Squid Game
-N/A,Narcos
-8,What If...?
-5,The Vampire Diaries
-6,Sacred Games
-5,The Walking Dead
-6,Hannibal
-7,Brooklyn Nine-Nine
-7,Modern Family
-6,Marvel's Agents of S.H.I.E.L.D.
-7,Arrow
-8,The Mentalist
-6,The Flash
-8,Arcane
-7,Agatha All Along
-9,Fullmetal Alchemist: Brotherhood
-7,DAHMER - Monster: The Jeffrey Dahmer Story
-8,Black Bird
-7,Loki
-8,Attack on Titan
-2,Secret Invasion
-8,The Detectives
-7,Farzi
-N/A,1899
-8,Better Call Saul
-10,Friends
-6,Game of Thrones
-8,The Playlist
-1,She-Hulk: Attorney at Law
-6,Ms. Marvel
-7,Man Vs Bee
-8,Moon Knight
-7,The Silent Sea
-6,Hawkeye
-9,Turning Point: 9/11 and the War on Terror
-8,The Falcon and the Winter Soldier
-7,Money Heist
-N/A,Dexter
-7,Silicon Valley
-7,WandaVision
-10,Scam 1992: The Harshad Mehta Story
-8,Dark
-N/A,Sherlock
-8,Prison Break
-9,Marvel's Daredevil
-9,Death Note
-N/A,How I Met Your Mother
-N/A,Breaking Bad
-8,Chernobyl
-N/A,
-N/A,
-N/A,
-N/A,
-N/A,
+notes,rating,rewatched,scrapedDate,tags,title,watchedDate
+,7,false,2025-10-05,,Peacemaker,
+,7,false,2025-10-05,,Farzi,
+,6,false,2025-10-05,,Murderbot,
+,9,false,2025-10-05,,Presumed Innocent,
+,6,false,2025-10-05,,The Mentalist,
+,N/A,false,2025-10-05,,Cowboy Bebop,
+,6,false,2025-10-05,,Daredevil: Born Again,
+,7,false,2025-10-05,,INVINCIBLE,
+,7,false,2025-10-05,,Severance,
+,N/A,false,2025-10-05,,Secret Level,
+,N/A,false,2025-10-05,,Pill,
+,6,false,2025-10-05,,The Boys,
+,N/A,false,2025-10-05,,Normal People,
+,8,false,2025-10-05,,Shōgun,
+,N/A,false,2025-10-05,,House,
+,7,false,2025-10-05,,"Love, Death & Robots",
+,6,false,2025-10-05,,The Sandman,
+,7,false,2025-10-05,,Mr. Robot,
+,N/A,false,2025-10-05,,The Railway Men - The Untold Story of Bhopal 1984,
+,8,false,2025-10-05,,Paatal Lok,
+,6,false,2025-10-05,,Rick and Morty,
+,N/A,false,2025-10-05,,The Hunt for Veerappan,
+,8,false,2025-10-05,,The Witcher,
+,9,false,2025-10-05,,Panchayat,
+,N/A,false,2025-10-05,,Rise of Empires: Ottoman,
+,N/A,false,2025-10-05,,The Sopranos,
+,8,false,2025-10-05,,The Last of Us,
+,7,false,2025-10-05,,Curb Your Enthusiasm,
+,6,false,2025-10-05,,Wednesday,
+,N/A,false,2025-10-05,,Hellbound,
+,6,false,2025-10-05,,TVF Tripling,
+,N/A,false,2025-10-05,,Indian Predator: The Diary of a Serial Killer,
+,7,false,2025-10-05,,House of the Dragon,
+,N/A,false,2025-10-05,,Naruto,
+,N/A,false,2025-10-05,,Demon Slayer: Kimetsu no Yaiba,
+,7,false,2025-10-05,,Only Murders in the Building,
+,6,false,2025-10-05,,The Terminal List,
+,8,false,2025-10-05,,Stranger Things,
+,N/A,false,2025-10-05,,Peaky Blinders,
+,8,false,2025-10-05,,Gullak,
+,8,false,2025-10-05,,True Detective,
+,N/A,false,2025-10-05,,The Office,
+,7,false,2025-10-05,,Squid Game,
+,N/A,false,2025-10-05,,Narcos,
+,8,false,2025-10-05,,What If...?,
+,5,false,2025-10-05,,The Vampire Diaries,
+,6,false,2025-10-05,,Sacred Games,
+,5,false,2025-10-05,,The Walking Dead,
+,6,false,2025-10-05,,Hannibal,
+,7,false,2025-10-05,,Brooklyn Nine-Nine,
+,7,false,2025-10-05,,Modern Family,
+,6,false,2025-10-05,,Marvel's Agents of S.H.I.E.L.D.,
+,7,false,2025-10-05,,Arrow,
+,6,false,2025-10-05,,The Flash,
+,7,false,2025-10-05,,Marvel Zombies,
+,6,false,2025-10-05,,Parasyte -the maxim-,
+,8,false,2025-10-05,,The Penguin,
+,7,false,2025-10-05,,Marvel's The Punisher,
+,8,false,2025-10-05,,Arcane,
+,7,false,2025-10-05,,Agatha All Along,
+,9,false,2025-10-05,,Fullmetal Alchemist: Brotherhood,
+,7,false,2025-10-05,,DAHMER - Monster: The Jeffrey Dahmer Story,
+,8,false,2025-10-05,,Black Bird,
+,7,false,2025-10-05,,Loki,
+,8,false,2025-10-05,,Attack on Titan,
+,2,false,2025-10-05,,Secret Invasion,
+,8,false,2025-10-05,,The Detectives,
+,N/A,false,2025-10-05,,1899,
+,8,false,2025-10-05,,Better Call Saul,
+,10,false,2025-10-05,,Friends,
+,6,false,2025-10-05,,Game of Thrones,
+,8,false,2025-10-05,,The Playlist,
+,1,false,2025-10-05,,She-Hulk: Attorney at Law,
+,6,false,2025-10-05,,Ms. Marvel,
+,7,false,2025-10-05,,Man Vs Bee,
+,8,false,2025-10-05,,Moon Knight,
+,7,false,2025-10-05,,The Silent Sea,
+,6,false,2025-10-05,,Hawkeye,
+,9,false,2025-10-05,,Turning Point: 9/11 and the War on Terror,
+,8,false,2025-10-05,,The Falcon and the Winter Soldier,
+,7,false,2025-10-05,,Money Heist,
+,N/A,false,2025-10-05,,Dexter,
+,7,false,2025-10-05,,Silicon Valley,
+,7,false,2025-10-05,,WandaVision,
+,10,false,2025-10-05,,Scam 1992: The Harshad Mehta Story,
+,8,false,2025-10-05,,Dark,
+,N/A,false,2025-10-05,,Sherlock,
+,8,false,2025-10-05,,Prison Break,
+,9,false,2025-10-05,,Marvel's Daredevil,
+,9,false,2025-10-05,,Death Note,
+,N/A,false,2025-10-05,,How I Met Your Mother,
+,N/A,false,2025-10-05,,Breaking Bad,
+,8,false,2025-10-05,,Chernobyl,
