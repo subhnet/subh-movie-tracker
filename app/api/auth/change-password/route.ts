@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import { createClient } from '@/lib/supabase'
+import { createClient } from '@supabase/supabase-js'
 import bcrypt from 'bcrypt'
 
 export async function POST(request: Request) {
@@ -21,7 +21,10 @@ export async function POST(request: Request) {
       )
     }
 
-    const supabase = createClient()
+    // Create Supabase client with service role key for admin operations
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || ''
+    const supabaseServiceKey = process.env.SUPABASE_SERVICE_KEY || ''
+    const supabase = createClient(supabaseUrl, supabaseServiceKey)
 
     // Get current user
     const { data: user, error: fetchError } = await supabase
