@@ -6,11 +6,31 @@ const csv = require('csvtojson');
 
 export async function readMoviesFromCSV(filename: string): Promise<Movie[]> {
   try {
-    const filePath = path.join(process.cwd(), filename);
+    // Try multiple paths for better compatibility
+    let filePath = path.join(process.cwd(), filename);
+    
+    // Check if file exists, if not try alternative paths
+    try {
+      await fs.access(filePath);
+    } catch {
+      // Try from project root on Vercel
+      filePath = path.join(process.cwd(), '..', filename);
+      try {
+        await fs.access(filePath);
+      } catch {
+        // Last try - use absolute path from workspace root
+        filePath = path.join(process.cwd(), filename);
+      }
+    }
+    
+    console.log(`Reading CSV from: ${filePath}`);
     const data = await csv().fromFile(filePath);
+    console.log(`Successfully read ${data.length} items from ${filename}`);
     return data as Movie[];
   } catch (error) {
     console.error(`Error reading ${filename}:`, error);
+    console.error(`Attempted path: ${path.join(process.cwd(), filename)}`);
+    console.error(`Current working directory: ${process.cwd()}`);
     return [];
   }
 }
