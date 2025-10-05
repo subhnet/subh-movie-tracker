@@ -38,7 +38,8 @@ export default function LoginPage() {
       if (isLogin) {
         localStorage.setItem('movieTrackerSession', JSON.stringify(data.session))
         localStorage.setItem('movieTrackerUser', JSON.stringify(data.user))
-        router.push('/')
+        // Force a full page reload to update the auth state
+        window.location.href = '/'
       } else {
         // Auto-login after registration
         setIsLogin(true)
