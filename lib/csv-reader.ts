@@ -6,13 +6,20 @@ const csv = require('csvtojson');
 
 export async function readMoviesFromCSV(filename: string): Promise<Movie[]> {
   try {
-    // Try multiple paths for Vercel compatibility
-    const pathsToTry = [
-      path.join(process.cwd(), filename),                    // Root directory
-      path.join(process.cwd(), 'public', filename),          // Public directory (Vercel-friendly)
-      path.join(process.cwd(), '..', filename),              // Parent directory
-      path.join(__dirname, '..', '..', filename),            // Relative to lib
+    // For Vercel, prioritize public directory
+    const isVercel = process.env.VERCEL === '1';
+    
+    const pathsToTry = isVercel ? [
+      path.join(process.cwd(), 'public', filename),          // Public directory (Vercel)
+      path.join(process.cwd(), filename),                    // Root directory fallback
+    ] : [
+      path.join(process.cwd(), filename),                    // Root directory (local dev)
+      path.join(process.cwd(), 'public', filename),          // Public directory fallback
     ];
+    
+    console.log(`🔍 Looking for ${filename}...`);
+    console.log(`   Environment: ${isVercel ? 'Vercel' : 'Local'}`);
+    console.log(`   Working directory: ${process.cwd()}`);
     
     let filePath = pathsToTry[0];
     let fileFound = false;
@@ -23,24 +30,37 @@ export async function readMoviesFromCSV(filename: string): Promise<Movie[]> {
         await fs.access(tryPath);
         filePath = tryPath;
         fileFound = true;
-        console.log(`✓ Found ${filename} at: ${tryPath}`);
+        console.log(`✅ Found ${filename} at: ${tryPath}`);
         break;
-      } catch {
-        console.log(`✗ Not found at: ${tryPath}`);
+      } catch (err) {
+        console.log(`❌ Not found at: ${tryPath}`);
       }
     }
     
     if (!fileFound) {
-      console.error(`❌ Could not find ${filename} in any location`);
-      console.error(`Working directory: ${process.cwd()}`);
+      console.error(`❌ ERROR: Could not find ${filename} in any location!`);
+      console.error(`   Tried paths:`, pathsToTry);
+      
+      // List what files ARE in the directories
+      try {
+        const rootFiles = await fs.readdir(process.cwd());
+        console.log(`   Files in root:`, rootFiles.filter(f => f.endsWith('.csv')));
+        
+        const publicPath = path.join(process.cwd(), 'public');
+        const publicFiles = await fs.readdir(publicPath);
+        console.log(`   Files in public:`, publicFiles.filter(f => f.endsWith('.csv')));
+      } catch (e) {
+        console.error(`   Could not list directory contents:`, e);
+      }
+      
       return [];
     }
     
     const data = await csv().fromFile(filePath);
-    console.log(`✓ Successfully read ${data.length} items from ${filename}`);
+    console.log(`✅ Successfully read ${data.length} items from ${filename}`);
     return data as Movie[];
   } catch (error) {
-    console.error(`❌ Error reading ${filename}:`, error);
+    console.error(`❌ EXCEPTION reading ${filename}:`, error);
     return [];
   }
 }
