@@ -141,7 +141,7 @@ export async function POST(request: Request) {
 // PUT: Update a movie
 export async function PUT(request: Request) {
   try {
-    const { movieId, userId, title, rating, tags } = await request.json()
+    const { movieId, userId, title, rating, tags, type } = await request.json()
 
     if (!movieId || !userId) {
       return NextResponse.json(
@@ -150,14 +150,25 @@ export async function PUT(request: Request) {
       )
     }
 
+    // Validate type if provided
+    if (type && !['watched', 'want', 'show'].includes(type)) {
+      return NextResponse.json(
+        { error: 'type must be one of: watched, want, show' },
+        { status: 400 }
+      )
+    }
+
+    // Build update object dynamically
+    const updateData: any = {}
+    if (title !== undefined) updateData.title = title
+    if (rating !== undefined) updateData.rating = rating
+    if (tags !== undefined) updateData.tags = tags
+    if (type !== undefined) updateData.type = type
+
     // Update in database
     const { data: updatedMovie, error: updateError } = await supabase
       .from('movies')
-      .update({
-        title,
-        rating,
-        tags
-      })
+      .update(updateData)
       .eq('id', movieId)
       .eq('user_id', userId) // Ensure user owns this movie
       .select()
