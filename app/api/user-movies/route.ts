@@ -15,9 +15,14 @@ export async function GET(request: Request) {
       return NextResponse.json({
         source: 'csv',
         watched: data.watched,
-        want: data.wantToWatch,
+        want: data.wants,
         shows: data.shows,
-        stats: data.stats
+        stats: {
+          totalWatched: data.watched.length,
+          totalWantToWatch: data.wants.length,
+          totalShows: data.shows.length,
+          averageRating: data.watchedStats.averageRating
+        }
       })
     }
 
