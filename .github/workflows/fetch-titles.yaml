@@ -3,7 +3,7 @@ name: Fetch Movie Titles
 on:
   workflow_dispatch:
   schedule:
-    - cron: "0 0 * * *"
+    - cron: "0 0 * * *"  # Runs daily at midnight UTC
 
 jobs:
   fetch-titles:
@@ -15,20 +15,31 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Setup Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v4
         with:
-          node-version: 14
+          node-version: '18'  # Updated to Node 18 for better compatibility
 
       - name: Install dependencies
         run: npm install
 
-      - name: Fetch Titles
-        run: node movies.js
+      - name: Create .env file
+        run: |
+          echo "MUST_USERNAME=subhransu" >> .env
+          echo "FETCH_WATCHED=true" >> .env
+          echo "FETCH_WANTS=true" >> .env
+          echo "FETCH_SHOWS=true" >> .env
+          echo "GENERATE_STATS=true" >> .env
+          echo "GENERATE_HTML_REPORT=true" >> .env
+          echo "CREATE_BACKUP=false" >> .env
+
+      - name: Fetch Titles and Generate Reports
+        run: npm start
 
       - name: Commit and Push Changes
-        uses: stefanzweifel/git-auto-commit-action@v4
+        uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: "Updated titles"
+          commit_message: "🎬 Updated titles and generated reports"
+          file_pattern: "*.csv STATS.md movie-dashboard.html"
