@@ -2,14 +2,17 @@
 
 import { useState, useEffect } from 'react'
 import { getUser } from '@/lib/auth'
+import { useRouter } from 'next/navigation'
 import type { Recommendation } from '@/lib/types'
 
 export default function RecommendationsPage() {
+  const router = useRouter()
   const [recommendations, setRecommendations] = useState<Recommendation[]>([])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const [type, setType] = useState<'general' | 'watchlist'>('general')
   const [user, setUser] = useState<any>(null)
+  const [addingMovie, setAddingMovie] = useState<number | null>(null)
 
   useEffect(() => {
     setUser(getUser())
@@ -41,6 +44,55 @@ export default function RecommendationsPage() {
       setError('Network error. Please try again.')
     } finally {
       setLoading(false)
+    }
+  }
+
+  const handleAddToList = async (movie: Recommendation, listType: 'watched' | 'want' | 'show', index: number) => {
+    if (!user) {
+      alert('Please login to add movies')
+      router.push('/login')
+      return
+    }
+
+    setAddingMovie(index)
+    
+    try {
+      // First, search for the movie to get its poster
+      let posterUrl = null
+      try {
+        const searchResponse = await fetch(`/api/search-movies?query=${encodeURIComponent(movie.title)}&type=movie`)
+        const searchData = await searchResponse.json()
+        if (searchData.results && searchData.results.length > 0) {
+          posterUrl = searchData.results[0].poster // Use the medium-sized poster
+        }
+      } catch (searchErr) {
+        console.log('Could not fetch poster, continuing without it')
+      }
+
+      const response = await fetch('/api/user-movies', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          userId: user.id,
+          title: movie.title,
+          rating: '',
+          tags: movie.genres?.join(', ') || '',
+          type: listType,
+          posterUrl: posterUrl
+        })
+      })
+
+      if (!response.ok) {
+        const data = await response.json()
+        alert(data.error || 'Failed to add movie')
+        return
+      }
+
+      alert(`"${movie.title}" added to your ${listType === 'watched' ? 'Watched' : listType === 'want' ? 'Watchlist' : 'Shows'}!`)
+    } catch (err) {
+      alert('Failed to add movie. Please try again.')
+    } finally {
+      setAddingMovie(null)
     }
   }
 
@@ -207,7 +259,7 @@ export default function RecommendationsPage() {
                       </h3>
                       <p className="text-gray-600 mb-4 leading-relaxed">{rec.reason}</p>
                       {rec.genres && rec.genres.length > 0 && (
-                        <div className="flex flex-wrap gap-2">
+                        <div className="flex flex-wrap gap-2 mb-4">
                           {rec.genres.map((genre, i) => (
                             <span 
                               key={i}
@@ -218,15 +270,29 @@ export default function RecommendationsPage() {
                           ))}
                         </div>
                       )}
-                    </div>
-                    
-                    {/* Confidence Score */}
-                    <div className="flex-shrink-0 text-center md:text-right">
-                      <div className="inline-flex flex-col items-center justify-center w-24 h-24 rounded-2xl bg-gradient-to-br from-green-400 to-emerald-600 shadow-lg">
-                        <div className="text-3xl font-black text-white">
-                          {rec.confidence}%
-                        </div>
-                        <div className="text-xs text-white/90 font-semibold uppercase tracking-wider">Match</div>
+                      
+                      {/* Add to List Buttons */}
+                      <div className="flex flex-wrap gap-2 mt-4">
+                        <button
+                          onClick={() => handleAddToList(rec, 'want', index)}
+                          disabled={addingMovie === index}
+                          className="flex items-center gap-2 bg-gradient-to-r from-pink-500 to-rose-600 text-white px-4 py-2 rounded-lg font-semibold hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                        >
+                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
+                          </svg>
+                          {addingMovie === index ? 'Adding...' : 'Add to Watchlist'}
+                        </button>
+                        <button
+                          onClick={() => handleAddToList(rec, 'watched', index)}
+                          disabled={addingMovie === index}
+                          className="flex items-center gap-2 bg-gradient-to-r from-blue-500 to-purple-600 text-white px-4 py-2 rounded-lg font-semibold hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                        >
+                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                          </svg>
+                          {addingMovie === index ? 'Adding...' : 'Mark as Watched'}
+                        </button>
                       </div>
                     </div>
                   </div>

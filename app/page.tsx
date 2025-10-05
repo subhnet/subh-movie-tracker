@@ -6,6 +6,7 @@ import { getUser } from '@/lib/auth'
 import StatCards from './components/StatCards'
 import RatingChart from './components/RatingChart'
 import TopRatedTable from './components/TopRatedTable'
+import QuickAdd from './components/QuickAdd'
 
 interface Stats {
   total: number
@@ -99,6 +100,38 @@ export default function Dashboard() {
       setLoading(false)
     }
   }
+
+  const handleAddMovie = async (title: string, type: string, rating: string, posterUrl?: string) => {
+    if (!user) return
+
+    try {
+      const response = await fetch('/api/user-movies', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          userId: user.id,
+          title,
+          type,
+          rating: rating || '',
+          tags: '',
+          poster_url: posterUrl
+        })
+      })
+
+      if (!response.ok) throw new Error('Failed to add movie')
+      
+      // Refresh data
+      await fetchData(user.id)
+    } catch (error) {
+      console.error('Failed to add movie:', error)
+      throw error
+    }
+  }
+
+  const allMovies = useMemo(() => {
+    if (!data) return []
+    return [...data.watched, ...data.wants, ...data.shows]
+  }, [data])
 
   if (loading) {
     return (
@@ -201,6 +234,12 @@ export default function Dashboard() {
           />
         </div>
       </div>
+
+      {/* Quick Add FAB */}
+      <QuickAdd
+        onAdd={handleAddMovie}
+        existingMovies={allMovies.map((m: any) => ({ title: m.title, type: m.type }))}
+      />
     </div>
   )
 }

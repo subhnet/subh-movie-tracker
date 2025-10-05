@@ -7,6 +7,7 @@ import MovieList from '../components/MovieList'
 import MovieGrid from '../components/MovieGrid'
 import AddMovieModal from '../components/AddMovieModal'
 import Pagination from '../components/Pagination'
+import QuickAdd from '../components/QuickAdd'
 
 interface Movie {
   id: string
@@ -258,21 +259,29 @@ export default function ManageMoviesPage() {
   return (
     <div className="max-w-6xl mx-auto space-y-6">
       {/* Header */}
-      <header className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-        <div>
-          <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">
-            🎬 Manage Movies
-          </h1>
-          <p className="text-white/70">
-            Add, edit, and organize your movie collection
-          </p>
+      <header className="relative">
+        <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-pink-500/10 rounded-2xl blur-2xl"></div>
+        <div className="relative bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl rounded-2xl border border-white/20 p-6 md:p-8 shadow-xl">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+            <div>
+              <h1 className="text-3xl md:text-5xl font-black text-white mb-2 bg-gradient-to-r from-blue-200 to-purple-200 bg-clip-text text-transparent">
+                My Collection
+              </h1>
+              <p className="text-white/80 text-lg">
+                Track, organize, and discover your favorite movies
+              </p>
+            </div>
+            <button
+              onClick={() => setIsAddModalOpen(true)}
+              className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white rounded-xl transition-all font-semibold shadow-lg hover:shadow-xl"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+              </svg>
+              Add Movie
+            </button>
+          </div>
         </div>
-        <button
-          onClick={() => setIsAddModalOpen(true)}
-          className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors font-medium shadow-lg"
-        >
-          ➕ Add Movie
-        </button>
       </header>
 
       {/* Search Bar and View Toggle */}
@@ -420,6 +429,12 @@ export default function ManageMoviesPage() {
         onClose={() => setIsAddModalOpen(false)}
         onAdd={handleAddMovie}
         defaultType={activeTab}
+        existingMovies={movies.map(m => ({ title: m.title, type: m.type }))}
+      />
+
+      {/* Quick Add FAB */}
+      <QuickAdd
+        onAdd={handleAddMovie}
         existingMovies={movies.map(m => ({ title: m.title, type: m.type }))}
       />
     </div>

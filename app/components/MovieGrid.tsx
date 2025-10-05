@@ -100,38 +100,51 @@ const MovieCard = memo(({
   }
 
   return (
-    <div className="bg-white/5 backdrop-blur-sm rounded-lg border border-white/10 overflow-hidden hover:bg-white/10 transition-all hover:scale-105 group">
+    <div className="group relative bg-white/5 backdrop-blur-sm rounded-xl border border-white/10 transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:border-white/30">
+      {/* Glow effect */}
+      <div className="absolute inset-0 bg-gradient-to-br from-blue-500/0 to-purple-500/0 group-hover:from-blue-500/20 group-hover:to-purple-500/20 transition-all duration-300 pointer-events-none rounded-xl"></div>
+      
       {/* Poster */}
-      <div className="relative aspect-[2/3] bg-white/5">
-        <OptimizedImage
-          src={movie.poster_url}
-          alt={movie.title}
-          className="w-full h-full object-cover"
-        />
+      <div className="relative aspect-[2/3] bg-gradient-to-br from-gray-800 to-gray-900 rounded-t-xl overflow-visible">
+        <div className="absolute inset-0 overflow-hidden rounded-t-xl">
+          <OptimizedImage
+            src={movie.poster_url}
+            alt={movie.title}
+            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+          />
+        </div>
         
         {/* Rating badge */}
         {movie.rating && (
-          <div className="absolute top-2 right-2 bg-black/80 backdrop-blur-sm px-2 py-1 rounded-full">
-            <span className="text-yellow-400 text-xs font-bold">
-              ⭐ {parseFloat(movie.rating).toFixed(1)}
+          <div className="absolute top-3 right-3 bg-gradient-to-br from-yellow-400 to-orange-500 px-3 py-1.5 rounded-full shadow-lg transform transition-all duration-300 group-hover:scale-110 z-10">
+            <span className="text-white text-xs font-black flex items-center gap-1">
+              <svg className="w-3 h-3 fill-current" viewBox="0 0 20 20">
+                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+              </svg>
+              {parseFloat(movie.rating).toFixed(1)}
             </span>
           </div>
         )}
         
         {/* Actions overlay */}
-        <div className="absolute inset-0 bg-black/80 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center gap-2 p-2">
-          <div className="relative group/move w-full">
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center gap-3 z-20">
+          <div className="relative group/move">
             <button
-              className="w-full px-2 py-1.5 text-xs bg-blue-600 hover:bg-blue-700 text-white rounded transition-colors disabled:opacity-50"
+              className="w-10 h-10 bg-blue-600/90 hover:bg-blue-600 backdrop-blur-sm text-white rounded-full transition-all disabled:opacity-50 flex items-center justify-center shadow-lg hover:scale-110 transform"
               disabled={isMoving}
+              title="Move to another list"
+              aria-label="Move to another list"
             >
-              {isMoving ? 'Moving...' : '📁 Move To'}
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
+              </svg>
             </button>
-            <div className="absolute top-full left-0 right-0 mt-1 bg-gray-900 rounded-lg shadow-xl border border-white/20 opacity-0 invisible group-hover/move:opacity-100 group-hover/move:visible transition-all z-10">
+            <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 bg-gray-900 rounded-lg shadow-xl border border-white/20 opacity-0 invisible group-hover/move:opacity-100 group-hover/move:visible transition-all z-50 min-w-max pointer-events-none group-hover/move:pointer-events-auto">
               {currentType !== 'watched' && (
                 <button
                   onClick={() => onMove(movie.id, 'watched')}
-                  className="w-full px-3 py-2 text-left text-white hover:bg-white/10 rounded-t-lg transition-colors text-xs"
+                  className="w-full px-4 py-2 text-left text-white hover:bg-white/10 rounded-t-lg transition-colors text-sm whitespace-nowrap"
+                  aria-label="Move to Watched"
                 >
                   🍿 Watched
                 </button>
@@ -139,7 +152,8 @@ const MovieCard = memo(({
               {currentType !== 'want' && (
                 <button
                   onClick={() => onMove(movie.id, 'want')}
-                  className="w-full px-3 py-2 text-left text-white hover:bg-white/10 transition-colors text-xs"
+                  className="w-full px-4 py-2 text-left text-white hover:bg-white/10 transition-colors text-sm whitespace-nowrap"
+                  aria-label="Move to Want to Watch"
                 >
                   📌 Want to Watch
                 </button>
@@ -147,7 +161,8 @@ const MovieCard = memo(({
               {currentType !== 'show' && (
                 <button
                   onClick={() => onMove(movie.id, 'show')}
-                  className="w-full px-3 py-2 text-left text-white hover:bg-white/10 rounded-b-lg transition-colors text-xs"
+                  className="w-full px-4 py-2 text-left text-white hover:bg-white/10 rounded-b-lg transition-colors text-sm whitespace-nowrap"
+                  aria-label="Move to TV Shows"
                 >
                   📺 TV Shows
                 </button>
@@ -157,17 +172,25 @@ const MovieCard = memo(({
           
           <button
             onClick={() => onEdit(movie)}
-            className="w-full px-2 py-1.5 text-xs bg-white/10 hover:bg-white/20 text-white rounded transition-colors"
+            className="w-10 h-10 bg-purple-600/90 hover:bg-purple-600 backdrop-blur-sm text-white rounded-full transition-all flex items-center justify-center shadow-lg hover:scale-110 transform"
+            title="Edit movie"
+            aria-label={`Edit ${movie.title}`}
           >
-            ✏️ Edit
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+            </svg>
           </button>
           
           <button
             onClick={() => onDelete(movie.id)}
-            className="w-full px-2 py-1.5 text-xs bg-red-600/80 hover:bg-red-600 text-white rounded transition-colors disabled:opacity-50"
+            className="w-10 h-10 bg-red-600/90 hover:bg-red-600 backdrop-blur-sm text-white rounded-full transition-all disabled:opacity-50 flex items-center justify-center shadow-lg hover:scale-110 transform"
             disabled={isDeleting}
+            title="Delete movie"
+            aria-label={`Delete ${movie.title}`}
           >
-            {isDeleting ? 'Deleting...' : '🗑️ Delete'}
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+            </svg>
           </button>
         </div>
       </div>

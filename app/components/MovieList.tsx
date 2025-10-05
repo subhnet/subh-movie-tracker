@@ -109,8 +109,11 @@ export default function MovieList({ movies, onMoveMovie, onUpdateMovie, onDelete
       {movies.map((movie) => (
         <div
           key={movie.id}
-          className="bg-white/5 backdrop-blur-sm rounded-lg border border-white/10 p-4 hover:bg-white/10 transition-colors"
+          className="group relative bg-white/5 backdrop-blur-sm rounded-xl border border-white/10 p-4 hover:bg-white/10 transition-all duration-300 hover:scale-[1.02] hover:shadow-xl hover:border-white/30"
         >
+          {/* Glow effect */}
+          <div className="absolute inset-0 bg-gradient-to-r from-blue-500/0 to-purple-500/0 group-hover:from-blue-500/10 group-hover:to-purple-500/10 transition-all duration-300 pointer-events-none rounded-xl"></div>
+          <div className="relative">
           {editingId === movie.id ? (
             // Edit mode
             <div className="space-y-4">
@@ -161,18 +164,21 @@ export default function MovieList({ movies, onMoveMovie, onUpdateMovie, onDelete
             // View mode
             <div className="flex items-start justify-between gap-4">
               {/* Poster thumbnail */}
-              {movie.poster_url ? (
-                <img 
-                  src={movie.poster_url} 
-                  alt={movie.title}
-                  className="w-16 h-24 object-cover rounded flex-shrink-0 shadow-lg"
-                  loading="lazy"
-                />
-              ) : (
-                <div className="w-16 h-24 bg-white/5 rounded flex items-center justify-center flex-shrink-0 text-3xl">
-                  🎬
-                </div>
-              )}
+              <div className="relative flex-shrink-0 overflow-hidden rounded-lg">
+                {movie.poster_url ? (
+                  <img 
+                    src={movie.poster_url} 
+                    alt={movie.title}
+                    className="w-16 h-24 object-cover shadow-lg transform transition-transform duration-300 group-hover:scale-110"
+                    loading="lazy"
+                  />
+                ) : (
+                  <div className="w-16 h-24 bg-gradient-to-br from-gray-700 to-gray-800 rounded flex items-center justify-center text-3xl transform transition-transform duration-300 group-hover:scale-110">
+                    🎬
+                  </div>
+                )}
+                <div className="absolute inset-0 ring-2 ring-white/0 group-hover:ring-white/20 transition-all duration-300 rounded-lg"></div>
+              </div>
               
               <div className="flex-1 min-w-0">
                 <h3 className="text-white font-semibold text-lg mb-1 truncate">
@@ -196,16 +202,21 @@ export default function MovieList({ movies, onMoveMovie, onUpdateMovie, onDelete
                 {/* Move dropdown */}
                 <div className="relative group">
                   <button
-                    className="px-3 py-1 text-sm bg-white/10 hover:bg-white/20 text-white rounded transition-colors disabled:opacity-50"
+                    className="w-9 h-9 bg-blue-600/90 hover:bg-blue-600 text-white rounded-lg transition-all disabled:opacity-50 flex items-center justify-center shadow-md hover:scale-105 transform"
                     disabled={isMoving === movie.id}
+                    title="Move to another list"
+                    aria-label="Move to another list"
                   >
-                    {isMoving === movie.id ? '...' : '📁 Move'}
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
+                    </svg>
                   </button>
-                  <div className="absolute right-0 mt-1 w-40 bg-gray-900 rounded-lg shadow-xl border border-white/20 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-10">
+                  <div className="absolute right-0 mt-1 w-44 bg-gray-900 rounded-lg shadow-xl border border-white/20 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50">
                     {currentType !== 'watched' && (
                       <button
                         onClick={() => handleMove(movie.id, 'watched')}
                         className="w-full px-4 py-2 text-left text-white hover:bg-white/10 rounded-t-lg transition-colors text-sm"
+                        aria-label="Move to Watched"
                       >
                         🍿 Watched
                       </button>
@@ -214,6 +225,7 @@ export default function MovieList({ movies, onMoveMovie, onUpdateMovie, onDelete
                       <button
                         onClick={() => handleMove(movie.id, 'want')}
                         className="w-full px-4 py-2 text-left text-white hover:bg-white/10 transition-colors text-sm"
+                        aria-label="Move to Want to Watch"
                       >
                         📌 Want to Watch
                       </button>
@@ -222,6 +234,7 @@ export default function MovieList({ movies, onMoveMovie, onUpdateMovie, onDelete
                       <button
                         onClick={() => handleMove(movie.id, 'show')}
                         className="w-full px-4 py-2 text-left text-white hover:bg-white/10 rounded-b-lg transition-colors text-sm"
+                        aria-label="Move to TV Shows"
                       >
                         📺 TV Shows
                       </button>
@@ -231,21 +244,30 @@ export default function MovieList({ movies, onMoveMovie, onUpdateMovie, onDelete
 
                 <button
                   onClick={() => handleEdit(movie)}
-                  className="px-3 py-1 text-sm bg-white/10 hover:bg-white/20 text-white rounded transition-colors"
+                  className="w-9 h-9 bg-purple-600/90 hover:bg-purple-600 text-white rounded-lg transition-all flex items-center justify-center shadow-md hover:scale-105 transform"
+                  title="Edit movie"
+                  aria-label={`Edit ${movie.title}`}
                 >
-                  ✏️ Edit
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                  </svg>
                 </button>
                 
                 <button
                   onClick={() => handleDelete(movie.id)}
-                  className="px-3 py-1 text-sm bg-red-600/20 hover:bg-red-600/40 text-red-200 rounded transition-colors disabled:opacity-50"
+                  className="w-9 h-9 bg-red-600/90 hover:bg-red-600 text-white rounded-lg transition-all disabled:opacity-50 flex items-center justify-center shadow-md hover:scale-105 transform"
                   disabled={isDeleting === movie.id}
+                  title="Delete movie"
+                  aria-label={`Delete ${movie.title}`}
                 >
-                  {isDeleting === movie.id ? '...' : '🗑️'}
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                  </svg>
                 </button>
               </div>
             </div>
           )}
+          </div>
         </div>
       ))}
     </div>
