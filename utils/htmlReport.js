@@ -396,9 +396,11 @@ function generateBarChart(distribution, maxValue) {
   return ratings.map(rating => {
     const count = distribution[rating] || 0;
     const height = maxValue > 0 ? (count / maxValue) * 100 : 0;
+    // Only show bar if count > 0, use actual height for proper visualization
+    const displayHeight = count > 0 ? Math.max(height, 3) : 0;
     return `
       <div class="bar-item">
-        <div class="bar" style="height: ${Math.max(height, 2)}%;">
+        <div class="bar" style="height: ${displayHeight}%;">
           ${count > 0 ? `<span class="bar-value">${count}</span>` : ''}
         </div>
         <div class="bar-label">${rating}★</div>
