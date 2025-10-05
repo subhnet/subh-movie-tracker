@@ -62,7 +62,7 @@ export default function AddMovieModal({ isOpen, onClose, onAdd, defaultType = 'w
       } finally {
         setIsSearching(false)
       }
-    }, 500) // Debounce for 500ms
+    }, 800) // Debounce for 800ms (reduces API calls)
 
     return () => {
       if (searchTimeoutRef.current) {

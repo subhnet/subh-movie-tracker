@@ -20,7 +20,7 @@ export default function RootLayout({
           {children}
         </main>
         <footer className="text-center text-white/70 py-10 text-sm border-t border-white/10 mt-12">
-          <p className="font-medium">Generated automatically • Updated daily via GitHub Actions</p>
+          <p className="font-medium">Built with ❤️ for movie lovers</p>
         </footer>
       </body>
     </html>
