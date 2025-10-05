@@ -1,3 +1,4 @@
+import { memo } from 'react'
 import type { MovieStats } from '@/lib/types'
 
 interface StatCardsProps {
@@ -6,7 +7,7 @@ interface StatCardsProps {
   shows: MovieStats
 }
 
-export default function StatCards({ watched, wants, shows }: StatCardsProps) {
+function StatCards({ watched, wants, shows }: StatCardsProps) {
   const completionRate = watched.total > 0 
     ? ((watched.total / (watched.total + wants.total)) * 100).toFixed(1)
     : 0
@@ -69,4 +70,7 @@ export default function StatCards({ watched, wants, shows }: StatCardsProps) {
     </div>
   )
 }
+
+// Memoize to prevent unnecessary re-renders
+export default memo(StatCards)
 

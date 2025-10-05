@@ -1,11 +1,13 @@
+import { memo } from 'react'
 import type { Movie } from '@/lib/types'
+import OptimizedImage from './OptimizedImage'
 
 interface TopRatedTableProps {
   title: string
   movies: Movie[]
 }
 
-export default function TopRatedTable({ title, movies }: TopRatedTableProps) {
+function TopRatedTable({ title, movies }: TopRatedTableProps) {
   const sortedMovies = movies
     .sort((a, b) => parseFloat(b.rating) - parseFloat(a.rating))
     .slice(0, 20)
@@ -42,18 +44,12 @@ export default function TopRatedTable({ title, movies }: TopRatedTableProps) {
               >
                 <td className="px-6 py-4 text-gray-500 font-medium text-sm">{index + 1}</td>
                 <td className="px-6 py-4">
-                  {movie.poster_url ? (
-                    <img 
-                      src={movie.poster_url} 
-                      alt={movie.title}
-                      className="w-12 h-16 object-cover rounded shadow-md"
-                      loading="lazy"
-                    />
-                  ) : (
-                    <div className="w-12 h-16 bg-gray-200 rounded flex items-center justify-center text-xl">
-                      🎬
-                    </div>
-                  )}
+                  <OptimizedImage
+                    src={movie.poster_url}
+                    alt={movie.title}
+                    className="w-12 h-16 object-cover rounded shadow-md"
+                    fallbackIcon="🎬"
+                  />
                 </td>
                 <td className="px-6 py-4 font-semibold text-gray-900 text-base">{movie.title}</td>
                 <td className="px-6 py-4">
@@ -88,4 +84,7 @@ export default function TopRatedTable({ title, movies }: TopRatedTableProps) {
     </div>
   )
 }
+
+// Memoize the component to prevent unnecessary re-renders
+export default memo(TopRatedTable)
 

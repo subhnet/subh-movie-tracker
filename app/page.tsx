@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useMemo, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
 import { getUser } from '@/lib/auth'
 import StatCards from './components/StatCards'
@@ -27,6 +27,40 @@ export default function Dashboard() {
   const [loading, setLoading] = useState(true)
   const [user, setUser] = useState<any>(null)
 
+  // Memoize calculateStats to prevent recalculation on every render
+  const calculateStats = useCallback((movies: Movie[]): Stats => {
+    const rated = movies.filter(m => m.rating && parseFloat(m.rating) > 0)
+    const distribution: Record<number, number> = {}
+    
+    rated.forEach(movie => {
+      const rating = Math.floor(parseFloat(movie.rating))
+      distribution[rating] = (distribution[rating] || 0) + 1
+    })
+
+    const avgRating = rated.length > 0
+      ? rated.reduce((sum, m) => sum + parseFloat(m.rating), 0) / rated.length
+      : 0
+
+    return {
+      total: movies.length,
+      rated: rated.length,
+      avgRating,
+      distribution
+    }
+  }, [])
+
+  // Memoize filtered movies to prevent recalculation on every render
+  // Must be called before any conditional returns (Rules of Hooks)
+  const topRatedMovies = useMemo(() => {
+    if (!data) return []
+    return data.watched.filter((m: Movie) => parseFloat(m.rating) >= 8)
+  }, [data])
+
+  const topRatedShows = useMemo(() => {
+    if (!data) return []
+    return data.shows.filter((m: Movie) => parseFloat(m.rating) >= 8)
+  }, [data])
+
   useEffect(() => {
     const currentUser = getUser()
     
@@ -47,52 +81,22 @@ export default function Dashboard() {
       const response = await fetch(url)
       const result = await response.json()
 
-      if (result.source === 'csv') {
-        // CSV data structure
-        setData({
-          watched: result.watched,
-          wants: result.want,
-          shows: result.shows,
-          watchedStats: calculateStats(result.watched),
-          wantsStats: calculateStats(result.want),
-          showsStats: calculateStats(result.shows),
-        })
-      } else {
-        // Database data structure
-        setData({
-          watched: result.watched,
-          wants: result.want,
-          shows: result.shows,
-          watchedStats: calculateStats(result.watched),
-          wantsStats: calculateStats(result.want),
-          showsStats: calculateStats(result.shows),
-        })
+      const movies = {
+        watched: result.watched || [],
+        wants: result.want || [],
+        shows: result.shows || []
       }
+
+      setData({
+        ...movies,
+        watchedStats: calculateStats(movies.watched),
+        wantsStats: calculateStats(movies.wants),
+        showsStats: calculateStats(movies.shows),
+      })
       setLoading(false)
     } catch (error) {
       console.error('Failed to fetch data:', error)
       setLoading(false)
-    }
-  }
-
-  const calculateStats = (movies: Movie[]): Stats => {
-    const rated = movies.filter(m => m.rating && parseFloat(m.rating) > 0)
-    const distribution: Record<number, number> = {}
-    
-    rated.forEach(movie => {
-      const rating = Math.floor(parseFloat(movie.rating))
-      distribution[rating] = (distribution[rating] || 0) + 1
-    })
-
-    const avgRating = rated.length > 0
-      ? rated.reduce((sum, m) => sum + parseFloat(m.rating), 0) / rated.length
-      : 0
-
-    return {
-      total: movies.length,
-      rated: rated.length,
-      avgRating,
-      distribution
     }
   }
 
@@ -154,12 +158,12 @@ export default function Dashboard() {
 
       <TopRatedTable 
         title="🌟 Top Rated Movies (8+ Stars)"
-        movies={data.watched.filter((m: Movie) => parseFloat(m.rating) >= 8)}
+        movies={topRatedMovies}
       />
 
       <TopRatedTable 
         title="📺 Top Rated Shows"
-        movies={data.shows.filter((m: Movie) => parseFloat(m.rating) >= 8)}
+        movies={topRatedShows}
       />
     </div>
   )

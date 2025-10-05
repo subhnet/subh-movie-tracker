@@ -133,7 +133,7 @@ export async function GET(request: Request) {
     const tmdbApiKey = process.env.TMDB_API_KEY
     const omdbApiKey = process.env.OMDB_API_KEY
 
-    let results = []
+    let results: any[] = []
     let source = 'none'
 
     // Try TMDB first, then fall back to OMDb
