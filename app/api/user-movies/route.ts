@@ -21,7 +21,7 @@ export async function GET(request: Request) {
           totalWatched: data.watched.length,
           totalWantToWatch: data.wants.length,
           totalShows: data.shows.length,
-          averageRating: data.watchedStats.averageRating
+          averageRating: data.watchedStats.avgRating
         }
       })
     }
