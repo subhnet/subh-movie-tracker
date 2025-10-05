@@ -14,10 +14,26 @@ const openai = new OpenAI({
 
 export async function POST(request: Request) {
   try {
-    const { type = 'general' } = await request.json()
+    const { type = 'general', userId } = await request.json()
     
-    // Get user's movie data
-    const data = await getDashboardData()
+    // Get user's movie data (from database if userId provided, otherwise CSV)
+    let data
+    if (userId) {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/api/user-movies?userId=${userId}`)
+      const result = await response.json()
+      data = {
+        watched: result.watched || [],
+        wants: result.want || [],
+        shows: result.shows || []
+      }
+    } else {
+      data = await getDashboardData()
+      data = {
+        watched: data.watched,
+        wants: data.wants,
+        shows: data.shows
+      }
+    }
     
     // Get top rated movies for context (10/10 ratings)
     const perfectRated = data.watched

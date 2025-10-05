@@ -1,6 +1,7 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { getUser } from '@/lib/auth'
 import type { Recommendation } from '@/lib/types'
 
 export default function RecommendationsPage() {
@@ -8,6 +9,11 @@ export default function RecommendationsPage() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const [type, setType] = useState<'general' | 'watchlist'>('general')
+  const [user, setUser] = useState<any>(null)
+
+  useEffect(() => {
+    setUser(getUser())
+  }, [])
 
   const getRecommendations = async () => {
     setLoading(true)
@@ -17,7 +23,10 @@ export default function RecommendationsPage() {
       const response = await fetch('/api/recommend', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ type }),
+        body: JSON.stringify({ 
+          type,
+          userId: user?.id // Send userId if logged in
+        }),
       })
       
       const data = await response.json()
