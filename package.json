@@ -17,6 +17,7 @@
   "author": "Subhransu",
   "license": "ISC",
   "dependencies": {
+    "@tailwindcss/postcss": "^4.1.14",
     "axios": "^1.4.0",
     "chart.js": "^4.5.0",
     "cheerio": "^1.0.0-rc.12",
