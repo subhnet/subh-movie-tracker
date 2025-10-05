@@ -1,11 +1,12 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useMemo } from 'react'
 import { useRouter } from 'next/navigation'
 import { getUser } from '@/lib/auth'
 import MovieList from '../components/MovieList'
 import MovieGrid from '../components/MovieGrid'
 import AddMovieModal from '../components/AddMovieModal'
+import Pagination from '../components/Pagination'
 
 interface Movie {
   id: string
@@ -29,6 +30,8 @@ export default function ManageMoviesPage() {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
   const [viewMode, setViewMode] = useState<ViewMode>('grid')
+  const [currentPage, setCurrentPage] = useState(1)
+  const [itemsPerPage, setItemsPerPage] = useState(24) // 24 for grid (6x4), adjustable
 
   // Load view preference from localStorage
   useEffect(() => {
@@ -42,7 +45,20 @@ export default function ManageMoviesPage() {
   const handleViewModeChange = (mode: ViewMode) => {
     setViewMode(mode)
     localStorage.setItem('movieViewMode', mode)
+    // Adjust items per page based on view mode
+    setItemsPerPage(mode === 'grid' ? 24 : 20)
+    setCurrentPage(1) // Reset to first page when changing view
   }
+
+  // Reset to page 1 when changing tabs or search
+  useEffect(() => {
+    setCurrentPage(1)
+  }, [activeTab, searchQuery])
+
+  // Scroll to top when page changes
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }, [currentPage])
 
   useEffect(() => {
     const currentUser = getUser()
@@ -179,6 +195,20 @@ export default function ManageMoviesPage() {
     )
   }
 
+  // Pagination logic with useMemo for performance
+  const paginatedMovies = useMemo(() => {
+    const filtered = getFilteredMovies()
+    const startIndex = (currentPage - 1) * itemsPerPage
+    const endIndex = startIndex + itemsPerPage
+    return filtered.slice(startIndex, endIndex)
+  }, [movies, activeTab, searchQuery, currentPage, itemsPerPage])
+
+  const totalFilteredMovies = useMemo(() => {
+    return getFilteredMovies().length
+  }, [movies, activeTab, searchQuery])
+
+  const totalPages = Math.ceil(totalFilteredMovies / itemsPerPage)
+
   const getTabCount = (type: TabType) => {
     return movies.filter(m => m.type === type).length
   }
@@ -202,8 +232,6 @@ export default function ManageMoviesPage() {
     )
   }
 
-  const filteredMovies = getFilteredMovies()
-
   return (
     <div className="max-w-6xl mx-auto space-y-6">
       {/* Header */}
@@ -226,14 +254,29 @@ export default function ManageMoviesPage() {
 
       {/* Search Bar and View Toggle */}
       <div className="bg-white/5 backdrop-blur-sm rounded-lg border border-white/10 p-4">
-        <div className="flex gap-4 items-center">
+        <div className="flex flex-wrap gap-4 items-center">
           <input
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search movies by title or tags..."
-            className="flex-1 px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="flex-1 min-w-[200px] px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
+          
+          {/* Items per page selector */}
+          <select
+            value={itemsPerPage}
+            onChange={(e) => {
+              setItemsPerPage(Number(e.target.value))
+              setCurrentPage(1)
+            }}
+            className="px-3 py-2 bg-white/10 border border-white/20 rounded-lg text-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
+            <option value={12} className="bg-gray-900">12 per page</option>
+            <option value={24} className="bg-gray-900">24 per page</option>
+            <option value={48} className="bg-gray-900">48 per page</option>
+            <option value={96} className="bg-gray-900">96 per page</option>
+          </select>
           
           {/* View Toggle */}
           <div className="flex gap-2 bg-white/10 rounded-lg p-1">
@@ -295,16 +338,17 @@ export default function ManageMoviesPage() {
           <h2 className="text-xl font-bold text-white">
             {getTabLabel(activeTab)}
           </h2>
-          {searchQuery && (
-            <p className="text-white/60 text-sm">
-              {filteredMovies.length} result{filteredMovies.length !== 1 ? 's' : ''}
-            </p>
-          )}
+          <p className="text-white/60 text-sm">
+            {searchQuery 
+              ? `${totalFilteredMovies} result${totalFilteredMovies !== 1 ? 's' : ''}`
+              : `${totalFilteredMovies} movie${totalFilteredMovies !== 1 ? 's' : ''}`
+            }
+          </p>
         </div>
         
         {viewMode === 'grid' ? (
           <MovieGrid
-            movies={filteredMovies}
+            movies={paginatedMovies}
             onMoveMovie={handleMoveMovie}
             onUpdateMovie={handleUpdateMovie}
             onDeleteMovie={handleDeleteMovie}
@@ -312,13 +356,22 @@ export default function ManageMoviesPage() {
           />
         ) : (
           <MovieList
-            movies={filteredMovies}
+            movies={paginatedMovies}
             onMoveMovie={handleMoveMovie}
             onUpdateMovie={handleUpdateMovie}
             onDeleteMovie={handleDeleteMovie}
             currentType={activeTab}
           />
         )}
+
+        {/* Pagination */}
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          totalItems={totalFilteredMovies}
+          itemsPerPage={itemsPerPage}
+          onPageChange={setCurrentPage}
+        />
       </div>
 
       {/* Add Movie Modal */}
