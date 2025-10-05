@@ -6,31 +6,41 @@ const csv = require('csvtojson');
 
 export async function readMoviesFromCSV(filename: string): Promise<Movie[]> {
   try {
-    // Try multiple paths for better compatibility
-    let filePath = path.join(process.cwd(), filename);
+    // Try multiple paths for Vercel compatibility
+    const pathsToTry = [
+      path.join(process.cwd(), filename),                    // Root directory
+      path.join(process.cwd(), 'public', filename),          // Public directory (Vercel-friendly)
+      path.join(process.cwd(), '..', filename),              // Parent directory
+      path.join(__dirname, '..', '..', filename),            // Relative to lib
+    ];
     
-    // Check if file exists, if not try alternative paths
-    try {
-      await fs.access(filePath);
-    } catch {
-      // Try from project root on Vercel
-      filePath = path.join(process.cwd(), '..', filename);
+    let filePath = pathsToTry[0];
+    let fileFound = false;
+    
+    // Try each path until we find the file
+    for (const tryPath of pathsToTry) {
       try {
-        await fs.access(filePath);
+        await fs.access(tryPath);
+        filePath = tryPath;
+        fileFound = true;
+        console.log(`✓ Found ${filename} at: ${tryPath}`);
+        break;
       } catch {
-        // Last try - use absolute path from workspace root
-        filePath = path.join(process.cwd(), filename);
+        console.log(`✗ Not found at: ${tryPath}`);
       }
     }
     
-    console.log(`Reading CSV from: ${filePath}`);
+    if (!fileFound) {
+      console.error(`❌ Could not find ${filename} in any location`);
+      console.error(`Working directory: ${process.cwd()}`);
+      return [];
+    }
+    
     const data = await csv().fromFile(filePath);
-    console.log(`Successfully read ${data.length} items from ${filename}`);
+    console.log(`✓ Successfully read ${data.length} items from ${filename}`);
     return data as Movie[];
   } catch (error) {
-    console.error(`Error reading ${filename}:`, error);
-    console.error(`Attempted path: ${path.join(process.cwd(), filename)}`);
-    console.error(`Current working directory: ${process.cwd()}`);
+    console.error(`❌ Error reading ${filename}:`, error);
     return [];
   }
 }
