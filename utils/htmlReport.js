@@ -222,6 +222,7 @@ function generateHtml(data) {
             border-radius: 5px 5px 0 0;
             transition: all 0.3s ease;
             position: relative;
+            min-height: 3px;
         }
         
         .bar:hover {
