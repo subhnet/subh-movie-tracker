@@ -190,16 +190,16 @@ export default function Dashboard() {
       <div>
         <div className="flex items-center gap-3 mb-6">
           <div className="h-1 w-12 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-full"></div>
-          <h2 className="text-2xl font-bold text-white">Top Rated</h2>
+          <h2 className="text-2xl font-bold text-white">Your Top Rated</h2>
         </div>
-        <div className="space-y-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <TopRatedTable 
-            title="🌟 Top Rated Movies (8+ Stars)"
+            title="🎬 Your Top Movies"
             movies={topRatedMovies}
           />
 
           <TopRatedTable 
-            title="📺 Top Rated Shows"
+            title="📺 Your Top Shows"
             movies={topRatedShows}
           />
         </div>
