@@ -2,6 +2,14 @@ import { NextResponse } from 'next/server'
 import OpenAI from 'openai'
 import { getDashboardData } from '@/lib/csv-reader'
 
+// Movie type definition
+interface Movie {
+  title: string
+  rating: string
+  tags?: string
+  [key: string]: any
+}
+
 // Configure OpenRouter using OpenAI SDK
 const openai = new OpenAI({
   apiKey: process.env.OPENROUTER_API_KEY || '',
@@ -17,7 +25,7 @@ export async function POST(request: Request) {
     const { type = 'general', userId } = await request.json()
     
     // Get user's movie data (from database if userId provided, otherwise CSV)
-    let data
+    let data: { watched: Movie[], wants: Movie[], shows: Movie[] }
     if (userId) {
       const response = await fetch(`${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/api/user-movies?userId=${userId}`)
       const result = await response.json()
@@ -27,53 +35,53 @@ export async function POST(request: Request) {
         shows: result.shows || []
       }
     } else {
-      data = await getDashboardData()
+      const csvData = await getDashboardData()
       data = {
-        watched: data.watched,
-        wants: data.wants,
-        shows: data.shows
+        watched: csvData.watched,
+        wants: csvData.wants,
+        shows: csvData.shows
       }
     }
     
     // Get top rated movies for context (10/10 ratings)
     const perfectRated = data.watched
-      .filter(m => parseFloat(m.rating) === 10)
-      .sort((a, b) => parseFloat(b.rating) - parseFloat(a.rating))
+      .filter((m: Movie) => parseFloat(m.rating) === 10)
+      .sort((a: Movie, b: Movie) => parseFloat(b.rating) - parseFloat(a.rating))
       .slice(0, 20)
-      .map(m => m.title)
+      .map((m: Movie) => m.title)
       .join(', ')
     
     // Get highly rated movies (9-10 stars)
     const highlyRated = data.watched
-      .filter(m => parseFloat(m.rating) >= 9)
-      .sort((a, b) => parseFloat(b.rating) - parseFloat(a.rating))
+      .filter((m: Movie) => parseFloat(m.rating) >= 9)
+      .sort((a: Movie, b: Movie) => parseFloat(b.rating) - parseFloat(a.rating))
       .slice(0, 30)
-      .map(m => `${m.title} (${m.rating}★)`)
+      .map((m: Movie) => `${m.title} (${m.rating}★)`)
       .join(', ')
     
     // Get good movies (8+ stars) for additional context
     const goodMovies = data.watched
-      .filter(m => parseFloat(m.rating) >= 8 && parseFloat(m.rating) < 9)
+      .filter((m: Movie) => parseFloat(m.rating) >= 8 && parseFloat(m.rating) < 9)
       .slice(0, 20)
-      .map(m => m.title)
+      .map((m: Movie) => m.title)
       .join(', ')
     
     // Get movies they didn't like (below 6) to understand what to avoid
     const dislikedMovies = data.watched
-      .filter(m => parseFloat(m.rating) > 0 && parseFloat(m.rating) < 6)
+      .filter((m: Movie) => parseFloat(m.rating) > 0 && parseFloat(m.rating) < 6)
       .slice(0, 15)
-      .map(m => `${m.title} (${m.rating}★)`)
+      .map((m: Movie) => `${m.title} (${m.rating}★)`)
       .join(', ')
     
     // Extract genre/tag preferences from top-rated movies
     const topRatedTags = data.watched
-      .filter(m => parseFloat(m.rating) >= 9 && m.tags)
-      .flatMap(m => m.tags.split(';').map(t => t.trim()))
-      .filter(t => t.length > 0)
+      .filter((m: Movie) => parseFloat(m.rating) >= 9 && m.tags)
+      .flatMap((m: Movie) => m.tags!.split(';').map((t: string) => t.trim()))
+      .filter((t: string) => t.length > 0)
     
     // Count tag frequency
     const tagCounts: Record<string, number> = {}
-    topRatedTags.forEach(tag => {
+    topRatedTags.forEach((tag: string) => {
       tagCounts[tag] = (tagCounts[tag] || 0) + 1
     })
     
@@ -86,28 +94,28 @@ export async function POST(request: Request) {
     
     // Get all watched movies and shows to exclude from recommendations
     const allWatchedTitles = [
-      ...data.watched.map(m => m.title),
-      ...data.shows.map(m => m.title)
+      ...data.watched.map((m: Movie) => m.title),
+      ...data.shows.map((m: Movie) => m.title)
     ]
     
     // Create a smart sample: include highly rated movies and a broad selection
     // to give AI good context of what's already watched
     const highRatedWatched = data.watched
-      .filter(m => parseFloat(m.rating) >= 7)
-      .map(m => m.title)
+      .filter((m: Movie) => parseFloat(m.rating) >= 7)
+      .map((m: Movie) => m.title)
     
-    const allShows = data.shows.map(m => m.title)
+    const allShows = data.shows.map((m: Movie) => m.title)
     
     // Combine and take a large sample (300 titles should fit in token limit)
     const watchedSample = [
       ...highRatedWatched.slice(0, 200),
       ...allShows,
-      ...allWatchedTitles.filter(t => !highRatedWatched.includes(t) && !allShows.includes(t)).slice(0, 50)
+      ...allWatchedTitles.filter((t: string) => !highRatedWatched.includes(t) && !allShows.includes(t)).slice(0, 50)
     ].slice(0, 300).join(', ')
     
     const watchlist = data.wants
       .slice(0, 10)
-      .map(m => m.title)
+      .map((m: Movie) => m.title)
       .join(', ')
     
     // Create prompt based on type
@@ -133,12 +141,18 @@ Example format:
   ]
 }`
     } else {
+      // Calculate stats on the fly
+      const watchedRatings = data.watched.filter((m: Movie) => parseFloat(m.rating) > 0)
+      const avgRating = watchedRatings.length > 0
+        ? watchedRatings.reduce((sum, m) => sum + parseFloat(m.rating), 0) / watchedRatings.length
+        : 0
+      
       prompt = `Analyze this user's movie taste to recommend NEW movies they haven't seen:
 
 USER'S RATING PROFILE:
-- Average Rating: ${data.watchedStats.avgRating}/10
-- Total Movies Watched: ${data.watchedStats.total}
-- Total TV Shows: ${data.showsStats.total}
+- Average Rating: ${avgRating.toFixed(1)}/10
+- Total Movies Watched: ${data.watched.length}
+- Total TV Shows: ${data.shows.length}
 
 MOVIES THEY LOVED (9-10★):
 ${highlyRated}
