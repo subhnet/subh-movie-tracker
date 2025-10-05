@@ -118,13 +118,10 @@ export default function LoginPage() {
         <div className="w-full max-w-md">
           {/* Logo/Title */}
           <div className="text-center mb-8">
-            <div className="bg-gradient-to-br from-blue-500 to-purple-600 p-3 rounded-xl shadow-lg inline-block mb-4">
-              <span className="text-4xl">🎬</span>
-            </div>
-            <h1 className="text-4xl font-bold text-white mb-2">
-              CineVault
+            <h1 className="text-5xl md:text-6xl font-black text-white mb-3 bg-gradient-to-r from-blue-200 via-purple-200 to-pink-200 bg-clip-text text-transparent">
+              CinePath
             </h1>
-            <p className="text-white/80">
+            <p className="text-white/80 text-lg">
               Track your favorite movies & get AI recommendations
             </p>
           </div>

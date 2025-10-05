@@ -24,15 +24,11 @@ export default function Navbar() {
     <nav className="bg-white/10 backdrop-blur-xl border-b border-white/20 sticky top-0 z-50 shadow-2xl">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
-          <Link href="/" className="group flex items-center space-x-3 transition-all duration-300">
-            <div className="bg-gradient-to-br from-blue-500 to-purple-600 p-2.5 rounded-xl shadow-lg group-hover:shadow-xl group-hover:scale-105 transition-all duration-300">
-              <span className="text-2xl">🎬</span>
-            </div>
+          <Link href="/" className="group transition-all duration-300">
             <div>
-              <span className="text-white font-black text-2xl tracking-tight bg-gradient-to-r from-blue-200 to-purple-200 bg-clip-text text-transparent">
-                CineVault
+              <span className="text-white font-black text-3xl tracking-tight bg-gradient-to-r from-blue-200 to-purple-200 bg-clip-text text-transparent hover:from-blue-100 hover:to-purple-100 transition-all">
+                CinePath
               </span>
-              <p className="text-white/60 text-xs font-medium">Your Movie Collection</p>
             </div>
           </Link>
           <div className="flex items-center space-x-3">

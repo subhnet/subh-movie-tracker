@@ -128,13 +128,10 @@ export default function Dashboard() {
         <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-pink-500/10 rounded-3xl blur-3xl"></div>
         <div className="relative bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl rounded-2xl border border-white/20 p-8 md:p-12 shadow-2xl">
           <div className="text-center">
-            <div className="inline-flex items-center gap-3 bg-white/10 backdrop-blur-sm px-5 py-2.5 rounded-full mb-6 border border-white/20">
-              <span className="text-3xl">🎬</span>
-              <span className="text-white/90 text-sm font-semibold uppercase tracking-wider">Your Personal Cinema</span>
-            </div>
-            <h1 className="text-5xl md:text-7xl font-black text-white mb-4 bg-gradient-to-r from-blue-200 via-purple-200 to-pink-200 bg-clip-text text-transparent">
-              CineVault
+            <h1 className="text-6xl md:text-8xl font-black text-white mb-4 bg-gradient-to-r from-blue-200 via-purple-200 to-pink-200 bg-clip-text text-transparent">
+              CinePath
             </h1>
+            <p className="text-white/70 text-lg md:text-xl mb-4">Your Personal Movie Journey</p>
             {user && (
               <p className="text-white/80 text-xl md:text-2xl">
                 Welcome back,{' '}
