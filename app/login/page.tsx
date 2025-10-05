@@ -1,7 +1,14 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
+import Script from 'next/script'
+
+declare global {
+  interface Window {
+    google?: any
+  }
+}
 
 export default function LoginPage() {
   const router = useRouter()
@@ -10,6 +17,53 @@ export default function LoginPage() {
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
+  const [googleLoaded, setGoogleLoaded] = useState(false)
+
+  useEffect(() => {
+    // Initialize Google Sign-In when the script loads
+    if (window.google && googleLoaded) {
+      window.google.accounts.id.initialize({
+        client_id: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID,
+        callback: handleGoogleCallback,
+      })
+      window.google.accounts.id.renderButton(
+        document.getElementById('googleSignInButton'),
+        { theme: 'outline', size: 'large', width: '100%' }
+      )
+    }
+  }, [googleLoaded])
+
+  const handleGoogleCallback = async (response: any) => {
+    setLoading(true)
+    setError('')
+
+    try {
+      const res = await fetch('/api/auth/google', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ credential: response.credential })
+      })
+
+      const data = await res.json()
+
+      if (!res.ok) {
+        setError(data.error || 'Google sign-in failed')
+        setLoading(false)
+        return
+      }
+
+      // Store session
+      localStorage.setItem('movieTrackerSession', JSON.stringify(data.session))
+      localStorage.setItem('movieTrackerUser', JSON.stringify(data.user))
+      
+      // Redirect to home
+      window.location.href = '/'
+    } catch (err) {
+      setError('Network error during Google sign-in')
+      console.error(err)
+      setLoading(false)
+    }
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -55,20 +109,28 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-600 via-pink-500 to-red-500 p-4">
-      <div className="w-full max-w-md">
-        {/* Logo/Title */}
-        <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-white mb-2">
-            🎬 Movie Tracker
-          </h1>
-          <p className="text-white/80">
-            Track your favorite movies & get AI recommendations
-          </p>
-        </div>
+    <>
+      <Script
+        src="https://accounts.google.com/gsi/client"
+        onLoad={() => setGoogleLoaded(true)}
+      />
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-600 via-pink-500 to-red-500 p-4">
+        <div className="w-full max-w-md">
+          {/* Logo/Title */}
+          <div className="text-center mb-8">
+            <div className="bg-gradient-to-br from-blue-500 to-purple-600 p-3 rounded-xl shadow-lg inline-block mb-4">
+              <span className="text-4xl">🎬</span>
+            </div>
+            <h1 className="text-4xl font-bold text-white mb-2">
+              CineVault
+            </h1>
+            <p className="text-white/80">
+              Track your favorite movies & get AI recommendations
+            </p>
+          </div>
 
-        {/* Login/Register Form */}
-        <div className="bg-white/95 backdrop-blur-sm rounded-2xl shadow-2xl p-8">
+          {/* Login/Register Form */}
+          <div className="bg-white/95 backdrop-blur-sm rounded-2xl shadow-2xl p-8">
           <div className="flex gap-4 mb-6">
             <button
               onClick={() => {
@@ -150,14 +212,38 @@ export default function LoginPage() {
               {loading ? 'Processing...' : isLogin ? 'Login' : 'Create Account'}
             </button>
           </form>
+
+          {/* Divider */}
+          {isLogin && (
+            <>
+              <div className="relative my-6">
+                <div className="absolute inset-0 flex items-center">
+                  <div className="w-full border-t border-gray-300"></div>
+                </div>
+                <div className="relative flex justify-center text-sm">
+                  <span className="px-2 bg-white text-gray-500">Or continue with</span>
+                </div>
+              </div>
+
+              {/* Google Sign-In Button */}
+              <div id="googleSignInButton" className="flex justify-center"></div>
+              
+              {!googleLoaded && (
+                <div className="text-center text-sm text-gray-500 py-3">
+                  Loading Google Sign-In...
+                </div>
+              )}
+            </>
+          )}
         </div>
 
-        {/* Info */}
-        <div className="mt-6 text-center text-white/80 text-sm">
-          <p>🆓 Free to use • 🔒 Your data is secure</p>
+          {/* Info */}
+          <div className="mt-6 text-center text-white/80 text-sm">
+            <p>🆓 Free to use • 🔒 Your data is secure</p>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   )
 }
 
