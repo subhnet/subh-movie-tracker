@@ -2,7 +2,6 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import Link from 'next/link'
 
 export default function LoginPage() {
   const router = useRouter()
@@ -151,15 +150,6 @@ export default function LoginPage() {
               {loading ? 'Processing...' : isLogin ? 'Login' : 'Create Account'}
             </button>
           </form>
-
-          <div className="mt-6 text-center">
-            <Link
-              href="/"
-              className="text-sm text-gray-600 hover:text-purple-600 transition-colors"
-            >
-              ← Continue without login (CSV mode)
-            </Link>
-          </div>
         </div>
 
         {/* Info */}
