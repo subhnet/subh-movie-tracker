@@ -7,6 +7,7 @@ export interface Movie {
   tags: string;
   rewatched: string;
   poster_url?: string | null;
+  overview?: string | null;
 }
 
 export interface MovieStats {

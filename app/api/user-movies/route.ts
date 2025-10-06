@@ -81,7 +81,7 @@ export async function GET(request: Request) {
 // POST: Add a new movie (write to both database and CSV)
 export async function POST(request: Request) {
   try {
-    const { userId, title, rating, tags, type, posterUrl } = await request.json()
+    const { userId, title, rating, tags, type, posterUrl, overview, poster_url } = await request.json()
 
     if (!userId || !title || !type) {
       return NextResponse.json(
@@ -108,7 +108,8 @@ export async function POST(request: Request) {
           rating: rating || '',
           tags: tags || '',
           type,
-          poster_url: posterUrl || null
+          poster_url: posterUrl || poster_url || null,
+          overview: overview || null
         }
       ])
       .select()
@@ -142,7 +143,7 @@ export async function POST(request: Request) {
 // PUT: Update a movie
 export async function PUT(request: Request) {
   try {
-    const { movieId, userId, title, rating, tags, type, posterUrl } = await request.json()
+    const { movieId, userId, title, rating, tags, type, posterUrl, overview } = await request.json()
 
     if (!movieId || !userId) {
       return NextResponse.json(
@@ -166,6 +167,7 @@ export async function PUT(request: Request) {
     if (tags !== undefined) updateData.tags = tags
     if (type !== undefined) updateData.type = type
     if (posterUrl !== undefined) updateData.poster_url = posterUrl
+    if (overview !== undefined) updateData.overview = overview
 
     // Update in database
     const { data: updatedMovie, error: updateError } = await supabase

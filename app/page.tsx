@@ -101,7 +101,7 @@ export default function Dashboard() {
     }
   }
 
-  const handleAddMovie = async (title: string, type: string, rating: string, posterUrl?: string) => {
+  const handleAddMovie = async (title: string, type: string, rating: string, posterUrl?: string, overview?: string) => {
     if (!user) return
 
     try {
@@ -114,7 +114,8 @@ export default function Dashboard() {
           type,
           rating: rating || '',
           tags: '',
-          poster_url: posterUrl
+          poster_url: posterUrl,
+          overview: overview
         })
       })
 

@@ -99,16 +99,34 @@ export default function ManageMoviesPage() {
     }
   }
 
-  const handleAddMovie = async (movieData: { title: string; rating: string; tags: string; type: string; posterUrl?: string }) => {
+  const handleAddMovie = async (movieData: { title: string; rating: string; tags: string; type: string; posterUrl?: string; overview?: string } | string, type?: string, rating?: string, posterUrl?: string, overview?: string) => {
     if (!user) return
+
+    // Support both signatures: object from AddMovieModal and individual params from QuickAdd
+    const requestData = typeof movieData === 'string' 
+      ? {
+          userId: user.id,
+          title: movieData,
+          type: type || 'want',
+          rating: rating || '',
+          tags: '',
+          poster_url: posterUrl,
+          overview: overview
+        }
+      : {
+          userId: user.id,
+          title: movieData.title,
+          type: movieData.type,
+          rating: movieData.rating,
+          tags: movieData.tags,
+          poster_url: movieData.posterUrl,
+          overview: movieData.overview
+        }
 
     const response = await fetch('/api/user-movies', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        userId: user.id,
-        ...movieData
-      })
+      body: JSON.stringify(requestData)
     })
 
     const result = await response.json()

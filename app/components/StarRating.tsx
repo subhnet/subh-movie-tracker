@@ -89,3 +89,4 @@ export default function StarRating({ rating, onChange, disabled = false, size = 
   )
 }
 
+

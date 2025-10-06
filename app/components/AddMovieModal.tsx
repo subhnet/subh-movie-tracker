@@ -18,7 +18,7 @@ interface MovieSuggestion {
 interface AddMovieModalProps {
   isOpen: boolean
   onClose: () => void
-  onAdd: (movieData: { title: string; rating: string; tags: string; type: string; posterUrl?: string }) => Promise<void>
+  onAdd: (movieData: { title: string; rating: string; tags: string; type: string; posterUrl?: string; overview?: string }) => Promise<void>
   defaultType?: string
   existingMovies?: Array<{ title: string; type: string }>
 }
@@ -34,6 +34,7 @@ export default function AddMovieModal({ isOpen, onClose, onAdd, defaultType = 'w
   const [isSearching, setIsSearching] = useState(false)
   const [showSuggestions, setShowSuggestions] = useState(false)
   const [selectedPoster, setSelectedPoster] = useState<string | null>(null)
+  const [selectedOverview, setSelectedOverview] = useState<string | null>(null)
   const [duplicateWarning, setDuplicateWarning] = useState<string | null>(null)
   const searchTimeoutRef = useRef<NodeJS.Timeout | null>(null)
 
@@ -101,6 +102,7 @@ export default function AddMovieModal({ isOpen, onClose, onAdd, defaultType = 'w
     setRating(suggestion.rating || '')
     // Save the medium-sized poster (w185) for storage
     setSelectedPoster(suggestion.poster)
+    setSelectedOverview(suggestion.overview || null)
     setShowSuggestions(false)
   }
 
@@ -121,7 +123,8 @@ export default function AddMovieModal({ isOpen, onClose, onAdd, defaultType = 'w
         rating, 
         tags, 
         type,
-        posterUrl: selectedPoster || undefined
+        posterUrl: selectedPoster || undefined,
+        overview: selectedOverview || undefined
       })
       // Reset form
       setTitle('')
@@ -129,6 +132,7 @@ export default function AddMovieModal({ isOpen, onClose, onAdd, defaultType = 'w
       setTags('')
       setType(defaultType)
       setSelectedPoster(null)
+      setSelectedOverview(null)
       setSuggestions([])
       onClose()
     } catch (err: any) {

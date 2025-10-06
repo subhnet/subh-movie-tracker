@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import StarRating from './StarRating'
+import MovieDetailsModal from './MovieDetailsModal'
 
 interface Movie {
   id: string
@@ -10,6 +11,7 @@ interface Movie {
   tags: string
   type: string
   poster_url?: string | null
+  overview?: string | null
   created_at?: string
 }
 
@@ -26,6 +28,8 @@ export default function MovieList({ movies, onMoveMovie, onUpdateMovie, onDelete
   const [editForm, setEditForm] = useState({ title: '', rating: '', tags: '' })
   const [isDeleting, setIsDeleting] = useState<string | null>(null)
   const [isMoving, setIsMoving] = useState<string | null>(null)
+  const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null)
+  const [isDetailsModalOpen, setIsDetailsModalOpen] = useState(false)
 
   const handleEdit = (movie: Movie) => {
     setEditingId(movie.id)
@@ -95,6 +99,16 @@ export default function MovieList({ movies, onMoveMovie, onUpdateMovie, onDelete
     }
   }
 
+  const handleViewDetails = (movie: Movie) => {
+    setSelectedMovie(movie)
+    setIsDetailsModalOpen(true)
+  }
+
+  const handleCloseDetailsModal = () => {
+    setIsDetailsModalOpen(false)
+    setSelectedMovie(null)
+  }
+
   if (movies.length === 0) {
     return (
       <div className="text-center py-12 bg-white/5 rounded-lg border border-white/10">
@@ -105,16 +119,17 @@ export default function MovieList({ movies, onMoveMovie, onUpdateMovie, onDelete
   }
 
   return (
-    <div className="space-y-3">
-      {movies.map((movie) => (
-        <div
-          key={movie.id}
-          className="group relative bg-white/5 backdrop-blur-sm rounded-xl border border-white/10 p-4 hover:bg-white/10 transition-all duration-300 hover:scale-[1.02] hover:shadow-xl hover:border-white/30"
-        >
-          {/* Glow effect */}
-          <div className="absolute inset-0 bg-gradient-to-r from-blue-500/0 to-purple-500/0 group-hover:from-blue-500/10 group-hover:to-purple-500/10 transition-all duration-300 pointer-events-none rounded-xl"></div>
-          <div className="relative">
-          {editingId === movie.id ? (
+    <>
+      <div className="space-y-3">
+        {movies.map((movie) => (
+          <div
+            key={movie.id}
+            className="group relative bg-white/5 backdrop-blur-sm rounded-xl border border-white/10 p-4 hover:bg-white/10 transition-all duration-300 hover:scale-[1.02] hover:shadow-xl hover:border-white/30"
+          >
+            {/* Glow effect */}
+            <div className="absolute inset-0 bg-gradient-to-r from-blue-500/0 to-purple-500/0 group-hover:from-blue-500/10 group-hover:to-purple-500/10 transition-all duration-300 pointer-events-none rounded-xl"></div>
+            <div className="relative">
+            {editingId === movie.id ? (
             // Edit mode
             <div className="space-y-4">
               <div>
@@ -164,7 +179,11 @@ export default function MovieList({ movies, onMoveMovie, onUpdateMovie, onDelete
             // View mode
             <div className="flex items-start justify-between gap-4">
               {/* Poster thumbnail */}
-              <div className="relative flex-shrink-0 overflow-hidden rounded-lg">
+              <div 
+                className="relative flex-shrink-0 overflow-hidden rounded-lg cursor-pointer"
+                onClick={() => handleViewDetails(movie)}
+                title="Click to view details"
+              >
                 {movie.poster_url ? (
                   <img 
                     src={movie.poster_url} 
@@ -271,6 +290,14 @@ export default function MovieList({ movies, onMoveMovie, onUpdateMovie, onDelete
         </div>
       ))}
     </div>
+
+    {/* Movie Details Modal */}
+    <MovieDetailsModal 
+      movie={selectedMovie}
+      isOpen={isDetailsModalOpen}
+      onClose={handleCloseDetailsModal}
+    />
+    </>
   )
 }
 

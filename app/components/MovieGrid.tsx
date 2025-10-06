@@ -3,6 +3,7 @@
 import { useState, memo } from 'react'
 import OptimizedImage from './OptimizedImage'
 import StarRating from './StarRating'
+import MovieDetailsModal from './MovieDetailsModal'
 
 interface Movie {
   id: string
@@ -11,6 +12,7 @@ interface Movie {
   tags: string
   type: string
   poster_url?: string | null
+  overview?: string | null
   created_at?: string
 }
 
@@ -28,6 +30,7 @@ const MovieCard = memo(({
   onMove, 
   onEdit, 
   onDelete, 
+  onViewDetails,
   currentType,
   isEditing,
   editForm,
@@ -41,6 +44,7 @@ const MovieCard = memo(({
   onMove: (movieId: string, newType: string) => void
   onEdit: (movie: Movie) => void
   onDelete: (movieId: string) => void
+  onViewDetails: (movie: Movie) => void
   currentType: string
   isEditing: boolean
   editForm: { title: string; rating: string; tags: string }
@@ -105,7 +109,11 @@ const MovieCard = memo(({
       <div className="absolute inset-0 bg-gradient-to-br from-blue-500/0 to-purple-500/0 group-hover:from-blue-500/20 group-hover:to-purple-500/20 transition-all duration-300 pointer-events-none rounded-xl"></div>
       
       {/* Poster */}
-      <div className="relative aspect-[2/3] bg-gradient-to-br from-gray-800 to-gray-900 rounded-t-xl overflow-visible">
+      <div 
+        className="relative aspect-[2/3] bg-gradient-to-br from-gray-800 to-gray-900 rounded-t-xl overflow-visible cursor-pointer"
+        onClick={() => onViewDetails(movie)}
+        title="Click to view details"
+      >
         <div className="absolute inset-0 overflow-hidden rounded-t-xl">
           <OptimizedImage
             src={movie.poster_url}
@@ -217,6 +225,8 @@ export default function MovieGrid({ movies, onMoveMovie, onUpdateMovie, onDelete
   const [editForm, setEditForm] = useState({ title: '', rating: '', tags: '' })
   const [isDeleting, setIsDeleting] = useState<string | null>(null)
   const [isMoving, setIsMoving] = useState<string | null>(null)
+  const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null)
+  const [isDetailsModalOpen, setIsDetailsModalOpen] = useState(false)
 
   const handleEdit = (movie: Movie) => {
     setEditingId(movie.id)
@@ -273,6 +283,16 @@ export default function MovieGrid({ movies, onMoveMovie, onUpdateMovie, onDelete
     }
   }
 
+  const handleViewDetails = (movie: Movie) => {
+    setSelectedMovie(movie)
+    setIsDetailsModalOpen(true)
+  }
+
+  const handleCloseDetailsModal = () => {
+    setIsDetailsModalOpen(false)
+    setSelectedMovie(null)
+  }
+
   if (movies.length === 0) {
     return (
       <div className="text-center py-12 bg-white/5 rounded-lg border border-white/10">
@@ -283,25 +303,35 @@ export default function MovieGrid({ movies, onMoveMovie, onUpdateMovie, onDelete
   }
 
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
-      {movies.map((movie) => (
-        <MovieCard
-          key={movie.id}
-          movie={movie}
-          onMove={handleMove}
-          onEdit={handleEdit}
-          onDelete={handleDelete}
-          currentType={currentType}
-          isEditing={editingId === movie.id}
-          editForm={editForm}
-          onEditFormChange={handleEditFormChange}
-          onSaveEdit={handleSaveEdit}
-          onCancelEdit={handleCancelEdit}
-          isDeleting={isDeleting === movie.id}
-          isMoving={isMoving === movie.id}
-        />
-      ))}
-    </div>
+    <>
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
+        {movies.map((movie) => (
+          <MovieCard
+            key={movie.id}
+            movie={movie}
+            onMove={handleMove}
+            onEdit={handleEdit}
+            onDelete={handleDelete}
+            onViewDetails={handleViewDetails}
+            currentType={currentType}
+            isEditing={editingId === movie.id}
+            editForm={editForm}
+            onEditFormChange={handleEditFormChange}
+            onSaveEdit={handleSaveEdit}
+            onCancelEdit={handleCancelEdit}
+            isDeleting={isDeleting === movie.id}
+            isMoving={isMoving === movie.id}
+          />
+        ))}
+      </div>
+
+      {/* Movie Details Modal */}
+      <MovieDetailsModal 
+        movie={selectedMovie}
+        isOpen={isDetailsModalOpen}
+        onClose={handleCloseDetailsModal}
+      />
+    </>
   )
 }
 

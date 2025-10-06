@@ -10,10 +10,11 @@ interface MovieSuggestion {
   posterSmall?: string
   poster?: string
   posterLarge?: string
+  overview?: string
 }
 
 interface QuickAddProps {
-  onAdd: (title: string, type: string, rating: string, posterUrl?: string) => Promise<void>
+  onAdd: (title: string, type: string, rating: string, posterUrl?: string, overview?: string) => Promise<void>
   existingMovies?: Array<{ title: string; type: string }>
 }
 
@@ -97,7 +98,8 @@ export default function QuickAdd({ onAdd, existingMovies = [] }: QuickAddProps) 
         selectedMovie.title,
         listType,
         rating,
-        selectedMovie.poster || selectedMovie.posterSmall
+        selectedMovie.poster || selectedMovie.posterSmall,
+        selectedMovie.overview
       )
       
       // Reset form
@@ -322,8 +324,8 @@ export default function QuickAdd({ onAdd, existingMovies = [] }: QuickAddProps) 
               <div className="mb-3">
                 <label className="block text-white/70 text-xs mb-2 font-medium">Rating (optional)</label>
                 <StarRating
-                  rating={parseFloat(rating) || 0}
-                  onRatingChange={(newRating) => setRating(newRating.toString())}
+                  rating={rating}
+                  onChange={setRating}
                   size="sm"
                 />
               </div>
@@ -350,4 +352,5 @@ export default function QuickAdd({ onAdd, existingMovies = [] }: QuickAddProps) 
     </div>
   )
 }
+
 
