@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import './globals.css'
 import Navbar from './components/Navbar'
 import { Analytics } from '@vercel/analytics/next'
+import { SpeedInsights } from '@vercel/speed-insights/next'
 
 export const metadata: Metadata = {
   title: 'CinePath - Your Personal Movie Collection',
@@ -34,6 +35,7 @@ export default function RootLayout({
           </p>
         </footer>
         <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   )
