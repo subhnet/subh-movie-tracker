@@ -36,6 +36,7 @@ export default function AddMovieModal({ isOpen, onClose, onAdd, defaultType = 'w
   const [selectedPoster, setSelectedPoster] = useState<string | null>(null)
   const [selectedOverview, setSelectedOverview] = useState<string | null>(null)
   const [duplicateWarning, setDuplicateWarning] = useState<string | null>(null)
+  const [justSelected, setJustSelected] = useState(false)
   const searchTimeoutRef = useRef<NodeJS.Timeout | null>(null)
 
   // Check for duplicates whenever title changes
@@ -64,6 +65,12 @@ export default function AddMovieModal({ isOpen, onClose, onAdd, defaultType = 'w
   useEffect(() => {
     if (searchTimeoutRef.current) {
       clearTimeout(searchTimeoutRef.current)
+    }
+
+    // Don't search if user just selected a suggestion
+    if (justSelected) {
+      setJustSelected(false)
+      return
     }
 
     if (title.trim().length < 2) {
@@ -95,14 +102,16 @@ export default function AddMovieModal({ isOpen, onClose, onAdd, defaultType = 'w
         clearTimeout(searchTimeoutRef.current)
       }
     }
-  }, [title, type])
+  }, [title, type, justSelected])
 
   const handleSelectSuggestion = (suggestion: MovieSuggestion) => {
+    setJustSelected(true) // Prevent search from triggering
     setTitle(suggestion.title)
     setRating(suggestion.rating || '')
     // Save the medium-sized poster (w185) for storage
     setSelectedPoster(suggestion.poster)
     setSelectedOverview(suggestion.overview || null)
+    setSuggestions([]) // Clear suggestions array
     setShowSuggestions(false)
   }
 
@@ -134,6 +143,8 @@ export default function AddMovieModal({ isOpen, onClose, onAdd, defaultType = 'w
       setSelectedPoster(null)
       setSelectedOverview(null)
       setSuggestions([])
+      setShowSuggestions(false)
+      setJustSelected(false)
       onClose()
     } catch (err: any) {
       setError(err.message || 'Failed to add movie')
