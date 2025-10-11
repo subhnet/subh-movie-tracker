@@ -2,6 +2,7 @@
 
 import { useState, useMemo } from 'react'
 import QuickAdd from './QuickAdd'
+import FloatingChat from './FloatingChat'
 
 interface Movie {
   title: string
@@ -59,6 +60,9 @@ export default function ClientDashboard({ initialMovies, userId }: ClientDashboa
         onAdd={handleAddMovie}
         existingMovies={existingMovies}
       />
+      
+      {/* Floating Chat Button */}
+      <FloatingChat userId={userId} />
     </>
   )
 }
