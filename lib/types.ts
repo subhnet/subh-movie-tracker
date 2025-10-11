@@ -1,13 +1,18 @@
 export interface Movie {
   title: string;
   rating: string;
-  watchedDate: string;
-  scrapedDate: string;
-  notes: string;
   tags: string;
-  rewatched: string;
+  watchedDate?: string;
+  scrapedDate?: string;
+  notes?: string;
+  rewatched?: string;
   poster_url?: string | null;
   overview?: string | null;
+  // Database fields
+  id?: string;
+  type?: string;
+  created_at?: string;
+  user_id?: string;
 }
 
 export interface MovieStats {

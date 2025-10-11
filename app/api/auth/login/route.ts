@@ -54,7 +54,7 @@ export async function POST(request: Request) {
       expiresAt: Date.now() + 7 * 24 * 60 * 60 * 1000 // 7 days
     }
 
-    return NextResponse.json({
+    const response = NextResponse.json({
       success: true,
       user: {
         id: user.id,
@@ -62,6 +62,17 @@ export async function POST(request: Request) {
       },
       session
     })
+
+    // Set cookie for server-side auth
+    response.cookies.set('movieTrackerSession', JSON.stringify(session), {
+      httpOnly: false, // Allow client-side access for backward compatibility
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+      maxAge: 7 * 24 * 60 * 60, // 7 days
+      path: '/'
+    })
+
+    return response
   } catch (error) {
     console.error('Login error:', error)
     return NextResponse.json(

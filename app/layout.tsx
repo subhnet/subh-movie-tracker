@@ -16,6 +16,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head>
+        {/* Preconnect to external domains for faster resource loading */}
+        <link rel="preconnect" href="https://image.tmdb.org" />
+        <link rel="dns-prefetch" href="https://image.tmdb.org" />
+        <link rel="preconnect" href="https://m.media-amazon.com" />
+        <link rel="dns-prefetch" href="https://m.media-amazon.com" />
+      </head>
       <body className="min-h-screen bg-gradient-to-br from-primary-500 via-secondary-500 to-primary-600">
         <Navbar />
         <main className="py-12 px-4 sm:px-6 lg:px-8">

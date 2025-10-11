@@ -1,159 +1,29 @@
-'use client'
-
-import { useEffect, useState, useMemo, useCallback } from 'react'
-import { useRouter } from 'next/navigation'
-import { getUser } from '@/lib/auth'
+import { redirect } from 'next/navigation'
+import { getServerUser } from '@/lib/auth-server'
+import { fetchUserMovies } from '@/lib/data-fetcher'
 import StatCards from './components/StatCards'
 import RatingChart from './components/RatingChart'
 import TopRatedTable from './components/TopRatedTable'
-import QuickAdd from './components/QuickAdd'
+import ClientDashboard from './components/ClientDashboard'
 
-interface Stats {
-  total: number
-  rated: number
-  avgRating: number
-  distribution: Record<number, number>
-}
-
-interface Movie {
-  title: string
-  rating: string
-  tags: string
-  [key: string]: any
-}
-
-export default function Dashboard() {
-  const router = useRouter()
-  const [data, setData] = useState<any>(null)
-  const [loading, setLoading] = useState(true)
-  const [user, setUser] = useState<any>(null)
-
-  // Memoize calculateStats to prevent recalculation on every render
-  const calculateStats = useCallback((movies: Movie[]): Stats => {
-    const rated = movies.filter(m => m.rating && parseFloat(m.rating) > 0)
-    const distribution: Record<number, number> = {}
-    
-    rated.forEach(movie => {
-      const rating = Math.floor(parseFloat(movie.rating))
-      distribution[rating] = (distribution[rating] || 0) + 1
-    })
-
-    const avgRating = rated.length > 0
-      ? rated.reduce((sum, m) => sum + parseFloat(m.rating), 0) / rated.length
-      : 0
-
-    return {
-      total: movies.length,
-      rated: rated.length,
-      avgRating,
-      distribution
-    }
-  }, [])
-
-  // Memoize filtered movies to prevent recalculation on every render
-  // Must be called before any conditional returns (Rules of Hooks)
-  const topRatedMovies = useMemo(() => {
-    if (!data) return []
-    return data.watched.filter((m: Movie) => parseFloat(m.rating) >= 8)
-  }, [data])
-
-  const topRatedShows = useMemo(() => {
-    if (!data) return []
-    return data.shows.filter((m: Movie) => parseFloat(m.rating) >= 8)
-  }, [data])
-
-  useEffect(() => {
-    const currentUser = getUser()
-    
-    // Redirect to login if not authenticated
-    if (!currentUser) {
-      router.push('/login')
-      return
-    }
-    
-    setUser(currentUser)
-    fetchData(currentUser.id)
-  }, [router])
-
-  const fetchData = async (userId?: string) => {
-    try {
-      // If user is logged in, fetch from database, otherwise use CSV
-      const url = userId ? `/api/user-movies?userId=${userId}` : '/api/user-movies'
-      const response = await fetch(url)
-      const result = await response.json()
-
-      const movies = {
-        watched: result.watched || [],
-        wants: result.want || [],
-        shows: result.shows || []
-      }
-
-      setData({
-        ...movies,
-        watchedStats: calculateStats(movies.watched),
-        wantsStats: calculateStats(movies.wants),
-        showsStats: calculateStats(movies.shows),
-      })
-      setLoading(false)
-    } catch (error) {
-      console.error('Failed to fetch data:', error)
-      setLoading(false)
-    }
+export default async function Dashboard() {
+  // Server-side authentication - fast and secure
+  const user = await getServerUser()
+  
+  // Redirect to login if not authenticated
+  if (!user) {
+    redirect('/login')
   }
-
-  const handleAddMovie = async (title: string, type: string, rating: string, posterUrl?: string, overview?: string) => {
-    if (!user) return
-
-    try {
-      const response = await fetch('/api/user-movies', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          userId: user.id,
-          title,
-          type,
-          rating: rating || '',
-          tags: '',
-          poster_url: posterUrl,
-          overview: overview
-        })
-      })
-
-      if (!response.ok) throw new Error('Failed to add movie')
-      
-      // Refresh data
-      await fetchData(user.id)
-    } catch (error) {
-      console.error('Failed to add movie:', error)
-      throw error
-    }
-  }
-
-  const allMovies = useMemo(() => {
-    if (!data) return []
-    return [...data.watched, ...data.wants, ...data.shows]
-  }, [data])
-
-  if (loading) {
-    return (
-      <div className="max-w-7xl mx-auto">
-        <div className="text-center py-20">
-          <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-white"></div>
-          <p className="text-white mt-4">Loading your movies...</p>
-        </div>
-      </div>
-    )
-  }
-
-  if (!data) {
-    return (
-      <div className="max-w-7xl mx-auto">
-        <div className="text-center py-20">
-          <p className="text-white text-xl">Failed to load data. Please refresh the page.</p>
-        </div>
-      </div>
-    )
-  }
+  
+  // Fetch data on the server - this is included in the initial HTML!
+  const data = await fetchUserMovies(user.id)
+  
+  // Filter top rated movies and shows
+  const topRatedMovies = data.watched.filter((m) => parseFloat(m.rating) >= 8)
+  const topRatedShows = data.shows.filter((m) => parseFloat(m.rating) >= 8)
+  
+  // All movies combined for QuickAdd
+  const allMovies = [...data.watched, ...data.wants, ...data.shows]
 
   return (
     <div className="max-w-7xl mx-auto space-y-10">
@@ -184,7 +54,7 @@ export default function Dashboard() {
         </div>
       </header>
 
-      {/* Stats Section */}
+      {/* Stats Section - Rendered on Server */}
       <div>
         <div className="flex items-center gap-3 mb-6">
           <div className="h-1 w-12 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full"></div>
@@ -197,7 +67,7 @@ export default function Dashboard() {
         />
       </div>
 
-      {/* Charts Section */}
+      {/* Charts Section - Rendered on Server */}
       <div>
         <div className="flex items-center gap-3 mb-6">
           <div className="h-1 w-12 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full"></div>
@@ -217,7 +87,7 @@ export default function Dashboard() {
         </div>
       </div>
 
-      {/* Top Rated Section */}
+      {/* Top Rated Section - Rendered on Server */}
       <div>
         <div className="flex items-center gap-3 mb-6">
           <div className="h-1 w-12 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-full"></div>
@@ -236,10 +106,10 @@ export default function Dashboard() {
         </div>
       </div>
 
-      {/* Quick Add FAB */}
-      <QuickAdd
-        onAdd={handleAddMovie}
-        existingMovies={allMovies.map((m: any) => ({ title: m.title, type: m.type }))}
+      {/* Interactive Client Components */}
+      <ClientDashboard 
+        initialMovies={allMovies}
+        userId={user.id}
       />
     </div>
   )

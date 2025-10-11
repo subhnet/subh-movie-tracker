@@ -38,7 +38,8 @@ const MovieCard = memo(({
   onSaveEdit,
   onCancelEdit,
   isDeleting,
-  isMoving
+  isMoving,
+  priority
 }: {
   movie: Movie
   onMove: (movieId: string, newType: string) => void
@@ -53,6 +54,7 @@ const MovieCard = memo(({
   onCancelEdit: () => void
   isDeleting: boolean
   isMoving: boolean
+  priority?: boolean
 }) => {
   if (isEditing) {
     return (
@@ -119,6 +121,7 @@ const MovieCard = memo(({
             src={movie.poster_url}
             alt={movie.title}
             className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+            priority={priority}
           />
         </div>
         
@@ -305,7 +308,7 @@ export default function MovieGrid({ movies, onMoveMovie, onUpdateMovie, onDelete
   return (
     <>
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
-        {movies.map((movie) => (
+        {movies.map((movie, index) => (
           <MovieCard
             key={movie.id}
             movie={movie}
@@ -321,6 +324,7 @@ export default function MovieGrid({ movies, onMoveMovie, onUpdateMovie, onDelete
             onCancelEdit={handleCancelEdit}
             isDeleting={isDeleting === movie.id}
             isMoving={isMoving === movie.id}
+            priority={index < 6} // Prioritize first 6 visible images
           />
         ))}
       </div>
