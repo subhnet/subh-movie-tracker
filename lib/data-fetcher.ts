@@ -97,3 +97,4 @@ export async function fetchAllUserMovies(userId: string): Promise<Movie[]> {
   return movies || []
 }
 
+

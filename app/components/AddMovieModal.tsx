@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect, useRef } from 'react'
+import { createPortal } from 'react-dom'
 import StarRating from './StarRating'
 
 interface MovieSuggestion {
@@ -36,8 +37,35 @@ export default function AddMovieModal({ isOpen, onClose, onAdd, defaultType = 'w
   const [selectedPoster, setSelectedPoster] = useState<string | null>(null)
   const [selectedOverview, setSelectedOverview] = useState<string | null>(null)
   const [duplicateWarning, setDuplicateWarning] = useState<string | null>(null)
-  const [justSelected, setJustSelected] = useState(false)
   const searchTimeoutRef = useRef<NodeJS.Timeout | null>(null)
+  const tagsInputRef = useRef<HTMLInputElement>(null)
+  const justSelectedRef = useRef(false) // Use ref instead of state for immediate updates
+  const previousTitleRef = useRef('') // Track previous title to detect actual changes
+
+  // Reset form when modal closes
+  useEffect(() => {
+    if (!isOpen) {
+      // Reset all form fields
+      setTitle('')
+      setRating('')
+      setTags('')
+      setType(defaultType)
+      setSelectedPoster(null)
+      setSelectedOverview(null)
+      setSuggestions([])
+      setShowSuggestions(false)
+      justSelectedRef.current = false
+      previousTitleRef.current = ''
+      setIsSearching(false)
+      setError('')
+      setDuplicateWarning(null)
+      
+      // Clear any pending timeouts
+      if (searchTimeoutRef.current) {
+        clearTimeout(searchTimeoutRef.current)
+      }
+    }
+  }, [isOpen, defaultType])
 
   // Check for duplicates whenever title changes
   useEffect(() => {
@@ -63,30 +91,44 @@ export default function AddMovieModal({ isOpen, onClose, onAdd, defaultType = 'w
 
   // Search for movie suggestions
   useEffect(() => {
-    if (searchTimeoutRef.current) {
-      clearTimeout(searchTimeoutRef.current)
+    // Don't search if user just selected a suggestion (check ref immediately)
+    if (justSelectedRef.current) {
+      return
     }
 
-    // Don't search if user just selected a suggestion
-    if (justSelected) {
-      setJustSelected(false)
+    // Only search if title actually changed (not just type dropdown)
+    if (title === previousTitleRef.current) {
       return
+    }
+    
+    previousTitleRef.current = title
+
+    if (searchTimeoutRef.current) {
+      clearTimeout(searchTimeoutRef.current)
     }
 
     if (title.trim().length < 2) {
       setSuggestions([])
       setShowSuggestions(false)
+      setIsSearching(false)
       return
     }
 
     setIsSearching(true)
     searchTimeoutRef.current = setTimeout(async () => {
+      // Double-check ref before making the API call
+      if (justSelectedRef.current) {
+        setIsSearching(false)
+        return
+      }
+      
       try {
         const searchType = type === 'show' ? 'tv' : 'movie'
         const response = await fetch(`/api/search-movies?query=${encodeURIComponent(title)}&type=${searchType}`)
         const data = await response.json()
         
-        if (data.results) {
+        // Triple-check ref after receiving results
+        if (data.results && !justSelectedRef.current) {
           setSuggestions(data.results)
           setShowSuggestions(data.results.length > 0)
         }
@@ -102,17 +144,39 @@ export default function AddMovieModal({ isOpen, onClose, onAdd, defaultType = 'w
         clearTimeout(searchTimeoutRef.current)
       }
     }
-  }, [title, type, justSelected])
+  }, [title, type])
 
   const handleSelectSuggestion = (suggestion: MovieSuggestion) => {
-    setJustSelected(true) // Prevent search from triggering
+    // Set ref flag IMMEDIATELY to prevent any search from triggering
+    justSelectedRef.current = true
+    
+    // Clear any pending search timeout
+    if (searchTimeoutRef.current) {
+      clearTimeout(searchTimeoutRef.current)
+    }
+    
+    // Stop any ongoing search
+    setIsSearching(false)
+    
+    // Close dropdown immediately
+    setSuggestions([])
+    setShowSuggestions(false)
+    
+    // Update form fields
     setTitle(suggestion.title)
     setRating(suggestion.rating || '')
-    // Save the medium-sized poster (w185) for storage
     setSelectedPoster(suggestion.poster)
     setSelectedOverview(suggestion.overview || null)
-    setSuggestions([]) // Clear suggestions array
-    setShowSuggestions(false)
+    
+    // Move focus to tags input to prevent re-triggering search
+    setTimeout(() => {
+      tagsInputRef.current?.focus()
+    }, 100)
+    
+    // Reset flag after a delay to allow future searches
+    setTimeout(() => {
+      justSelectedRef.current = false
+    }, 1500)
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -155,8 +219,11 @@ export default function AddMovieModal({ isOpen, onClose, onAdd, defaultType = 'w
 
   if (!isOpen) return null
 
-  return (
-    <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4 animate-in fade-in duration-200">
+  // Use portal to render modal at document root to avoid z-index stacking issues
+  if (typeof window === 'undefined') return null
+
+  return createPortal(
+    <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 animate-in fade-in duration-200" style={{ zIndex: 9999 }}>
       <div className="bg-gradient-to-br from-white/95 to-white/90 backdrop-blur-xl rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto border border-white/40 animate-in slide-in-from-bottom-4 duration-300">
         <div className="sticky top-0 bg-gradient-to-r from-blue-500 to-purple-600 px-6 py-4 flex justify-between items-center border-b border-white/20 backdrop-blur-xl">
           <div>
@@ -208,7 +275,11 @@ export default function AddMovieModal({ isOpen, onClose, onAdd, defaultType = 'w
                 type="text"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
-                onFocus={() => suggestions.length > 0 && setShowSuggestions(true)}
+                onFocus={() => !justSelectedRef.current && suggestions.length > 0 && setShowSuggestions(true)}
+                onBlur={() => {
+                  // Delay closing to allow click events on suggestions
+                  setTimeout(() => setShowSuggestions(false), 200)
+                }}
                 className="w-full pl-11 pr-4 py-3 bg-white border-2 border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all"
                 placeholder="Start typing to search..."
                 disabled={isSubmitting}
@@ -240,7 +311,10 @@ export default function AddMovieModal({ isOpen, onClose, onAdd, defaultType = 'w
                     <button
                       key={suggestion.id}
                       type="button"
-                      onClick={() => handleSelectSuggestion(suggestion)}
+                      onMouseDown={(e) => {
+                        e.preventDefault() // Prevent blur event
+                        handleSelectSuggestion(suggestion)
+                      }}
                       className={`w-full p-4 hover:bg-blue-50 transition-all text-left flex gap-4 items-start border-b border-gray-100 last:border-0 ${existsIn ? 'bg-yellow-50' : ''}`}
                     >
                       {suggestion.posterSmall ? (
@@ -275,7 +349,7 @@ export default function AddMovieModal({ isOpen, onClose, onAdd, defaultType = 'w
                             <svg className="w-4 h-4 fill-current" viewBox="0 0 20 20">
                               <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                             </svg>
-                            {suggestion.rating}/5.0
+                            {suggestion.rating}/10.0
                           </div>
                         )}
                         {suggestion.overview && (
@@ -320,6 +394,7 @@ export default function AddMovieModal({ isOpen, onClose, onAdd, defaultType = 'w
               </label>
               <input
                 id="tags"
+                ref={tagsInputRef}
                 type="text"
                 value={tags}
                 onChange={(e) => setTags(e.target.value)}
@@ -377,7 +452,8 @@ export default function AddMovieModal({ isOpen, onClose, onAdd, defaultType = 'w
         </form>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   )
 }
 

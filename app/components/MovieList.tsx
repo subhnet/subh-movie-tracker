@@ -109,6 +109,20 @@ export default function MovieList({ movies, onMoveMovie, onUpdateMovie, onDelete
     setSelectedMovie(null)
   }
 
+  const handleOverviewFetched = async (movieId: string, overview: string, posterUrl?: string) => {
+    try {
+      // Update the movie in the database with the fetched overview
+      const updates: any = { overview }
+      if (posterUrl && !selectedMovie?.poster_url) {
+        updates.poster_url = posterUrl
+      }
+      
+      await onUpdateMovie(movieId, updates)
+    } catch (error) {
+      console.error('Failed to save fetched overview:', error)
+    }
+  }
+
   if (movies.length === 0) {
     return (
       <div className="text-center py-12 bg-white/5 rounded-lg border border-white/10">
@@ -296,6 +310,7 @@ export default function MovieList({ movies, onMoveMovie, onUpdateMovie, onDelete
       movie={selectedMovie}
       isOpen={isDetailsModalOpen}
       onClose={handleCloseDetailsModal}
+      onOverviewFetched={handleOverviewFetched}
     />
     </>
   )

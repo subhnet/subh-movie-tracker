@@ -1,6 +1,7 @@
 'use client'
 
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
+import { createPortal } from 'react-dom'
 
 interface Movie {
   id: string
@@ -17,9 +18,16 @@ interface MovieDetailsModalProps {
   movie: Movie | null
   isOpen: boolean
   onClose: () => void
+  onOverviewFetched?: (movieId: string, overview: string, posterUrl?: string) => void
 }
 
-export default function MovieDetailsModal({ movie, isOpen, onClose }: MovieDetailsModalProps) {
+export default function MovieDetailsModal({ movie, isOpen, onClose, onOverviewFetched }: MovieDetailsModalProps) {
+  const [fetchedOverview, setFetchedOverview] = useState<string | null>(null)
+  const [fetchedCast, setFetchedCast] = useState<string[] | null>(null)
+  const [isLoadingOverview, setIsLoadingOverview] = useState(false)
+  const [fetchError, setFetchError] = useState(false)
+  const [fetchSource, setFetchSource] = useState<string | null>(null)
+
   // Close modal on Escape key press
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
@@ -37,6 +45,59 @@ export default function MovieDetailsModal({ movie, isOpen, onClose }: MovieDetai
     }
   }, [isOpen, onClose])
 
+  // Fetch overview and cast if missing
+  useEffect(() => {
+    if (!isOpen || !movie) {
+      setFetchedOverview(null)
+      setFetchedCast(null)
+      setFetchError(false)
+      setFetchSource(null)
+      return
+    }
+
+    // If overview already exists, don't fetch
+    if (movie.overview) {
+      return
+    }
+
+    // Fetch overview and cast from API
+    const fetchDetails = async () => {
+      setIsLoadingOverview(true)
+      setFetchError(false)
+      
+      try {
+        const response = await fetch(
+          `/api/movies/fetch-details?title=${encodeURIComponent(movie.title)}&type=${movie.type}`
+        )
+        const data = await response.json()
+
+        if (data.found) {
+          if (data.data.overview) {
+            setFetchedOverview(data.data.overview)
+          }
+          if (data.data.cast && data.data.cast.length > 0) {
+            setFetchedCast(data.data.cast)
+          }
+          setFetchSource(data.source)
+          
+          // Optionally call the callback to update the database
+          if (onOverviewFetched && data.data.overview) {
+            onOverviewFetched(movie.id, data.data.overview, data.data.poster)
+          }
+        } else {
+          setFetchError(true)
+        }
+      } catch (error) {
+        console.error('Failed to fetch details:', error)
+        setFetchError(true)
+      } finally {
+        setIsLoadingOverview(false)
+      }
+    }
+
+    fetchDetails()
+  }, [isOpen, movie, onOverviewFetched])
+
   if (!isOpen || !movie) return null
 
   const getTypeLabel = (type: string) => {
@@ -48,9 +109,13 @@ export default function MovieDetailsModal({ movie, isOpen, onClose }: MovieDetai
     }
   }
 
-  return (
+  // Use portal to render modal at document root to avoid z-index stacking issues
+  if (typeof window === 'undefined') return null
+
+  return createPortal(
     <div 
-      className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50 p-4 animate-in fade-in duration-200"
+      className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4 animate-in fade-in duration-200"
+      style={{ zIndex: 9999 }}
       onClick={onClose}
     >
       <div 
@@ -112,7 +177,7 @@ export default function MovieDetailsModal({ movie, isOpen, onClose }: MovieDetai
                         <svg className="w-4 h-4 fill-current" viewBox="0 0 20 20">
                           <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                         </svg>
-                        {parseFloat(movie.rating).toFixed(1)} / 5.0
+                        {parseFloat(movie.rating).toFixed(1)} / 10.0
                       </span>
                     )}
                   </div>
@@ -132,28 +197,55 @@ export default function MovieDetailsModal({ movie, isOpen, onClose }: MovieDetai
                   </div>
                 )}
 
-                {/* Overview/Synopsis */}
-                {movie.overview && (
+                {/* Cast */}
+                {fetchedCast && fetchedCast.length > 0 && (
                   <div className="bg-white/5 rounded-xl p-4 border border-white/10 backdrop-blur-sm">
-                    <h3 className="text-white font-semibold text-lg mb-2 flex items-center gap-2">
-                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                    <h3 className="text-white font-semibold text-sm mb-2 flex items-center gap-2">
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
                       </svg>
-                      Synopsis
+                      Cast
                     </h3>
-                    <p className="text-white/80 leading-relaxed text-sm md:text-base">
-                      {movie.overview}
-                    </p>
+                    <div className="flex flex-wrap gap-2">
+                      {fetchedCast.map((actor, index) => (
+                        <span 
+                          key={index}
+                          className="bg-blue-500/20 text-blue-300 px-3 py-1 rounded-full text-xs font-medium border border-blue-500/30"
+                        >
+                          {actor}
+                        </span>
+                      ))}
+                    </div>
                   </div>
                 )}
 
-                {!movie.overview && (
-                  <div className="bg-white/5 rounded-xl p-4 border border-white/10 backdrop-blur-sm">
+                {/* Overview/Synopsis */}
+                <div className="bg-white/5 rounded-xl p-4 border border-white/10 backdrop-blur-sm">
+                  <h3 className="text-white font-semibold text-lg mb-2 flex items-center gap-2">
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                    </svg>
+                    Synopsis
+                  </h3>
+                  
+                  {(movie.overview || fetchedOverview) ? (
+                    <p className="text-white/80 leading-relaxed text-sm md:text-base">
+                      {movie.overview || fetchedOverview}
+                    </p>
+                  ) : isLoadingOverview ? (
+                    <div className="flex items-center gap-2 text-white/60 text-sm">
+                      <svg className="animate-spin h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                      </svg>
+                      Fetching synopsis from movie database...
+                    </div>
+                  ) : fetchError ? (
                     <p className="text-white/50 italic text-sm">
                       No synopsis available for this title.
                     </p>
-                  </div>
-                )}
+                  ) : null}
+                </div>
 
                 {/* Added date */}
                 {movie.created_at && (
@@ -177,7 +269,8 @@ export default function MovieDetailsModal({ movie, isOpen, onClose }: MovieDetai
           </div>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   )
 }
 

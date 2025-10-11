@@ -59,7 +59,7 @@ async function searchWithTMDB(query: string, type: string, apiKey: string) {
       ? `https://image.tmdb.org/t/p/w500${item.poster_path}` 
       : null,
     overview: item.overview,
-    rating: item.vote_average ? (item.vote_average / 2).toFixed(1) : null,
+    rating: item.vote_average ? item.vote_average.toFixed(1) : null,
     mediaType: type
   }))
 }
@@ -97,7 +97,7 @@ async function searchWithOMDb(query: string, type: string, apiKey: string) {
           poster: item.Poster !== 'N/A' ? item.Poster : null,
           posterLarge: item.Poster !== 'N/A' ? item.Poster : null,
           overview: detail.Plot !== 'N/A' ? detail.Plot : '',
-          rating: detail.imdbRating !== 'N/A' ? (parseFloat(detail.imdbRating) / 2).toFixed(1) : null,
+          rating: detail.imdbRating !== 'N/A' ? parseFloat(detail.imdbRating).toFixed(1) : null,
           mediaType: type
         }
       } catch (error) {
