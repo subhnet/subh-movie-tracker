@@ -115,11 +115,16 @@ export async function POST(request: Request) {
       .single()
 
     if (insertError || !newUser) {
-      logError('Failed to create Google user', insertError, { 
-        username,
-        email: googleData.email,
-        ip 
-      })
+      logError(
+        'Failed to create Google user', 
+        insertError ? new Error(insertError.message) : undefined,
+        { 
+          username,
+          email: googleData.email,
+          ip,
+          dbError: insertError
+        }
+      )
       return NextResponse.json(
         { error: 'Failed to create user account. Please try again.' },
         { status: 500 }
