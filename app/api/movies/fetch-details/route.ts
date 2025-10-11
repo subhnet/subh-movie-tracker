@@ -79,6 +79,8 @@ async function fetchFromTMDB(title: string, type: string, apiKey: string) {
     console.error('Failed to fetch TMDB cast:', error)
   }
 
+  const dateString = movie.release_date || movie.first_air_date
+  
   return {
     id: movie.id,
     title: movie.title || movie.name,
@@ -87,9 +89,7 @@ async function fetchFromTMDB(title: string, type: string, apiKey: string) {
       ? `https://image.tmdb.org/t/p/w500${movie.poster_path}` 
       : null,
     rating: movie.vote_average ? movie.vote_average.toFixed(1) : null,
-    year: movie.release_date || movie.first_air_date 
-      ? new Date(movie.release_date || movie.first_air_date).getFullYear() 
-      : null,
+    year: dateString ? new Date(dateString).getFullYear() : null,
     cast,
     source: 'tmdb'
   }
