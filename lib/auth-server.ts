@@ -1,43 +1,25 @@
 // Server-side authentication utilities for Server Components
-import { cookies } from 'next/headers'
+import { getUserFromJWT } from './jwt'
 
 export interface User {
   id: string
   username: string
 }
 
-export interface ServerSession {
-  userId: string
-  username: string
-  expiresAt: number
-}
-
 /**
- * Get the current user from server-side cookies
+ * Get the current user from server-side JWT cookie
  * Use this in Server Components and Server Actions
  */
 export async function getServerUser(): Promise<User | null> {
-  const cookieStore = await cookies()
-  const sessionCookie = cookieStore.get('movieTrackerSession')
+  const payload = await getUserFromJWT()
   
-  if (!sessionCookie) {
+  if (!payload) {
     return null
   }
 
-  try {
-    const session: ServerSession = JSON.parse(sessionCookie.value)
-    
-    // Check if session expired
-    if (session.expiresAt < Date.now()) {
-      return null
-    }
-
-    return {
-      id: session.userId,
-      username: session.username
-    }
-  } catch {
-    return null
+  return {
+    id: payload.userId,
+    username: payload.username
   }
 }
 

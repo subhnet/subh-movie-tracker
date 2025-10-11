@@ -1,33 +1,48 @@
 import { NextResponse } from 'next/server'
+import { z } from 'zod'
 import { supabase } from '@/lib/supabase'
 import bcrypt from 'bcryptjs'
+import { rateLimitAuth } from '@/lib/rate-limit'
+
+// Validation schema with stronger password requirements
+const registerSchema = z.object({
+  username: z.string()
+    .min(3, 'Username must be at least 3 characters')
+    .max(50, 'Username must be less than 50 characters')
+    .regex(/^[a-zA-Z0-9_-]+$/, 'Username can only contain letters, numbers, underscores, and hyphens'),
+  password: z.string()
+    .min(8, 'Password must be at least 8 characters')
+    .max(100, 'Password must be less than 100 characters')
+    .regex(/[A-Z]/, 'Password must contain at least one uppercase letter')
+    .regex(/[a-z]/, 'Password must contain at least one lowercase letter')
+    .regex(/[0-9]/, 'Password must contain at least one number')
+})
 
 export async function POST(request: Request) {
   try {
-    const { username, password } = await request.json()
-
-    if (!username || !password) {
+    // Rate limiting - 5 registration attempts per 10 seconds per IP
+    const ip = request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip') || 'anonymous'
+    const rateLimitResult = await rateLimitAuth(ip)
+    
+    if (!rateLimitResult.success) {
       return NextResponse.json(
-        { error: 'Username and password are required' },
-        { status: 400 }
+        { 
+          error: 'Too many registration attempts. Please try again later.',
+          retryAfter: Math.ceil((rateLimitResult.reset - Date.now()) / 1000)
+        },
+        { 
+          status: 429,
+          headers: {
+            'Retry-After': String(Math.ceil((rateLimitResult.reset - Date.now()) / 1000))
+          }
+        }
       )
     }
 
-    // Validate username
-    if (username.length < 3) {
-      return NextResponse.json(
-        { error: 'Username must be at least 3 characters' },
-        { status: 400 }
-      )
-    }
-
-    // Validate password
-    if (password.length < 6) {
-      return NextResponse.json(
-        { error: 'Password must be at least 6 characters' },
-        { status: 400 }
-      )
-    }
+    // Parse and validate request body
+    const body = await request.json()
+    const validatedData = registerSchema.parse(body)
+    const { username, password } = validatedData
 
     // Check if username already exists
     const { data: existingUsers } = await supabase
@@ -74,8 +89,20 @@ export async function POST(request: Request) {
         username: newUser.username
       }
     })
-  } catch (error) {
+  } catch (error: any) {
     console.error('Registration error:', error)
+    
+    // Handle Zod validation errors
+    if (error.name === 'ZodError') {
+      return NextResponse.json(
+        { 
+          error: 'Invalid input',
+          details: error.errors.map((e: any) => `${e.path.join('.')}: ${e.message}`)
+        },
+        { status: 400 }
+      )
+    }
+    
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }

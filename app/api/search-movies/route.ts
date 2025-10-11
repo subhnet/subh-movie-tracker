@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server'
+import { rateLimitSearch } from '@/lib/rate-limit'
 
 interface TMDBMovie {
   id: number
@@ -121,6 +122,25 @@ async function searchWithOMDb(query: string, type: string, apiKey: string) {
 }
 
 export async function GET(request: Request) {
+  // Rate limiting - 10 searches per 10 seconds
+  const ip = request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip') || 'anonymous'
+  const rateLimitResult = await rateLimitSearch(ip)
+  
+  if (!rateLimitResult.success) {
+    return NextResponse.json(
+      { 
+        error: 'Too many search requests. Please try again later.',
+        results: []
+      },
+      { 
+        status: 429,
+        headers: {
+          'Retry-After': String(Math.ceil((rateLimitResult.reset - Date.now()) / 1000))
+        }
+      }
+    )
+  }
+
   try {
     const { searchParams } = new URL(request.url)
     const query = searchParams.get('query')

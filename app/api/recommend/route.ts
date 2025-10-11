@@ -1,7 +1,9 @@
 import { NextResponse } from 'next/server'
 import OpenAI from 'openai'
+import { z } from 'zod'
 import { getDashboardData } from '@/lib/csv-reader'
 import { supabase } from '@/lib/supabase'
+import { rateLimitAI } from '@/lib/rate-limit'
 
 // Movie type definition
 interface Movie {
@@ -10,6 +12,12 @@ interface Movie {
   tags?: string
   [key: string]: any
 }
+
+// Validation schema
+const recommendRequestSchema = z.object({
+  type: z.enum(['general', 'watchlist']).default('general'),
+  userId: z.string().uuid().optional()
+})
 
 // Configure OpenRouter using OpenAI SDK
 const openai = new OpenAI({
@@ -23,7 +31,32 @@ const openai = new OpenAI({
 
 export async function POST(request: Request) {
   try {
-    const { type = 'general', userId } = await request.json()
+    // Rate limiting - 5 AI requests per 10 seconds
+    const ip = request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip') || 'anonymous'
+    const rateLimitResult = await rateLimitAI(ip)
+    
+    if (!rateLimitResult.success) {
+      return NextResponse.json(
+        { 
+          error: 'Too many requests. Please wait before requesting more recommendations.',
+          retryAfter: Math.ceil((rateLimitResult.reset - Date.now()) / 1000)
+        },
+        { 
+          status: 429,
+          headers: {
+            'Retry-After': String(Math.ceil((rateLimitResult.reset - Date.now()) / 1000)),
+            'X-RateLimit-Limit': String(rateLimitResult.limit),
+            'X-RateLimit-Remaining': String(rateLimitResult.remaining),
+            'X-RateLimit-Reset': String(rateLimitResult.reset)
+          }
+        }
+      )
+    }
+
+    // Parse and validate request body
+    const body = await request.json()
+    const validatedData = recommendRequestSchema.parse(body)
+    const { type = 'general', userId } = validatedData
     
     // Get user's movie data (from database if userId provided, otherwise CSV)
     let data: { watched: Movie[], wants: Movie[], shows: Movie[] }
@@ -281,6 +314,19 @@ Example format:
     
   } catch (error: any) {
     console.error('Error generating recommendations:', error)
+    
+    // Handle Zod validation errors
+    if (error.name === 'ZodError') {
+      return NextResponse.json(
+        { 
+          error: 'Invalid request data',
+          details: error.errors.map((e: any) => `${e.path.join('.')}: ${e.message}`),
+          recommendations: []
+        },
+        { status: 400 }
+      )
+    }
+    
     console.error('Error details:', {
       message: error.message,
       status: error.status,
