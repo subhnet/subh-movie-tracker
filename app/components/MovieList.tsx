@@ -311,6 +311,7 @@ export default function MovieList({ movies, onMoveMovie, onUpdateMovie, onDelete
       isOpen={isDetailsModalOpen}
       onClose={handleCloseDetailsModal}
       onOverviewFetched={handleOverviewFetched}
+      onMoveMovie={handleMove}
     />
     </>
   )

@@ -349,6 +349,7 @@ export default function MovieGrid({ movies, onMoveMovie, onUpdateMovie, onDelete
         isOpen={isDetailsModalOpen}
         onClose={handleCloseDetailsModal}
         onOverviewFetched={handleOverviewFetched}
+        onMoveMovie={handleMove}
       />
     </>
   )
