@@ -1,6 +1,6 @@
 # 🎬 Movie Tracker Statistics
 
-*Last Updated: 10/10/2025, 12:51:43 AM*
+*Last Updated: 10/11/2025, 12:48:08 AM*
 
 ---
 
@@ -47,17 +47,17 @@
 
 ## 📝 Want to Watch
 
-- **Total on Watchlist:** 186
+- **Total on Watchlist:** 187
 - **Pre-rated:** 0
-- **Completion Rate:** 75.5%
+- **Completion Rate:** 75.4%
 
 ### Recently Added to Watchlist
 
-1. One Battle After Another
-2. Don't F**k with Cats: Hunting an Internet Killer
-3. Maanaadu
-4. Good Fortune
-5. Project Hail Mary
+1. RDX: Robert Dony Xavier
+2. One Battle After Another
+3. Don't F**k with Cats: Hunting an Internet Killer
+4. Maanaadu
+5. Good Fortune
 
 ## 📺 TV Shows
 
@@ -75,9 +75,9 @@
 
 ## 📊 Overall Summary
 
-- **Total Tracked Content:** 853
+- **Total Tracked Content:** 854
 - **Movies Watched:** 574
-- **Movies to Watch:** 186
+- **Movies to Watch:** 187
 - **TV Shows:** 93
 - **Overall Average Rating:** 7.04/10
 
