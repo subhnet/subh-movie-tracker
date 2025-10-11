@@ -31,7 +31,21 @@ export async function createJWT(userId: string, username: string): Promise<strin
 export async function verifyJWT(token: string): Promise<JWTPayload | null> {
   try {
     const { payload } = await jwtVerify(token, JWT_SECRET)
-    return payload as JWTPayload
+    
+    // Validate that the payload has our required fields
+    if (
+      typeof payload.userId === 'string' && 
+      typeof payload.username === 'string'
+    ) {
+      return {
+        userId: payload.userId,
+        username: payload.username,
+        iat: payload.iat,
+        exp: payload.exp
+      }
+    }
+    
+    return null
   } catch (error) {
     console.error('JWT verification failed:', error)
     return null
