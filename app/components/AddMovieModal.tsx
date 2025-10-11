@@ -208,7 +208,7 @@ export default function AddMovieModal({ isOpen, onClose, onAdd, defaultType = 'w
       setSelectedOverview(null)
       setSuggestions([])
       setShowSuggestions(false)
-      setJustSelected(false)
+      justSelectedRef.current = false
       onClose()
     } catch (err: any) {
       setError(err.message || 'Failed to add movie')
