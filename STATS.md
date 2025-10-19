@@ -1,15 +1,15 @@
 # 🎬 Movie Tracker Statistics
 
-*Last Updated: 10/18/2025, 12:48:41 AM*
+*Last Updated: 10/19/2025, 12:58:35 AM*
 
 ---
 
 ## 🍿 Watched Movies
 
-- **Total Watched:** 574
-- **Rated:** 574
+- **Total Watched:** 576
+- **Rated:** 576
 - **Unrated:** 0
-- **Average Rating:** 7.04/10
+- **Average Rating:** 7.03/10
 
 ### Rating Distribution
 
@@ -17,8 +17,8 @@
 - **9★**: 35 ███████
 - **8★**: 143 █████████████████████████████
 - **7★**: 205 █████████████████████████████████████████
-- **6★**: 118 ████████████████████████
-- **5★**: 36 ████████
+- **6★**: 119 ████████████████████████
+- **5★**: 37 ████████
 - **4★**: 10 ██
 - **3★**: 5 █
 - **2★**: 1 █
@@ -39,31 +39,31 @@
 
 ### 📅 Watching Patterns
 
-- **Movies with watch dates:** 574
-- **Most active month:** 2025-10 (574 movies)
+- **Movies with watch dates:** 576
+- **Most active month:** 2025-10 (576 movies)
 
 **By Year:**
-- 2025: 574 movies
+- 2025: 576 movies
 
 ## 📝 Want to Watch
 
-- **Total on Watchlist:** 187
+- **Total on Watchlist:** 185
 - **Pre-rated:** 0
-- **Completion Rate:** 75.4%
+- **Completion Rate:** 75.7%
 
 ### Recently Added to Watchlist
 
-1. RDX: Robert Dony Xavier
-2. One Battle After Another
-3. Don't F**k with Cats: Hunting an Internet Killer
-4. Maanaadu
-5. Good Fortune
+1. One Battle After Another
+2. Don't F**k with Cats: Hunting an Internet Killer
+3. Maanaadu
+4. Good Fortune
+5. Project Hail Mary
 
 ## 📺 TV Shows
 
-- **Total Shows:** 93
+- **Total Shows:** 94
 - **Rated:** 72
-- **Average Rating:** 7.08/10
+- **Average Rating:** 7.07/10
 
 ### Top Rated Shows
 
@@ -75,11 +75,11 @@
 
 ## 📊 Overall Summary
 
-- **Total Tracked Content:** 854
-- **Movies Watched:** 574
-- **Movies to Watch:** 187
-- **TV Shows:** 93
-- **Overall Average Rating:** 7.04/10
+- **Total Tracked Content:** 855
+- **Movies Watched:** 576
+- **Movies to Watch:** 185
+- **TV Shows:** 94
+- **Overall Average Rating:** 7.03/10
 
 ---
 
