@@ -1,6 +1,6 @@
 # 🎬 Movie Tracker Statistics
 
-*Last Updated: 10/19/2025, 12:58:35 AM*
+*Last Updated: 10/20/2025, 12:57:16 AM*
 
 ---
 
@@ -47,17 +47,17 @@
 
 ## 📝 Want to Watch
 
-- **Total on Watchlist:** 185
+- **Total on Watchlist:** 186
 - **Pre-rated:** 0
-- **Completion Rate:** 75.7%
+- **Completion Rate:** 75.6%
 
 ### Recently Added to Watchlist
 
-1. One Battle After Another
-2. Don't F**k with Cats: Hunting an Internet Killer
-3. Maanaadu
-4. Good Fortune
-5. Project Hail Mary
+1. Palm Springs
+2. One Battle After Another
+3. Don't F**k with Cats: Hunting an Internet Killer
+4. Maanaadu
+5. Good Fortune
 
 ## 📺 TV Shows
 
@@ -75,9 +75,9 @@
 
 ## 📊 Overall Summary
 
-- **Total Tracked Content:** 855
+- **Total Tracked Content:** 856
 - **Movies Watched:** 576
-- **Movies to Watch:** 185
+- **Movies to Watch:** 186
 - **TV Shows:** 94
 - **Overall Average Rating:** 7.03/10
 
