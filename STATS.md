@@ -1,13 +1,13 @@
 # 🎬 Movie Tracker Statistics
 
-*Last Updated: 10/20/2025, 12:57:16 AM*
+*Last Updated: 10/21/2025, 12:54:27 AM*
 
 ---
 
 ## 🍿 Watched Movies
 
-- **Total Watched:** 576
-- **Rated:** 576
+- **Total Watched:** 577
+- **Rated:** 577
 - **Unrated:** 0
 - **Average Rating:** 7.03/10
 
@@ -16,10 +16,10 @@
 - **10★**: 20 ████
 - **9★**: 35 ███████
 - **8★**: 143 █████████████████████████████
-- **7★**: 205 █████████████████████████████████████████
+- **7★**: 206 ██████████████████████████████████████████
 - **6★**: 119 ████████████████████████
-- **5★**: 37 ████████
-- **4★**: 10 ██
+- **5★**: 36 ████████
+- **4★**: 11 ███
 - **3★**: 5 █
 - **2★**: 1 █
 - **1★**: 1 █
@@ -39,25 +39,25 @@
 
 ### 📅 Watching Patterns
 
-- **Movies with watch dates:** 576
-- **Most active month:** 2025-10 (576 movies)
+- **Movies with watch dates:** 577
+- **Most active month:** 2025-10 (577 movies)
 
 **By Year:**
-- 2025: 576 movies
+- 2025: 577 movies
 
 ## 📝 Want to Watch
 
-- **Total on Watchlist:** 186
+- **Total on Watchlist:** 185
 - **Pre-rated:** 0
-- **Completion Rate:** 75.6%
+- **Completion Rate:** 75.7%
 
 ### Recently Added to Watchlist
 
-1. Palm Springs
-2. One Battle After Another
-3. Don't F**k with Cats: Hunting an Internet Killer
-4. Maanaadu
-5. Good Fortune
+1. One Battle After Another
+2. Don't F**k with Cats: Hunting an Internet Killer
+3. Maanaadu
+4. Good Fortune
+5. Project Hail Mary
 
 ## 📺 TV Shows
 
@@ -76,8 +76,8 @@
 ## 📊 Overall Summary
 
 - **Total Tracked Content:** 856
-- **Movies Watched:** 576
-- **Movies to Watch:** 186
+- **Movies Watched:** 577
+- **Movies to Watch:** 185
 - **TV Shows:** 94
 - **Overall Average Rating:** 7.03/10
 
