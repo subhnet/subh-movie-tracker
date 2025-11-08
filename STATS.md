@@ -1,6 +1,6 @@
 # 🎬 Movie Tracker Statistics
 
-*Last Updated: 11/7/2025, 12:55:17 AM*
+*Last Updated: 11/8/2025, 12:51:41 AM*
 
 ---
 
@@ -47,23 +47,23 @@
 
 ## 📝 Want to Watch
 
-- **Total on Watchlist:** 185
+- **Total on Watchlist:** 186
 - **Pre-rated:** 0
-- **Completion Rate:** 75.9%
+- **Completion Rate:** 75.8%
 
 ### Recently Added to Watchlist
 
-1. Save the Green Planet!
-2. One Battle After Another
-3. Don't F**k with Cats: Hunting an Internet Killer
-4. Maanaadu
-5. Good Fortune
+1. Pluribus
+2. Save the Green Planet!
+3. One Battle After Another
+4. Don't F**k with Cats: Hunting an Internet Killer
+5. Maanaadu
 
 ## 📺 TV Shows
 
-- **Total Shows:** 90
-- **Rated:** 71
-- **Average Rating:** 7/10
+- **Total Shows:** 95
+- **Rated:** 74
+- **Average Rating:** 7.07/10
 
 ### Top Rated Shows
 
@@ -75,10 +75,10 @@
 
 ## 📊 Overall Summary
 
-- **Total Tracked Content:** 857
+- **Total Tracked Content:** 863
 - **Movies Watched:** 582
-- **Movies to Watch:** 185
-- **TV Shows:** 90
+- **Movies to Watch:** 186
+- **TV Shows:** 95
 - **Overall Average Rating:** 7.03/10
 
 ---
