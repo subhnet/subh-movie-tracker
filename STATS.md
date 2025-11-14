@@ -1,6 +1,6 @@
 # 🎬 Movie Tracker Statistics
 
-*Last Updated: 11/13/2025, 12:55:42 AM*
+*Last Updated: 11/14/2025, 12:55:47 AM*
 
 ---
 
@@ -47,23 +47,23 @@
 
 ## 📝 Want to Watch
 
-- **Total on Watchlist:** 186
+- **Total on Watchlist:** 190
 - **Pre-rated:** 0
-- **Completion Rate:** 75.8%
+- **Completion Rate:** 75.5%
 
 ### Recently Added to Watchlist
 
-1. Predator
-2. Predator: Badlands
-3. Save the Green Planet!
-4. One Battle After Another
-5. Don't F**k with Cats: Hunting an Internet Killer
+1. The 8th Night
+2. Gonjiam: Haunted Asylum
+3. Exhuma
+4. Pandora
+5. Predator
 
 ## 📺 TV Shows
 
 - **Total Shows:** 96
 - **Rated:** 74
-- **Average Rating:** 7.07/10
+- **Average Rating:** 7.05/10
 
 ### Top Rated Shows
 
@@ -75,9 +75,9 @@
 
 ## 📊 Overall Summary
 
-- **Total Tracked Content:** 866
+- **Total Tracked Content:** 870
 - **Movies Watched:** 584
-- **Movies to Watch:** 186
+- **Movies to Watch:** 190
 - **TV Shows:** 96
 - **Overall Average Rating:** 7.03/10
 
