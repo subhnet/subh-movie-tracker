@@ -1,6 +1,6 @@
 # 🎬 Movie Tracker Statistics
 
-*Last Updated: 11/15/2025, 12:54:31 AM*
+*Last Updated: 11/16/2025, 12:59:34 AM*
 
 ---
 
@@ -47,7 +47,7 @@
 
 ## 📝 Want to Watch
 
-- **Total on Watchlist:** 190
+- **Total on Watchlist:** 189
 - **Pre-rated:** 0
 - **Completion Rate:** 75.5%
 
@@ -56,8 +56,8 @@
 1. The 8th Night
 2. Gonjiam: Haunted Asylum
 3. Exhuma
-4. Pandora
-5. Predator
+4. Predator
+5. Predator: Badlands
 
 ## 📺 TV Shows
 
@@ -75,9 +75,9 @@
 
 ## 📊 Overall Summary
 
-- **Total Tracked Content:** 870
+- **Total Tracked Content:** 869
 - **Movies Watched:** 584
-- **Movies to Watch:** 190
+- **Movies to Watch:** 189
 - **TV Shows:** 96
 - **Overall Average Rating:** 7.03/10
 
