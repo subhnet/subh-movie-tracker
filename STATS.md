@@ -1,13 +1,13 @@
 # 🎬 Movie Tracker Statistics
 
-*Last Updated: 11/16/2025, 12:59:34 AM*
+*Last Updated: 11/17/2025, 12:56:54 AM*
 
 ---
 
 ## 🍿 Watched Movies
 
-- **Total Watched:** 584
-- **Rated:** 584
+- **Total Watched:** 585
+- **Rated:** 585
 - **Unrated:** 0
 - **Average Rating:** 7.03/10
 
@@ -16,7 +16,7 @@
 - **10★**: 20 ████
 - **9★**: 35 ███████
 - **8★**: 145 █████████████████████████████
-- **7★**: 208 ██████████████████████████████████████████
+- **7★**: 209 ██████████████████████████████████████████
 - **6★**: 122 █████████████████████████
 - **5★**: 36 ████████
 - **4★**: 11 ███
@@ -39,25 +39,25 @@
 
 ### 📅 Watching Patterns
 
-- **Movies with watch dates:** 584
+- **Movies with watch dates:** 585
 - **Most active month:** 2025-10 (579 movies)
 
 **By Year:**
-- 2025: 584 movies
+- 2025: 585 movies
 
 ## 📝 Want to Watch
 
-- **Total on Watchlist:** 189
+- **Total on Watchlist:** 190
 - **Pre-rated:** 0
 - **Completion Rate:** 75.5%
 
 ### Recently Added to Watchlist
 
-1. The 8th Night
-2. Gonjiam: Haunted Asylum
-3. Exhuma
-4. Predator
-5. Predator: Badlands
+1. Vada Chennai
+2. Su from So
+3. The 8th Night
+4. Gonjiam: Haunted Asylum
+5. Exhuma
 
 ## 📺 TV Shows
 
@@ -75,9 +75,9 @@
 
 ## 📊 Overall Summary
 
-- **Total Tracked Content:** 869
-- **Movies Watched:** 584
-- **Movies to Watch:** 189
+- **Total Tracked Content:** 871
+- **Movies Watched:** 585
+- **Movies to Watch:** 190
 - **TV Shows:** 96
 - **Overall Average Rating:** 7.03/10
 
