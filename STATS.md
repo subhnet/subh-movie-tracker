@@ -1,13 +1,13 @@
 # 🎬 Movie Tracker Statistics
 
-*Last Updated: 11/21/2025, 12:55:36 AM*
+*Last Updated: 11/22/2025, 12:53:42 AM*
 
 ---
 
 ## 🍿 Watched Movies
 
-- **Total Watched:** 586
-- **Rated:** 586
+- **Total Watched:** 587
+- **Rated:** 587
 - **Unrated:** 0
 - **Average Rating:** 7.03/10
 
@@ -15,7 +15,7 @@
 
 - **10★**: 20 ████
 - **9★**: 35 ███████
-- **8★**: 145 █████████████████████████████
+- **8★**: 146 ██████████████████████████████
 - **7★**: 210 ██████████████████████████████████████████
 - **6★**: 122 █████████████████████████
 - **5★**: 36 ████████
@@ -39,25 +39,25 @@
 
 ### 📅 Watching Patterns
 
-- **Movies with watch dates:** 586
+- **Movies with watch dates:** 587
 - **Most active month:** 2025-10 (579 movies)
 
 **By Year:**
-- 2025: 586 movies
+- 2025: 587 movies
 
 ## 📝 Want to Watch
 
-- **Total on Watchlist:** 189
+- **Total on Watchlist:** 193
 - **Pre-rated:** 0
-- **Completion Rate:** 75.6%
+- **Completion Rate:** 75.3%
 
 ### Recently Added to Watchlist
 
-1. Vada Chennai
-2. The 8th Night
-3. Gonjiam: Haunted Asylum
-4. Exhuma
-5. Predator: Badlands
+1. Mulholland Drive
+2. Pan's Labyrinth
+3. A Separation
+4. Crouching Tiger, Hidden Dragon
+5. Vada Chennai
 
 ## 📺 TV Shows
 
@@ -75,9 +75,9 @@
 
 ## 📊 Overall Summary
 
-- **Total Tracked Content:** 871
-- **Movies Watched:** 586
-- **Movies to Watch:** 189
+- **Total Tracked Content:** 876
+- **Movies Watched:** 587
+- **Movies to Watch:** 193
 - **TV Shows:** 96
 - **Overall Average Rating:** 7.03/10
 
