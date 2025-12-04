@@ -1,6 +1,6 @@
 # 🎬 Movie Tracker Statistics
 
-*Last Updated: 12/3/2025, 12:56:45 AM*
+*Last Updated: 12/4/2025, 12:57:03 AM*
 
 ---
 
@@ -47,17 +47,17 @@
 
 ## 📝 Want to Watch
 
-- **Total on Watchlist:** 193
+- **Total on Watchlist:** 194
 - **Pre-rated:** 0
-- **Completion Rate:** 75.3%
+- **Completion Rate:** 75.2%
 
 ### Recently Added to Watchlist
 
-1. Mulholland Drive
-2. Pan's Labyrinth
-3. A Separation
-4. Crouching Tiger, Hidden Dragon
-5. Vada Chennai
+1. The Shadow's Edge
+2. Mulholland Drive
+3. Pan's Labyrinth
+4. A Separation
+5. Crouching Tiger, Hidden Dragon
 
 ## 📺 TV Shows
 
@@ -75,9 +75,9 @@
 
 ## 📊 Overall Summary
 
-- **Total Tracked Content:** 876
+- **Total Tracked Content:** 877
 - **Movies Watched:** 587
-- **Movies to Watch:** 193
+- **Movies to Watch:** 194
 - **TV Shows:** 96
 - **Overall Average Rating:** 7.03/10
 
