@@ -1,6 +1,6 @@
 # 🎬 Movie Tracker Statistics
 
-*Last Updated: 12/4/2025, 12:57:03 AM*
+*Last Updated: 12/5/2025, 12:57:20 AM*
 
 ---
 
@@ -47,17 +47,17 @@
 
 ## 📝 Want to Watch
 
-- **Total on Watchlist:** 194
+- **Total on Watchlist:** 198
 - **Pre-rated:** 0
-- **Completion Rate:** 75.2%
+- **Completion Rate:** 74.8%
 
 ### Recently Added to Watchlist
 
-1. The Shadow's Edge
-2. Mulholland Drive
-3. Pan's Labyrinth
-4. A Separation
-5. Crouching Tiger, Hidden Dragon
+1. Ekō
+2. Stand by Me
+3. Dead Poets Society
+4. Casino
+5. The Shadow's Edge
 
 ## 📺 TV Shows
 
@@ -75,9 +75,9 @@
 
 ## 📊 Overall Summary
 
-- **Total Tracked Content:** 877
+- **Total Tracked Content:** 881
 - **Movies Watched:** 587
-- **Movies to Watch:** 194
+- **Movies to Watch:** 198
 - **TV Shows:** 96
 - **Overall Average Rating:** 7.03/10
 
