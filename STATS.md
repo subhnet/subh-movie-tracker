@@ -1,6 +1,6 @@
 # 🎬 Movie Tracker Statistics
 
-*Last Updated: 12/5/2025, 12:57:20 AM*
+*Last Updated: 12/6/2025, 12:54:43 AM*
 
 ---
 
@@ -47,17 +47,17 @@
 
 ## 📝 Want to Watch
 
-- **Total on Watchlist:** 198
+- **Total on Watchlist:** 199
 - **Pre-rated:** 0
-- **Completion Rate:** 74.8%
+- **Completion Rate:** 74.7%
 
 ### Recently Added to Watchlist
 
-1. Ekō
-2. Stand by Me
-3. Dead Poets Society
-4. Casino
-5. The Shadow's Edge
+1. Wake Up Dead Man: A Knives Out Mystery
+2. Ekō
+3. Stand by Me
+4. Dead Poets Society
+5. Casino
 
 ## 📺 TV Shows
 
@@ -75,9 +75,9 @@
 
 ## 📊 Overall Summary
 
-- **Total Tracked Content:** 881
+- **Total Tracked Content:** 882
 - **Movies Watched:** 587
-- **Movies to Watch:** 198
+- **Movies to Watch:** 199
 - **TV Shows:** 96
 - **Overall Average Rating:** 7.03/10
 
