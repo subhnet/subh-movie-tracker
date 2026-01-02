@@ -1,55 +1,56 @@
 # 🎬 Movie Tracker Statistics
 
-*Last Updated: 1/1/2026, 1:07:01 AM*
+*Last Updated: 1/2/2026, 1:00:29 AM*
 
 ---
 
 ## 🍿 Watched Movies
 
-- **Total Watched:** 293
-- **Rated:** 293
+- **Total Watched:** 593
+- **Rated:** 593
 - **Unrated:** 0
-- **Average Rating:** 7.1/10
+- **Average Rating:** 7.03/10
 
 ### Rating Distribution
 
-- **10★**: 10 ██
-- **9★**: 16 ████
-- **8★**: 78 ████████████████
-- **7★**: 110 ██████████████████████
-- **6★**: 56 ████████████
-- **5★**: 18 ████
-- **4★**: 2 █
-- **3★**: 2 █
+- **10★**: 20 ████
+- **9★**: 35 ███████
+- **8★**: 146 ██████████████████████████████
+- **7★**: 214 ███████████████████████████████████████████
+- **6★**: 124 █████████████████████████
+- **5★**: 36 ████████
+- **4★**: 11 ███
+- **3★**: 5 █
 - **2★**: 1 █
+- **1★**: 1 █
 
 ### 🌟 Top Rated (8+ Stars)
 
-1. **Sholay** - 10★
-2. **The Pursuit of Happyness** - 10★
-3. **Interstellar** - 10★
-4. **Avatar** - 10★
-5. **The Dark Knight Rises** - 10★
-6. **The Dark Knight** - 10★
-7. **Captain America: The Winter Soldier** - 10★
-8. **Captain America: Civil War** - 10★
-9. **Joker** - 10★
-10. **Parasite** - 10★
+1. **12 Angry Men** - 10★
+2. **The Wild Robot** - 10★
+3. **Isle of Dogs** - 10★
+4. **Everything Everywhere All at Once** - 10★
+5. **The Batman** - 10★
+6. **Sholay** - 10★
+7. **The Pursuit of Happyness** - 10★
+8. **Ending the Knight** - 10★
+9. **The Prestige** - 10★
+10. **Inception** - 10★
 
 ### 📅 Watching Patterns
 
-- **Movies with watch dates:** 293
-- **Most active month:** 2025-10 (279 movies)
+- **Movies with watch dates:** 593
+- **Most active month:** 2026-01 (299 movies)
 
 **By Year:**
-- 2026: 1 movies
-- 2025: 292 movies
+- 2026: 299 movies
+- 2025: 294 movies
 
 ## 📝 Want to Watch
 
 - **Total on Watchlist:** 197
 - **Pre-rated:** 0
-- **Completion Rate:** 59.8%
+- **Completion Rate:** 75.1%
 
 ### Recently Added to Watchlist
 
@@ -75,11 +76,11 @@
 
 ## 📊 Overall Summary
 
-- **Total Tracked Content:** 587
-- **Movies Watched:** 293
+- **Total Tracked Content:** 887
+- **Movies Watched:** 593
 - **Movies to Watch:** 197
 - **TV Shows:** 97
-- **Overall Average Rating:** 7.1/10
+- **Overall Average Rating:** 7.03/10
 
 ---
 
