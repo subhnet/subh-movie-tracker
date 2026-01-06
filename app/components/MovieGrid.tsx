@@ -19,7 +19,7 @@ interface Movie {
 interface MovieGridProps {
   movies: Movie[]
   onMoveMovie: (movieId: string, newType: string) => Promise<void>
-  onUpdateMovie: (movieId: string, updates: { title?: string; rating?: string; tags?: string }) => Promise<void>
+  onUpdateMovie: (movieId: string, updates: { title?: string; rating?: string; tags?: string; poster_url?: string }) => Promise<void>
   onDeleteMovie: (movieId: string) => Promise<void>
   currentType: string
   isLoading?: boolean
@@ -59,7 +59,7 @@ const MovieCard = memo(({
   onViewDetails: (movie: Movie) => void
   currentType: string
   isEditing: boolean
-  editForm: { title: string; rating: string; tags: string }
+  editForm: { title: string; rating: string; tags: string; poster_url: string }
   onEditFormChange: (field: string, value: string) => void
   onSaveEdit: () => void
   onCancelEdit: () => void
@@ -69,7 +69,7 @@ const MovieCard = memo(({
 }) => {
   if (isEditing) {
     return (
-      <div className="bg-white/5 backdrop-blur-sm rounded-lg border border-white/10 p-4 space-y-3">
+      <div className="bg-white/5 backdrop-blur-sm rounded-lg border border-white/10 p-4 space-y-3 z-30 relative">
         <div>
           <label className="block text-white/60 text-xs mb-1">Title</label>
           <input
@@ -79,6 +79,18 @@ const MovieCard = memo(({
             className="w-full px-2 py-1 bg-white/10 border border-white/20 rounded text-white text-sm placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-blue-500"
             placeholder="Title"
           />
+        </div>
+        <div>
+          <label className="block text-white/60 text-xs mb-1">Poster URL</label>
+          <div className="flex gap-2">
+            <input
+              type="text"
+              value={editForm.poster_url || ''}
+              onChange={(e) => onEditFormChange('poster_url', e.target.value)}
+              className="flex-1 px-2 py-1 bg-white/10 border border-white/20 rounded text-white text-xs placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="https://..."
+            />
+          </div>
         </div>
         <div>
           <label className="block text-white/60 text-xs mb-1">Rating</label>
@@ -221,7 +233,7 @@ MovieCard.displayName = 'MovieCard'
 
 export default function MovieGrid({ movies, onMoveMovie, onUpdateMovie, onDeleteMovie, currentType, isLoading }: MovieGridProps) {
   const [editingId, setEditingId] = useState<string | null>(null)
-  const [editForm, setEditForm] = useState({ title: '', rating: '', tags: '' })
+  const [editForm, setEditForm] = useState({ title: '', rating: '', tags: '', poster_url: '' })
   const [isDeleting, setIsDeleting] = useState<string | null>(null)
   const [isMoving, setIsMoving] = useState<string | null>(null)
   const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null)
@@ -232,7 +244,8 @@ export default function MovieGrid({ movies, onMoveMovie, onUpdateMovie, onDelete
     setEditForm({
       title: movie.title,
       rating: movie.rating || '',
-      tags: movie.tags || ''
+      tags: movie.tags || '',
+      poster_url: movie.poster_url || ''
     })
   }
 
@@ -249,7 +262,7 @@ export default function MovieGrid({ movies, onMoveMovie, onUpdateMovie, onDelete
 
   const handleCancelEdit = () => {
     setEditingId(null)
-    setEditForm({ title: '', rating: '', tags: '' })
+    setEditForm({ title: '', rating: '', tags: '', poster_url: '' })
   }
 
   const handleEditFormChange = (field: string, value: string) => {

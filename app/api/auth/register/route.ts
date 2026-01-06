@@ -23,14 +23,14 @@ export async function POST(request: Request) {
     // Rate limiting - 5 registration attempts per 10 seconds per IP
     const ip = request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip') || 'anonymous'
     const rateLimitResult = await rateLimitAuth(ip)
-    
+
     if (!rateLimitResult.success) {
       return NextResponse.json(
-        { 
+        {
           error: 'Too many registration attempts. Please try again later.',
           retryAfter: Math.ceil((rateLimitResult.reset - Date.now()) / 1000)
         },
-        { 
+        {
           status: 429,
           headers: {
             'Retry-After': String(Math.ceil((rateLimitResult.reset - Date.now()) / 1000))
@@ -43,6 +43,16 @@ export async function POST(request: Request) {
     const body = await request.json()
     const validatedData = registerSchema.parse(body)
     const { username, password } = validatedData
+    const { inviteCode } = body
+
+    // Check Invite Code (Alpha Access)
+    const REQUIRED_CODE = process.env.REGISTRATION_ACCESS_CODE
+    if (REQUIRED_CODE && inviteCode !== REQUIRED_CODE) {
+      return NextResponse.json(
+        { error: 'Invalid invite code. Access is restricted.' },
+        { status: 403 }
+      )
+    }
 
     // Check if username already exists
     const { data: existingUsers } = await supabase
@@ -91,22 +101,21 @@ export async function POST(request: Request) {
     })
   } catch (error: any) {
     console.error('Registration error:', error)
-    
+
     // Handle Zod validation errors
-    if (error.name === 'ZodError') {
+    if (error instanceof z.ZodError) {
       return NextResponse.json(
-        { 
+        {
           error: 'Invalid input',
           details: error.errors.map((e: any) => `${e.path.join('.')}: ${e.message}`)
         },
         { status: 400 }
       )
     }
-    
+
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }
     )
   }
 }
-
