@@ -116,117 +116,102 @@ const MovieCard = memo(({
     )
   }
 
+  const year = movie.created_at ? new Date(movie.created_at).getFullYear() : '';
+
   return (
-    <div className="group relative bg-white/5 backdrop-blur-sm rounded-xl border border-white/10 transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:border-white/30">
-      {/* Glow effect */}
-      <div className="absolute inset-0 bg-gradient-to-br from-blue-500/0 to-purple-500/0 group-hover:from-blue-500/20 group-hover:to-purple-500/20 transition-all duration-300 pointer-events-none rounded-xl"></div>
-
-      {/* Poster */}
+    <div className="group relative bg-white/5 backdrop-blur-sm rounded-xl border border-white/10 transition-all duration-300 hover:shadow-2xl hover:border-white/30 hover:-translate-y-1">
+      {/* Poster Image Area */}
       <div
-        className="relative aspect-[2/3] overflow-hidden rounded-xl bg-gray-900 group shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-1 cursor-pointer"
+        className="relative aspect-[2/3] overflow-hidden rounded-t-xl bg-gray-900 cursor-pointer"
         onClick={() => onViewDetails(movie)}
-        title="Click to view details"
       >
-        <div className="absolute inset-0 overflow-hidden rounded-t-xl">
-          <OptimizedImage
-            src={movie.poster_url}
-            alt={movie.title}
-            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-            priority={priority}
-          />
-        </div>
+        <OptimizedImage
+          src={movie.poster_url}
+          alt={movie.title}
+          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 group-hover:brightness-75"
+          priority={priority}
+          fallbackIcon={movie.type === 'shows' ? '📺' : '🎬'}
+        />
 
-        {/* Rating badge */}
-        {movie.rating && !isNaN(parseFloat(movie.rating)) && (
-          <div className="absolute top-3 right-3 bg-gradient-to-br from-yellow-400 to-orange-500 px-3 py-1.5 rounded-full shadow-lg transform transition-all duration-300 group-hover:scale-110 z-10">
-            <span className="text-white text-xs font-black flex items-center gap-1">
-              <svg className="w-3 h-3 fill-current" viewBox="0 0 20 20">
-                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-              </svg>
-              {parseFloat(movie.rating).toFixed(1)}
-            </span>
-          </div>
-        )}
+        {/* Floating Action Menu - Appears on Hover */}
+        <div className="absolute top-2 right-2 flex flex-col gap-2 translate-x-4 opacity-0 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-300 z-20">
+          {/* Context Aware Quick Move Button */}
+          {currentType === 'want' && (
+            <button
+              onClick={(e) => { e.stopPropagation(); onMove(movie.id, 'watched'); }}
+              className="p-2 bg-green-500/80 hover:bg-green-500 text-white backdrop-blur-md rounded-xl shadow-lg transition-all hover:scale-110 active:scale-95 border border-white/20"
+              title="Mark as Watched"
+            >
+              <span className="text-sm">👀</span>
+            </button>
+          )}
 
-        {/* Actions overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center gap-3 z-20">
+          <button
+            onClick={(e) => { e.stopPropagation(); onEdit(movie); }}
+            className="p-2 bg-white/20 hover:bg-blue-600 text-white backdrop-blur-md rounded-xl shadow-lg transition-all hover:scale-110 active:scale-95 border border-white/20"
+            title="Edit"
+          >
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" /></svg>
+          </button>
+
           <div className="relative group/move">
             <button
-              className="w-10 h-10 bg-blue-600/90 hover:bg-blue-600 backdrop-blur-sm text-white rounded-full transition-all disabled:opacity-50 flex items-center justify-center shadow-lg hover:scale-110 transform"
-              disabled={isMoving}
-              title="Move to another list"
-              aria-label="Move to another list"
+              className="p-2 bg-white/20 hover:bg-purple-600 text-white backdrop-blur-md rounded-xl shadow-lg transition-all hover:scale-110 active:scale-95 border border-white/20"
+              title="Move to..."
+              onClick={(e) => e.stopPropagation()}
             >
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
-              </svg>
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" /></svg>
             </button>
-            <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 bg-gray-900 rounded-lg shadow-xl border border-white/20 opacity-0 invisible group-hover/move:opacity-100 group-hover/move:visible transition-all z-50 min-w-max pointer-events-none group-hover/move:pointer-events-auto">
+            {/* Dropdown for Move */}
+            <div className="absolute right-full top-0 mr-2 bg-gray-900/90 backdrop-blur-xl border border-white/10 rounded-xl overflow-hidden shadow-2xl opacity-0 invisible group-hover/move:opacity-100 group-hover/move:visible transition-all w-32">
               {currentType !== 'watched' && (
-                <button
-                  onClick={() => onMove(movie.id, 'watched')}
-                  className="w-full px-4 py-2 text-left text-white hover:bg-white/10 rounded-t-lg transition-colors text-sm whitespace-nowrap"
-                  aria-label="Move to Watched"
-                >
-                  🍿 Watched
-                </button>
+                <button onClick={(e) => { e.stopPropagation(); onMove(movie.id, 'watched'); }} className="w-full text-left px-3 py-2 text-xs text-white hover:bg-white/10">🍿 Watched</button>
               )}
               {currentType !== 'want' && (
-                <button
-                  onClick={() => onMove(movie.id, 'want')}
-                  className="w-full px-4 py-2 text-left text-white hover:bg-white/10 transition-colors text-sm whitespace-nowrap"
-                  aria-label="Move to Want to Watch"
-                >
-                  📌 Want to Watch
-                </button>
+                <button onClick={(e) => { e.stopPropagation(); onMove(movie.id, 'want'); }} className="w-full text-left px-3 py-2 text-xs text-white hover:bg-white/10">📌 Want</button>
               )}
               {currentType !== 'show' && (
-                <button
-                  onClick={() => onMove(movie.id, 'show')}
-                  className="w-full px-4 py-2 text-left text-white hover:bg-white/10 rounded-b-lg transition-colors text-sm whitespace-nowrap"
-                  aria-label="Move to TV Shows"
-                >
-                  📺 TV Shows
-                </button>
+                <button onClick={(e) => { e.stopPropagation(); onMove(movie.id, 'show'); }} className="w-full text-left px-3 py-2 text-xs text-white hover:bg-white/10">📺 TV</button>
               )}
             </div>
           </div>
 
           <button
-            onClick={() => onEdit(movie)}
-            className="w-10 h-10 bg-purple-600/90 hover:bg-purple-600 backdrop-blur-sm text-white rounded-full transition-all flex items-center justify-center shadow-lg hover:scale-110 transform"
-            title="Edit movie"
-            aria-label={`Edit ${movie.title}`}
+            onClick={(e) => { e.stopPropagation(); onDelete(movie.id); }}
+            className="p-2 bg-white/20 hover:bg-red-600 text-white backdrop-blur-md rounded-xl shadow-lg transition-all hover:scale-110 active:scale-95 border border-white/20"
+            title="Delete"
           >
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-            </svg>
-          </button>
-
-          <button
-            onClick={() => onDelete(movie.id)}
-            className="w-10 h-10 bg-red-600/90 hover:bg-red-600 backdrop-blur-sm text-white rounded-full transition-all disabled:opacity-50 flex items-center justify-center shadow-lg hover:scale-110 transform"
-            disabled={isDeleting}
-            title="Delete movie"
-            aria-label={`Delete ${movie.title}`}
-          >
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-            </svg>
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
           </button>
         </div>
+
+        {/* Rating Badge (Always Visible) */}
+        {movie.rating && (
+          <div className="absolute bottom-2 right-2 bg-black/60 backdrop-blur-md border border-white/10 px-2 py-1 rounded-lg flex items-center gap-1 shadow-lg">
+            <span className="text-yellow-400 text-xs">★</span>
+            <span className="text-white text-xs font-bold">{movie.rating}</span>
+          </div>
+        )}
       </div>
 
-      {/* Movie info */}
-      <div className="p-3">
-        <h3 className="text-white font-semibold text-sm mb-1 line-clamp-2 min-h-[2.5rem]">
+      {/* Info Content */}
+      <div className="p-3" onClick={() => onViewDetails(movie)}>
+        <h3 className="text-white font-bold text-sm leading-tight mb-1 line-clamp-1 group-hover:text-blue-200 transition-colors">
           {movie.title}
         </h3>
-        {movie.tags && (
-          <p className="text-white/60 text-xs truncate">
-            🏷️ {movie.tags}
-          </p>
-        )}
+
+        <div className="flex items-center justify-between">
+          <div className="flex gap-1 overflow-hidden">
+            {movie.tags?.split(',').slice(0, 2).map((tag, i) => (
+              <span key={i} className="text-[10px] px-1.5 py-0.5 bg-white/10 rounded text-white/60 whitespace-nowrap">
+                {tag.trim()}
+              </span>
+            ))}
+          </div>
+          {year && (
+            <span className="text-[10px] text-white/40 font-mono">{year}</span>
+          )}
+        </div>
       </div>
     </div>
   )
@@ -309,20 +294,13 @@ export default function MovieGrid({ movies, onMoveMovie, onUpdateMovie, onDelete
 
   const handleOverviewFetched = async (movieId: string, overview: string, posterUrl?: string, forceUpdate = false, providers?: any) => {
     try {
-      // Update the movie in the database with the fetched overview
       const updates: any = { overview }
-
-      // Update poster if forced or if currently missing
       if (posterUrl && (forceUpdate || !selectedMovie?.poster_url)) {
         updates.poster_url = posterUrl
       }
-
-      // Update providers if available
       if (providers) {
         updates.providers = providers
       }
-
-      // Update local state so modal reflects changes immediately
       if (selectedMovie) {
         setSelectedMovie({
           ...selectedMovie,
@@ -330,14 +308,11 @@ export default function MovieGrid({ movies, onMoveMovie, onUpdateMovie, onDelete
           poster_url: updates.poster_url || selectedMovie.poster_url
         })
       }
-
       await onUpdateMovie(movieId, updates)
     } catch (error) {
       console.error('Failed to save fetched overview:', error)
     }
   }
-
-  // ... component logic ...
 
   return (
     <>
@@ -360,7 +335,7 @@ export default function MovieGrid({ movies, onMoveMovie, onUpdateMovie, onDelete
           </p>
         </div>
       ) : (
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 pb-20">
           {movies.map((movie, index) => (
             <MovieCard
               key={movie.id}
@@ -377,13 +352,12 @@ export default function MovieGrid({ movies, onMoveMovie, onUpdateMovie, onDelete
               onCancelEdit={handleCancelEdit}
               isDeleting={isDeleting === movie.id}
               isMoving={isMoving === movie.id}
-              priority={index < 6} // Prioritize first 6 visible images
+              priority={index < 6}
             />
           ))}
         </div>
       )}
 
-      {/* Movie Details Modal */}
       <MovieDetailsModal
         movie={selectedMovie}
         isOpen={isDetailsModalOpen}
@@ -394,4 +368,3 @@ export default function MovieGrid({ movies, onMoveMovie, onUpdateMovie, onDelete
     </>
   )
 }
-

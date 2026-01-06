@@ -130,8 +130,8 @@ export default function RecommendationsPage() {
       {/* Hero Section */}
       <header className="relative">
         <div className="absolute inset-0 bg-gradient-to-r from-purple-500/10 via-pink-500/10 to-orange-500/10 rounded-3xl blur-3xl"></div>
-        <div className="relative bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl rounded-2xl border border-white/20 p-8 md:p-12 shadow-2xl text-center">
-          <div className="inline-flex items-center gap-3 bg-white/10 backdrop-blur-sm px-5 py-2.5 rounded-full mb-6 border border-white/20">
+        <div className="relative bg-white/5 backdrop-blur-xl rounded-2xl border border-white/10 p-8 md:p-12 shadow-2xl text-center">
+          <div className="inline-flex items-center gap-3 bg-white/10 backdrop-blur-sm px-5 py-2.5 rounded-full mb-6 border border-white/10">
             <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
             </svg>
@@ -148,35 +148,37 @@ export default function RecommendationsPage() {
 
       {/* Selection Cards */}
       <div className="relative group">
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-purple-500/10 rounded-2xl blur-xl"></div>
-        <div className="relative bg-gradient-to-br from-white/95 to-white/80 backdrop-blur-xl rounded-2xl p-8 shadow-xl border border-white/30">
-          <div className="flex items-center gap-3 mb-6">
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-purple-500/10 rounded-3xl blur-xl"></div>
+        <div className="relative bg-white/5 backdrop-blur-xl rounded-3xl p-8 shadow-2xl border border-white/10">
+          <div className="flex items-center gap-3 mb-8">
             <div className="h-1 w-12 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full"></div>
-            <h2 className="text-2xl font-bold bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent">
+            <h2 className="text-2xl font-bold text-white">
               What would you like?
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
             <button
               onClick={() => setType('general')}
-              className={`group relative overflow-hidden p-6 rounded-xl transition-all duration-300 ${type === 'general'
-                ? 'bg-gradient-to-br from-blue-500 to-purple-600 text-white shadow-lg scale-105'
-                : 'bg-white/50 hover:bg-white/80 border-2 border-gray-200 hover:border-purple-300 hover:scale-102'
-                }`}
+              className={`group relative overflow-hidden p-8 rounded-2xl transition-all duration-300 text-left ${type === 'general'
+                ? 'bg-gradient-to-br from-blue-600/20 to-purple-600/20 border-purple-500/50 shadow-lg shadow-purple-500/10'
+                : 'bg-white/5 hover:bg-white/10 border-white/10 hover:border-white/20'
+                } border-2`}
             >
               <div className="relative z-10">
-                <div className="text-4xl mb-3">🎬</div>
-                <div className={`font-bold text-lg mb-2 ${type === 'general' ? 'text-white' : 'text-gray-800'}`}>
+                <div className="w-12 h-12 bg-gradient-to-br from-blue-500/20 to-purple-600/20 rounded-xl flex items-center justify-center mb-4 border border-white/10">
+                  <span className="text-2xl">🎬</span>
+                </div>
+                <div className={`font-bold text-xl mb-2 text-white`}>
                   New Recommendations
                 </div>
-                <div className={`text-sm ${type === 'general' ? 'text-white/90' : 'text-gray-600'}`}>
+                <div className={`text-sm text-white/60`}>
                   Discover fresh movies you haven't seen yet
                 </div>
               </div>
               {type === 'general' && (
-                <div className="absolute top-3 right-3">
-                  <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+                <div className="absolute top-4 right-4 text-purple-400">
+                  <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                   </svg>
                 </div>
@@ -185,23 +187,25 @@ export default function RecommendationsPage() {
 
             <button
               onClick={() => setType('watchlist')}
-              className={`group relative overflow-hidden p-6 rounded-xl transition-all duration-300 ${type === 'watchlist'
-                ? 'bg-gradient-to-br from-pink-500 to-orange-600 text-white shadow-lg scale-105'
-                : 'bg-white/50 hover:bg-white/80 border-2 border-gray-200 hover:border-pink-300 hover:scale-102'
-                }`}
+              className={`group relative overflow-hidden p-8 rounded-2xl transition-all duration-300 text-left ${type === 'watchlist'
+                ? 'bg-gradient-to-br from-pink-500/20 to-orange-600/20 border-pink-500/50 shadow-lg shadow-pink-500/10'
+                : 'bg-white/5 hover:bg-white/10 border-white/10 hover:border-white/20'
+                } border-2`}
             >
               <div className="relative z-10">
-                <div className="text-4xl mb-3">⭐</div>
-                <div className={`font-bold text-lg mb-2 ${type === 'watchlist' ? 'text-white' : 'text-gray-800'}`}>
+                <div className="w-12 h-12 bg-gradient-to-br from-pink-500/20 to-orange-600/20 rounded-xl flex items-center justify-center mb-4 border border-white/10">
+                  <span className="text-2xl">⭐</span>
+                </div>
+                <div className={`font-bold text-xl mb-2 text-white`}>
                   Prioritize Watchlist
                 </div>
-                <div className={`text-sm ${type === 'watchlist' ? 'text-white/90' : 'text-gray-600'}`}>
+                <div className={`text-sm text-white/60`}>
                   Get suggestions from your existing watchlist
                 </div>
               </div>
               {type === 'watchlist' && (
-                <div className="absolute top-3 right-3">
-                  <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+                <div className="absolute top-4 right-4 text-pink-400">
+                  <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                   </svg>
                 </div>
@@ -212,39 +216,37 @@ export default function RecommendationsPage() {
           <button
             onClick={getRecommendations}
             disabled={loading}
-            className="w-full bg-gradient-to-r from-purple-500 via-pink-500 to-orange-500 text-white py-4 rounded-xl font-bold text-lg shadow-lg hover:shadow-2xl transition-all disabled:opacity-50 disabled:cursor-not-allowed hover:scale-[1.02] active:scale-[0.98]"
+            className="w-full group relative overflow-hidden bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 text-white py-5 rounded-2xl font-bold text-lg shadow-xl shadow-purple-500/20 hover:shadow-purple-500/40 transition-all disabled:opacity-50 disabled:cursor-not-allowed hover:scale-[1.01] active:scale-[0.99]"
           >
-            {loading ? (
-              <span className="flex items-center justify-center gap-3">
-                <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
-                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
-                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
-                </svg>
-                <span>Generating Recommendations...</span>
-              </span>
-            ) : (
-              <span className="flex items-center justify-center gap-2">
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                </svg>
-                Get AI Recommendations
-              </span>
-            )}
+            <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+            <div className="relative flex items-center justify-center gap-3">
+              {loading ? (
+                <>
+                  <svg className="animate-spin h-6 w-6" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                  </svg>
+                  <span>Consulting the AI Director...</span>
+                </>
+              ) : (
+                <>
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19.428 15.428a2 2 0 00-1.022-.547l-2.384-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
+                  </svg>
+                  Generate Recommendations
+                </>
+              )}
+            </div>
           </button>
 
           {error && (
-            <div className="mt-6 p-4 bg-red-50 border-l-4 border-red-500 rounded-lg">
-              <div className="flex items-start gap-3">
-                <svg className="w-5 h-5 text-red-500 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+            <div className="mt-8 p-4 bg-red-500/10 border border-red-500/20 rounded-xl backdrop-blur-md">
+              <div className="flex items-center gap-3">
+                <svg className="w-5 h-5 text-red-400" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
                 </svg>
                 <div className="flex-1">
-                  <p className="text-red-800 font-semibold">{error}</p>
-                  {error.includes('API key') && (
-                    <div className="mt-3 text-sm text-red-700">
-                      <p className="font-medium">AI recommendations require proper API configuration. Please contact the administrator.</p>
-                    </div>
-                  )}
+                  <p className="text-red-200 font-medium">{error}</p>
                 </div>
               </div>
             </div>
@@ -254,24 +256,24 @@ export default function RecommendationsPage() {
 
       {/* Results Section */}
       {recommendations.length > 0 && (
-        <div>
-          <div className="flex items-center gap-3 mb-6">
-            <div className="h-1 w-12 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-full"></div>
-            <h2 className="text-2xl font-bold text-white">Your Personalized Picks</h2>
+        <div className="animate-in fade-in slide-in-from-bottom-8 duration-700">
+          <div className="flex items-center gap-3 mb-8">
+            <h2 className="text-3xl font-bold text-white">Your Personalized Picks</h2>
+            <div className="h-px flex-1 bg-gradient-to-r from-white/20 to-transparent"></div>
           </div>
 
-          <div className="grid grid-cols-1 gap-4">
+          <div className="grid grid-cols-1 gap-6">
             {recommendations.map((rec, index) => (
               <div
                 key={index}
                 className="group relative"
               >
-                <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 via-purple-500/10 to-pink-500/10 rounded-2xl blur-xl group-hover:blur-2xl transition-all duration-300"></div>
-                <div className="relative bg-gradient-to-br from-white/95 to-white/80 backdrop-blur-xl rounded-2xl p-6 shadow-xl border border-white/30 hover:scale-[1.02] transition-all duration-300">
-                  <div className="flex flex-col sm:flex-row gap-6">
+                <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 via-purple-500/10 to-pink-500/10 rounded-3xl blur-xl group-hover:blur-2xl transition-all duration-300 opacity-50"></div>
+                <div className="relative bg-white/5 backdrop-blur-xl rounded-3xl p-6 md:p-8 shadow-2xl border border-white/10 hover:border-white/20 transition-all duration-300">
+                  <div className="flex flex-col md:flex-row gap-8">
                     {/* Poster */}
-                    <div className="flex-shrink-0 mx-auto sm:mx-0">
-                      <div className="w-32 h-48 rounded-xl overflow-hidden shadow-lg relative bg-gray-200">
+                    <div className="flex-shrink-0 mx-auto md:mx-0">
+                      <div className="w-40 h-60 rounded-2xl overflow-hidden shadow-2xl relative bg-black/40 border border-white/5 group-hover:scale-105 transition-transform duration-300">
                         {rec.posterUrl ? (
                           <img
                             src={rec.posterUrl}
@@ -279,53 +281,65 @@ export default function RecommendationsPage() {
                             className="w-full h-full object-cover"
                           />
                         ) : (
-                          <div className="w-full h-full flex items-center justify-center bg-gray-300 text-gray-500">
-                            <span className="text-4xl">🎬</span>
+                          <div className="w-full h-full flex items-center justify-center text-white/20">
+                            <span className="text-5xl">🎬</span>
                           </div>
                         )}
-                        <div className="absolute top-2 left-2 w-8 h-8 rounded-full bg-black/60 backdrop-blur-md flex items-center justify-center text-white font-bold text-sm border border-white/20">
+                        <div className="absolute top-3 left-3 w-10 h-10 rounded-xl bg-black/60 backdrop-blur-md flex items-center justify-center text-white font-bold border border-white/20 shadow-lg">
                           #{index + 1}
                         </div>
                       </div>
                     </div>
 
                     {/* Content */}
-                    <div className="flex-1 min-w-0 text-center sm:text-left">
-                      <h3 className="text-2xl font-bold text-gray-800 mb-2 flex items-center justify-center sm:justify-start gap-2">
-                        {rec.title}
-                        <span className="text-sm font-normal text-gray-500 border border-gray-200 px-2 py-0.5 rounded-full">
-                          {rec.confidence}% match
-                        </span>
-                      </h3>
+                    <div className="flex-1 min-w-0 text-center md:text-left flex flex-col">
+                      <div className="mb-4">
+                        <div className="flex flex-wrap items-center justify-center md:justify-start gap-3 mb-2">
+                          <h3 className="text-3xl font-bold text-white tracking-tight">
+                            {rec.title}
+                          </h3>
+                          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-500/20 text-green-300 border border-green-500/30">
+                            {rec.confidence}% match
+                          </span>
+                        </div>
 
-                      <p className="text-gray-600 mb-4 leading-relaxed italic border-l-4 border-purple-200 pl-4">
-                        "{rec.reason}"
-                      </p>
-
-                      {rec.genres && rec.genres.length > 0 && (
-                        <div className="flex flex-wrap gap-2 mb-4 justify-center sm:justify-start">
-                          {rec.genres.map((genre, i) => (
+                        <div className="flex flex-wrap justify-center md:justify-start gap-2">
+                          {rec.genres && rec.genres.map((genre, i) => (
                             <span
                               key={i}
-                              className="inline-flex items-center bg-gray-100 text-gray-600 px-3 py-1 rounded-full text-xs font-semibold"
+                              className="text-xs font-medium text-white/50 bg-white/5 px-2 py-1 rounded-lg border border-white/5"
                             >
                               {genre}
                             </span>
                           ))}
                         </div>
-                      )}
+                      </div>
+
+                      <div className="relative mb-6 bg-white/5 rounded-2xl p-5 border border-white/5">
+                        <div className="absolute -left-1 -top-1 text-4xl text-white/10">"</div>
+                        <p className="text-white/80 leading-relaxed italic relative z-10">
+                          {rec.reason}
+                        </p>
+                      </div>
 
                       {/* Add to List Buttons */}
-                      <div className="flex flex-wrap gap-2 mt-auto justify-center sm:justify-start">
+                      <div className="mt-auto flex flex-wrap gap-3 justify-center md:justify-start">
                         <button
                           onClick={() => handleAddToList(rec, 'want', index)}
                           disabled={addingMovie === index}
-                          className="flex items-center gap-2 bg-gray-900 text-white px-5 py-2.5 rounded-xl font-semibold hover:bg-black transition-all disabled:opacity-50 disabled:cursor-not-allowed text-sm shadow-md"
+                          className="flex items-center gap-2 bg-white text-black px-6 py-3 rounded-xl font-bold hover:bg-white/90 transition-all disabled:opacity-50 disabled:cursor-not-allowed text-sm shadow-lg hover:shadow-white/20 active:translate-y-0.5"
                         >
                           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 4v16m8-8H4" />
                           </svg>
                           Add to Watchlist
+                        </button>
+                        <button
+                          onClick={() => handleAddToList(rec, 'watched', index)}
+                          className="flex items-center gap-2 bg-white/5 text-white px-6 py-3 rounded-xl font-bold hover:bg-white/10 transition-all text-sm border border-white/10 hover:border-white/20 active:translate-y-0.5"
+                        >
+                          <span className="text-lg">👀</span>
+                          Mark Saw It
                         </button>
                       </div>
                     </div>
@@ -339,4 +353,3 @@ export default function RecommendationsPage() {
     </div>
   )
 }
-
