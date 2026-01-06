@@ -1,6 +1,6 @@
 # 🎬 Movie Tracker Statistics
 
-*Last Updated: 1/5/2026, 1:05:18 AM*
+*Last Updated: 1/6/2026, 1:00:06 AM*
 
 ---
 
@@ -54,7 +54,7 @@
 
 ### Recently Added to Watchlist
 
-1. Ekō
+1. Eko
 2. Stand by Me
 3. Dead Poets Society
 4. Casino
