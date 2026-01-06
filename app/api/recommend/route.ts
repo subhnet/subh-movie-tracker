@@ -166,24 +166,14 @@ export async function POST(request: Request) {
     let prompt = ''
 
     if (type === 'watchlist') {
-      prompt = `Analyze this user's movie taste:
-
-PERFECT SCORES (10/10): ${perfectRated || 'None yet'}
-
-HIGHLY RATED (9-10★): ${highlyRated}
-
-Their watchlist includes: ${watchlist}
-
-From their watchlist, recommend which 5 movies they should watch FIRST and why, based on their taste preferences shown above.
-
-Return a JSON object with a "recommendations" array. Each item should have: title, reason, confidence (0-100).
-
-Example format:
-{
-  "recommendations": [
-    {"title": "Movie Name", "reason": "Why this movie", "confidence": 95}
-  ]
-}`
+      prompt = `My watchlist contains: ${watchlist}
+      
+      Based on my high ratings (9-10/10) for: ${highlyRated}
+      
+      Which 5 movies from my watchlist should I prioritize?
+      For each, explain the connection to my favorites.
+      
+      Return JSON: { "recommendations": [{ "title": "Movie", "reason": "Connection explanation", "confidence": 90 }] }`
     } else {
       // Calculate stats on the fly
       const watchedRatings = data.watched.filter((m: Movie) => parseFloat(m.rating) > 0)
@@ -191,61 +181,53 @@ Example format:
         ? watchedRatings.reduce((sum, m) => sum + parseFloat(m.rating), 0) / watchedRatings.length
         : 0
 
-      prompt = `Act as an expert film curator with deep knowledge of cinema history, directors, and screenwriting. Analyze this user's taste profile to recommend 5 NEW movies they haven't seen.
-      
-USER PROFILE:
-- Average Rating: ${avgRating.toFixed(1)}/10
-- Total Watched: ${data.watched.length}
-- Total Shows: ${data.shows.length}
+      prompt = `Analyze my cinematic taste profile and recommend 5 NEW movies.
 
-HIGHLY RATED (9-10★):
-${highlyRated}
+PROFILE:
+- Avg Rating: ${avgRating.toFixed(1)}/10
+- Favorites (9-10★): ${highlyRated}
+- Liked (8★): ${goodMovies}
+- Top Themes: ${topGenres}
+${dislikedMovies ? `- Disliked: ${dislikedMovies}` : ''}
 
-LIKED (8★):
-${goodMovies || 'Various titles'}
-
-${topGenres ? `PREFERRED THEMES/GENRES:\n${topGenres}\n\n` : ''}
-${dislikedMovies ? `DISLIKED (<6★):\n${dislikedMovies}\n\n` : ''}
-
-ALREADY SEEN (EXCLUDE THESE):
+AVOID (Already Seen):
 ${watchedSample}
 
-TASK: Recommend 5 movies.
-CRITERIA:
-1. FOCUS on shared directors, cinematographers, writers, or specific thematic elements.
-2. DO NOT just recommend popular movies. Dig deeper.
-3. EXPLAIN the connection clearly (e.g., "Written by the same person directly," "Similar visual style to...").
+INSTRUCTIONS:
+1. Be a "Film Curator". Don't just pick popular hits. Look for shared directors, writers, cinematographers, or atmospheric matches.
+2. Provide a "Curator's Note" for each, explaining the specific connection to my taste (e.g., "If you loved Inception for its dream logic, you must see Paprika").
+3. Ensure high diversity (mix of eras/languages if appropriate).
+4. Strictly NO movies from the "AVOID" list.
 
-Return a JSON object with a "recommendations" array. Each item:
+Return JSON object:
 {
-  "title": "Exact Movie Title",
-  "reason": "Specific curator-style explanation connecting to their history.",
-  "confidence": 85,
-  "genres": ["Genre1", "Genre2"]
+  "recommendations": [
+    {
+      "title": "Exact Title (Year)",
+      "reason": "Curator's note on why this specific film matches my taste",
+      "confidence": 85, 
+      "genres": ["Genre1", "Genre2"]
+    }
+  ]
 }`
     }
 
-    // Call OpenRouter (using a capable model like GPT-4 or Claude)
-
+    // Call OpenRouter (Using Google Gemini 2.0 Flash - Free & Powerful)
     const response = await openai.chat.completions.create({
-      model: 'openai/gpt-4o-mini', // Cost-effective and fast model
-      // Alternative models you can try:
-      // 'anthropic/claude-3.5-sonnet' - Very intelligent, great reasoning
-      // 'openai/gpt-4-turbo' - More expensive but very capable
-      // 'google/gemini-pro' - Good balance of speed and quality
+      model: 'google/gemini-2.0-flash-exp:free',
       messages: [
         {
           role: 'system',
-          content: 'You are a movie recommendation expert. Analyze viewing patterns and provide personalized recommendations. Respond with valid JSON array only, no markdown formatting.'
+          content: 'You are CineMate, an elite film curator with encyclopedic knowledge of cinema history, directors, and screenwriting. Your recommendations are insightful, personalized, and go beyond surface-level genre matches. You speak eloquently but concisely.'
         },
         {
           role: 'user',
           content: prompt
         }
       ],
-      temperature: 0.7,
-      max_tokens: 2000,
-      response_format: { type: 'json_object' } as any, // Force JSON output
+      temperature: 0.8, // Slightly higher for more creative/diverse picks
+      max_tokens: 3000,
+      response_format: { type: 'json_object' } as any,
     })
 
     const content = response.choices[0]?.message?.content || '{}'
