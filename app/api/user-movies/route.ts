@@ -229,7 +229,11 @@ export async function PUT(request: Request) {
     if (title !== undefined) updateData.title = title
     if (rating !== undefined) updateData.rating = rating
     if (tags !== undefined) updateData.tags = tags
-    if (type !== undefined) updateData.type = type
+    if (type !== undefined) {
+      updateData.type = type
+      // Bump to top of list when moving between lists
+      updateData.created_at = new Date().toISOString()
+    }
     if (posterUrl !== undefined) updateData.poster_url = posterUrl
     if (poster_url !== undefined) updateData.poster_url = poster_url
     if (overview !== undefined) updateData.overview = overview
