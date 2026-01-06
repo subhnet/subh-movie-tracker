@@ -61,7 +61,7 @@ function TopRatedTable({ title, movies }: TopRatedTableProps) {
                   </div>
                   <span className="text-[10px] text-white/40">•</span>
                   <span className="text-[10px] text-white/40 truncate max-w-[100px]">
-                    {new Date(movie.created_at).toLocaleDateString(undefined, { year: 'numeric', month: 'short' })}
+                    {new Date(movie.created_at || Date.now()).toLocaleDateString(undefined, { year: 'numeric', month: 'short' })}
                   </span>
                 </div>
               </div>
