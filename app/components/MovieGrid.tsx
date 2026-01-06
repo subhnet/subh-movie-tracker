@@ -22,7 +22,18 @@ interface MovieGridProps {
   onUpdateMovie: (movieId: string, updates: { title?: string; rating?: string; tags?: string }) => Promise<void>
   onDeleteMovie: (movieId: string) => Promise<void>
   currentType: string
+  isLoading?: boolean
 }
+
+const MovieCardSkeleton = () => (
+  <div className="bg-white/5 rounded-xl border border-white/10 overflow-hidden animate-pulse">
+    <div className="aspect-[2/3] bg-white/10" />
+    <div className="p-3 space-y-2">
+      <div className="h-4 bg-white/10 rounded w-3/4" />
+      <div className="h-3 bg-white/10 rounded w-1/2" />
+    </div>
+  </div>
+)
 
 // Memoize individual movie card for better performance
 const MovieCard = memo(({
@@ -112,7 +123,7 @@ const MovieCard = memo(({
 
       {/* Poster */}
       <div
-        className="relative aspect-[2/3] bg-gradient-to-br from-gray-800 to-gray-900 rounded-t-xl overflow-visible cursor-pointer"
+        className="relative aspect-[2/3] overflow-hidden rounded-xl bg-gray-900 group shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-1 cursor-pointer"
         onClick={() => onViewDetails(movie)}
         title="Click to view details"
       >
@@ -223,7 +234,7 @@ const MovieCard = memo(({
 
 MovieCard.displayName = 'MovieCard'
 
-export default function MovieGrid({ movies, onMoveMovie, onUpdateMovie, onDeleteMovie, currentType }: MovieGridProps) {
+export default function MovieGrid({ movies, onMoveMovie, onUpdateMovie, onDeleteMovie, currentType, isLoading }: MovieGridProps) {
   const [editingId, setEditingId] = useState<string | null>(null)
   const [editForm, setEditForm] = useState({ title: '', rating: '', tags: '' })
   const [isDeleting, setIsDeleting] = useState<string | null>(null)
@@ -326,38 +337,51 @@ export default function MovieGrid({ movies, onMoveMovie, onUpdateMovie, onDelete
     }
   }
 
-  if (movies.length === 0) {
-    return (
-      <div className="text-center py-12 bg-white/5 rounded-lg border border-white/10">
-        <p className="text-white/60 text-lg">No movies in this list yet</p>
-        <p className="text-white/40 text-sm mt-2">Click "Add Movie" to get started</p>
-      </div>
-    )
-  }
+  // ... component logic ...
 
   return (
     <>
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
-        {movies.map((movie, index) => (
-          <MovieCard
-            key={movie.id}
-            movie={movie}
-            onMove={handleMove}
-            onEdit={handleEdit}
-            onDelete={handleDelete}
-            onViewDetails={handleViewDetails}
-            currentType={currentType}
-            isEditing={editingId === movie.id}
-            editForm={editForm}
-            onEditFormChange={handleEditFormChange}
-            onSaveEdit={handleSaveEdit}
-            onCancelEdit={handleCancelEdit}
-            isDeleting={isDeleting === movie.id}
-            isMoving={isMoving === movie.id}
-            priority={index < 6} // Prioritize first 6 visible images
-          />
-        ))}
-      </div>
+      {isLoading ? (
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
+          {Array.from({ length: 12 }).map((_, i) => (
+            <MovieCardSkeleton key={i} />
+          ))}
+        </div>
+      ) : movies.length === 0 ? (
+        <div className="flex flex-col items-center justify-center py-20 bg-white/5 rounded-2xl border border-white/10 border-dashed">
+          <div className="w-16 h-16 bg-white/10 rounded-full flex items-center justify-center mb-4 text-3xl">
+            🎬
+          </div>
+          <h3 className="text-white text-xl font-bold mb-2">No movies found</h3>
+          <p className="text-white/60 text-center max-w-sm mb-6">
+            {currentType === 'watched' ? "You haven't watched any movies yet." :
+              currentType === 'want' ? "Your watchlist is empty." :
+                "No TV shows in your list."}
+          </p>
+        </div>
+      ) : (
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
+          {movies.map((movie, index) => (
+            <MovieCard
+              key={movie.id}
+              movie={movie}
+              onMove={handleMove}
+              onEdit={handleEdit}
+              onDelete={handleDelete}
+              onViewDetails={handleViewDetails}
+              currentType={currentType}
+              isEditing={editingId === movie.id}
+              editForm={editForm}
+              onEditFormChange={handleEditFormChange}
+              onSaveEdit={handleSaveEdit}
+              onCancelEdit={handleCancelEdit}
+              isDeleting={isDeleting === movie.id}
+              isMoving={isMoving === movie.id}
+              priority={index < 6} // Prioritize first 6 visible images
+            />
+          ))}
+        </div>
+      )}
 
       {/* Movie Details Modal */}
       <MovieDetailsModal

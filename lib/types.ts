@@ -37,5 +37,6 @@ export interface Recommendation {
   confidence: number;
   genres?: string[];
   rating?: number;
+  posterUrl?: string | null;
 }
 

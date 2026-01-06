@@ -18,27 +18,56 @@ export default function RecommendationsPage() {
     setUser(getUser())
   }, [])
 
+  useEffect(() => {
+    const fetchPosters = async () => {
+      const recsWithPosters = await Promise.all(recommendations.map(async (rec) => {
+        if (rec.posterUrl) return rec
+
+        try {
+          const res = await fetch(`/api/search-movies?query=${encodeURIComponent(rec.title)}&type=movie`)
+          const data = await res.json()
+          if (data.results && data.results.length > 0) {
+            return { ...rec, posterUrl: data.results[0].poster }
+          }
+        } catch (e) {
+          console.error('Failed to fetch poster for', rec.title)
+        }
+        return rec
+      }))
+
+      // Only update if we actually found new posters to avoid infinite loops
+      const hasNewPosters = recsWithPosters.some((r, i) => r.posterUrl !== recommendations[i].posterUrl)
+      if (hasNewPosters) {
+        setRecommendations(recsWithPosters)
+      }
+    }
+
+    if (recommendations.length > 0) {
+      fetchPosters()
+    }
+  }, [recommendations])
+
   const getRecommendations = async () => {
     setLoading(true)
     setError('')
-    
+
     try {
       const response = await fetch('/api/recommend', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ 
+        body: JSON.stringify({
           type,
           userId: user?.id // Send userId if logged in
         }),
       })
-      
+
       const data = await response.json()
-      
+
       if (!response.ok) {
         setError(data.error || 'Failed to get recommendations')
         setRecommendations([])
       } else {
-        setRecommendations(data.recommendations || [])
+        setRecommendations((data.recommendations || []).map((r: any) => ({ ...r, posterUrl: null })))
       }
     } catch (err) {
       setError('Network error. Please try again.')
@@ -55,7 +84,7 @@ export default function RecommendationsPage() {
     }
 
     setAddingMovie(index)
-    
+
     try {
       // First, search for the movie to get its poster
       let posterUrl = null
@@ -127,15 +156,14 @@ export default function RecommendationsPage() {
               What would you like?
             </h2>
           </div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
             <button
               onClick={() => setType('general')}
-              className={`group relative overflow-hidden p-6 rounded-xl transition-all duration-300 ${
-                type === 'general'
-                  ? 'bg-gradient-to-br from-blue-500 to-purple-600 text-white shadow-lg scale-105'
-                  : 'bg-white/50 hover:bg-white/80 border-2 border-gray-200 hover:border-purple-300 hover:scale-102'
-              }`}
+              className={`group relative overflow-hidden p-6 rounded-xl transition-all duration-300 ${type === 'general'
+                ? 'bg-gradient-to-br from-blue-500 to-purple-600 text-white shadow-lg scale-105'
+                : 'bg-white/50 hover:bg-white/80 border-2 border-gray-200 hover:border-purple-300 hover:scale-102'
+                }`}
             >
               <div className="relative z-10">
                 <div className="text-4xl mb-3">🎬</div>
@@ -154,14 +182,13 @@ export default function RecommendationsPage() {
                 </div>
               )}
             </button>
-            
+
             <button
               onClick={() => setType('watchlist')}
-              className={`group relative overflow-hidden p-6 rounded-xl transition-all duration-300 ${
-                type === 'watchlist'
-                  ? 'bg-gradient-to-br from-pink-500 to-orange-600 text-white shadow-lg scale-105'
-                  : 'bg-white/50 hover:bg-white/80 border-2 border-gray-200 hover:border-pink-300 hover:scale-102'
-              }`}
+              className={`group relative overflow-hidden p-6 rounded-xl transition-all duration-300 ${type === 'watchlist'
+                ? 'bg-gradient-to-br from-pink-500 to-orange-600 text-white shadow-lg scale-105'
+                : 'bg-white/50 hover:bg-white/80 border-2 border-gray-200 hover:border-pink-300 hover:scale-102'
+                }`}
             >
               <div className="relative z-10">
                 <div className="text-4xl mb-3">⭐</div>
@@ -232,66 +259,73 @@ export default function RecommendationsPage() {
             <div className="h-1 w-12 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-full"></div>
             <h2 className="text-2xl font-bold text-white">Your Personalized Picks</h2>
           </div>
-          
+
           <div className="grid grid-cols-1 gap-4">
             {recommendations.map((rec, index) => (
-              <div 
+              <div
                 key={index}
                 className="group relative"
               >
                 <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 via-purple-500/10 to-pink-500/10 rounded-2xl blur-xl group-hover:blur-2xl transition-all duration-300"></div>
                 <div className="relative bg-gradient-to-br from-white/95 to-white/80 backdrop-blur-xl rounded-2xl p-6 shadow-xl border border-white/30 hover:scale-[1.02] transition-all duration-300">
-                  <div className="flex flex-col md:flex-row gap-6">
-                    {/* Number Badge */}
-                    <div className="flex-shrink-0">
-                      <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-purple-500 to-pink-600 flex items-center justify-center shadow-lg">
-                        <span className="text-3xl font-black text-white">#{index + 1}</span>
+                  <div className="flex flex-col sm:flex-row gap-6">
+                    {/* Poster */}
+                    <div className="flex-shrink-0 mx-auto sm:mx-0">
+                      <div className="w-32 h-48 rounded-xl overflow-hidden shadow-lg relative bg-gray-200">
+                        {rec.posterUrl ? (
+                          <img
+                            src={rec.posterUrl}
+                            alt={rec.title}
+                            className="w-full h-full object-cover"
+                          />
+                        ) : (
+                          <div className="w-full h-full flex items-center justify-center bg-gray-300 text-gray-500">
+                            <span className="text-4xl">🎬</span>
+                          </div>
+                        )}
+                        <div className="absolute top-2 left-2 w-8 h-8 rounded-full bg-black/60 backdrop-blur-md flex items-center justify-center text-white font-bold text-sm border border-white/20">
+                          #{index + 1}
+                        </div>
                       </div>
                     </div>
-                    
+
                     {/* Content */}
-                    <div className="flex-1 min-w-0">
-                      <h3 className="text-2xl font-bold text-gray-800 mb-3 flex items-center gap-2">
+                    <div className="flex-1 min-w-0 text-center sm:text-left">
+                      <h3 className="text-2xl font-bold text-gray-800 mb-2 flex items-center justify-center sm:justify-start gap-2">
                         {rec.title}
-                        <svg className="w-5 h-5 text-yellow-500" fill="currentColor" viewBox="0 0 20 20">
-                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                        </svg>
+                        <span className="text-sm font-normal text-gray-500 border border-gray-200 px-2 py-0.5 rounded-full">
+                          {rec.confidence}% match
+                        </span>
                       </h3>
-                      <p className="text-gray-600 mb-4 leading-relaxed">{rec.reason}</p>
+
+                      <p className="text-gray-600 mb-4 leading-relaxed italic border-l-4 border-purple-200 pl-4">
+                        "{rec.reason}"
+                      </p>
+
                       {rec.genres && rec.genres.length > 0 && (
-                        <div className="flex flex-wrap gap-2 mb-4">
+                        <div className="flex flex-wrap gap-2 mb-4 justify-center sm:justify-start">
                           {rec.genres.map((genre, i) => (
-                            <span 
+                            <span
                               key={i}
-                              className="inline-flex items-center bg-gradient-to-r from-blue-100 to-purple-100 text-blue-700 px-3 py-1.5 rounded-full text-sm font-semibold border border-blue-200/50"
+                              className="inline-flex items-center bg-gray-100 text-gray-600 px-3 py-1 rounded-full text-xs font-semibold"
                             >
                               {genre}
                             </span>
                           ))}
                         </div>
                       )}
-                      
+
                       {/* Add to List Buttons */}
-                      <div className="flex flex-wrap gap-2 mt-4">
+                      <div className="flex flex-wrap gap-2 mt-auto justify-center sm:justify-start">
                         <button
                           onClick={() => handleAddToList(rec, 'want', index)}
                           disabled={addingMovie === index}
-                          className="flex items-center gap-2 bg-gradient-to-r from-pink-500 to-rose-600 text-white px-4 py-2 rounded-lg font-semibold hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                          className="flex items-center gap-2 bg-gray-900 text-white px-5 py-2.5 rounded-xl font-semibold hover:bg-black transition-all disabled:opacity-50 disabled:cursor-not-allowed text-sm shadow-md"
                         >
                           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
                           </svg>
-                          {addingMovie === index ? 'Adding...' : 'Add to Watchlist'}
-                        </button>
-                        <button
-                          onClick={() => handleAddToList(rec, 'watched', index)}
-                          disabled={addingMovie === index}
-                          className="flex items-center gap-2 bg-gradient-to-r from-blue-500 to-purple-600 text-white px-4 py-2 rounded-lg font-semibold hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-                        >
-                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                          </svg>
-                          {addingMovie === index ? 'Adding...' : 'Mark as Watched'}
+                          Add to Watchlist
                         </button>
                       </div>
                     </div>
