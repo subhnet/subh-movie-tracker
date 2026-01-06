@@ -11,6 +11,26 @@ const nextConfig = {
       allowedOrigins: ['localhost:3000'],
     },
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'image.tmdb.org',
+      },
+      {
+        protocol: 'https',
+        hostname: 'm.media-amazon.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'is1-ssl.mzstatic.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'img.omdbapi.com',
+      },
+    ],
+  },
 }
 
 module.exports = nextConfig

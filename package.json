@@ -12,7 +12,8 @@
     "scrape": "node movies.js",
     "stats": "node -e \"require('./utils/analytics').generateStatistics()\"",
     "report": "node -e \"require('./utils/htmlReport').generateHtmlReport()\"",
-    "migrate": "node utils/migrate.js"
+    "migrate": "node utils/migrate.js",
+    "refresh-metadata": "node scripts/refresh-metadata.js"
   },
   "author": "Subhransu",
   "license": "ISC",

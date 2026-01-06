@@ -24,19 +24,25 @@ const updateMovieSchema = z.object({
   tags: z.string().max(500).optional(),
   type: z.enum(['watched', 'want', 'show']).optional(),
   posterUrl: z.string().url().optional().or(z.literal('')),
-  overview: z.string().max(2000).optional()
+  poster_url: z.string().url().optional().or(z.literal('')),
+  overview: z.string().max(2000).optional(),
+  providers: z.any().optional()
 })
 
+// ... (inside PUT)
+
+
+// PUT: Update a movie
 // GET: Fetch user's movies (prioritize database, fallback to CSV)
 export async function GET(request: Request) {
   // Rate limiting for GET requests
   const ip = request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip') || 'anonymous'
   const rateLimitResult = await rateLimitAPI(ip)
-  
+
   if (!rateLimitResult.success) {
     return NextResponse.json(
       { error: 'Too many requests. Please try again later.' },
-      { 
+      {
         status: 429,
         headers: {
           'Retry-After': String(Math.ceil((rateLimitResult.reset - Date.now()) / 1000))
@@ -123,11 +129,11 @@ export async function POST(request: Request) {
   // Rate limiting
   const ip = request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip') || 'anonymous'
   const rateLimitResult = await rateLimitAPI(ip)
-  
+
   if (!rateLimitResult.success) {
     return NextResponse.json(
       { error: 'Too many requests. Please try again later.' },
-      { 
+      {
         status: 429,
         headers: {
           'Retry-After': String(Math.ceil((rateLimitResult.reset - Date.now()) / 1000))
@@ -176,18 +182,18 @@ export async function POST(request: Request) {
     })
   } catch (error: any) {
     console.error('Add movie error:', error)
-    
+
     // Handle Zod validation errors
     if (error.name === 'ZodError') {
       return NextResponse.json(
-        { 
+        {
           error: 'Invalid input',
           details: error.errors.map((e: any) => `${e.path.join('.')}: ${e.message}`)
         },
         { status: 400 }
       )
     }
-    
+
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }
@@ -200,11 +206,11 @@ export async function PUT(request: Request) {
   // Rate limiting
   const ip = request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip') || 'anonymous'
   const rateLimitResult = await rateLimitAPI(ip)
-  
+
   if (!rateLimitResult.success) {
     return NextResponse.json(
       { error: 'Too many requests. Please try again later.' },
-      { 
+      {
         status: 429,
         headers: {
           'Retry-After': String(Math.ceil((rateLimitResult.reset - Date.now()) / 1000))
@@ -216,7 +222,7 @@ export async function PUT(request: Request) {
   try {
     const body = await request.json()
     const validatedData = updateMovieSchema.parse(body)
-    const { movieId, userId, title, rating, tags, type, posterUrl, overview } = validatedData
+    const { movieId, userId, title, rating, tags, type, posterUrl, poster_url, overview, providers } = validatedData
 
     // Build update object dynamically
     const updateData: any = {}
@@ -225,7 +231,9 @@ export async function PUT(request: Request) {
     if (tags !== undefined) updateData.tags = tags
     if (type !== undefined) updateData.type = type
     if (posterUrl !== undefined) updateData.poster_url = posterUrl
+    if (poster_url !== undefined) updateData.poster_url = poster_url
     if (overview !== undefined) updateData.overview = overview
+    if (providers !== undefined) updateData.providers = providers
 
     // Update in database
     const { data: updatedMovie, error: updateError } = await supabase
@@ -250,18 +258,18 @@ export async function PUT(request: Request) {
     })
   } catch (error: any) {
     console.error('Update movie error:', error)
-    
+
     // Handle Zod validation errors
     if (error.name === 'ZodError') {
       return NextResponse.json(
-        { 
+        {
           error: 'Invalid input',
           details: error.errors.map((e: any) => `${e.path.join('.')}: ${e.message}`)
         },
         { status: 400 }
       )
     }
-    
+
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }
@@ -269,16 +277,15 @@ export async function PUT(request: Request) {
   }
 }
 
-// DELETE: Remove a movie
 export async function DELETE(request: Request) {
   // Rate limiting
   const ip = request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip') || 'anonymous'
   const rateLimitResult = await rateLimitAPI(ip)
-  
+
   if (!rateLimitResult.success) {
     return NextResponse.json(
       { error: 'Too many requests. Please try again later.' },
-      { 
+      {
         status: 429,
         headers: {
           'Retry-After': String(Math.ceil((rateLimitResult.reset - Date.now()) / 1000))

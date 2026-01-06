@@ -11,6 +11,25 @@ interface TMDBMovie {
   vote_average: number
 }
 
+interface TMDBProvider {
+  provider_id: number
+  provider_name: string
+  logo_path: string
+  display_priority: number
+}
+
+interface TMDBProvidersResponse {
+  results: {
+    [countryCode: string]: {
+      link: string
+      flatrate?: TMDBProvider[]
+      rent?: TMDBProvider[]
+      buy?: TMDBProvider[]
+    }
+  }
+}
+
+
 interface TMDBSearchResponse {
   results: TMDBMovie[]
 }
@@ -50,7 +69,7 @@ async function fetchFromTMDB(title: string, type: string, apiKey: string) {
   const url = `${TMDB_API_BASE}/${endpoint}?api_key=${apiKey}&query=${encodeURIComponent(title)}&page=1`
 
   const response = await fetch(url)
-  
+
   if (!response.ok) {
     throw new Error('Failed to fetch from TMDB')
   }
@@ -80,18 +99,34 @@ async function fetchFromTMDB(title: string, type: string, apiKey: string) {
   }
 
   const dateString = movie.release_date || movie.first_air_date
-  
+
   return {
     id: movie.id,
     title: movie.title || movie.name,
     overview: movie.overview || '',
-    poster: movie.poster_path 
-      ? `https://image.tmdb.org/t/p/w500${movie.poster_path}` 
+    poster: movie.poster_path
+      ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
       : null,
     rating: movie.vote_average ? movie.vote_average.toFixed(1) : null,
     year: dateString ? new Date(dateString).getFullYear() : null,
     cast,
+    providers: await fetchTMDBProviders(movie.id, mediaType, apiKey),
     source: 'tmdb'
+  }
+}
+
+async function fetchTMDBProviders(id: number, type: string, apiKey: string) {
+  try {
+    const url = `${TMDB_API_BASE}/${type}/${id}/watch/providers?api_key=${apiKey}`
+    const response = await fetch(url)
+    if (!response.ok) return null
+
+    const data: TMDBProvidersResponse = await response.json()
+    // Return the full map of countries so frontend can filter
+    return data.results
+  } catch (e) {
+    console.error('Failed to fetch providers', e)
+    return null
   }
 }
 
@@ -100,11 +135,11 @@ async function fetchFromTMDB(title: string, type: string, apiKey: string) {
  */
 async function fetchFromOMDb(title: string, type: string, apiKey: string) {
   const omdbType = type === 'show' ? 'series' : 'movie'
-  
+
   // First, search to get the IMDb ID
   const searchUrl = `${OMDB_API_BASE}/?apikey=${apiKey}&s=${encodeURIComponent(title)}&type=${omdbType}`
   const searchResponse = await fetch(searchUrl)
-  
+
   if (!searchResponse.ok) {
     throw new Error('Failed to search OMDb')
   }
@@ -119,7 +154,7 @@ async function fetchFromOMDb(title: string, type: string, apiKey: string) {
   const firstResult = searchData.Search[0]
   const detailUrl = `${OMDB_API_BASE}/?apikey=${apiKey}&i=${firstResult.imdbID}&plot=full`
   const detailResponse = await fetch(detailUrl)
-  
+
   if (!detailResponse.ok) {
     throw new Error('Failed to fetch OMDb details')
   }
@@ -131,7 +166,7 @@ async function fetchFromOMDb(title: string, type: string, apiKey: string) {
   }
 
   // Parse cast from OMDb (comma-separated string)
-  const cast = detail.Actors && detail.Actors !== 'N/A' 
+  const cast = detail.Actors && detail.Actors !== 'N/A'
     ? detail.Actors.split(',').map(name => name.trim()).slice(0, 5)
     : []
 

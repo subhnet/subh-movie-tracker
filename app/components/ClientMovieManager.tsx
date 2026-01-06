@@ -15,6 +15,7 @@ interface Movie {
   tags: string
   type: string
   poster_url?: string | null
+  providers?: any
   created_at?: string
 }
 
@@ -38,6 +39,20 @@ export default function ClientMovieManager({ initialMovies, userId, username }: 
   const [currentPage, setCurrentPage] = useState(1)
   const [itemsPerPage, setItemsPerPage] = useState(24)
   const [sortBy, setSortBy] = useState<SortOption>('date-desc')
+  const [selectedProvider, setSelectedProvider] = useState('all')
+
+  const COMMON_PROVIDERS = [
+    { id: 'all', name: 'All Providers' },
+    { id: 'Netflix', name: 'Netflix' },
+    { id: 'Amazon Prime Video', name: 'Prime Video' },
+    { id: 'Disney Plus', name: 'Disney+' },
+    { id: 'Hotstar', name: 'Hotstar' },
+    { id: 'JioCinema', name: 'JioCinema' },
+    { id: 'Apple TV Plus', name: 'Apple TV+' },
+    { id: 'Hulu', name: 'Hulu' },
+    { id: 'Peacock', name: 'Peacock' },
+    { id: 'Max', name: 'HBO Max' }
+  ]
 
   // Load view preference from localStorage
   useEffect(() => {
@@ -69,7 +84,7 @@ export default function ClientMovieManager({ initialMovies, userId, username }: 
     try {
       const response = await fetch(`/api/user-movies?userId=${userId}`)
       const result = await response.json()
-      
+
       if (result.error) {
         throw new Error(result.error)
       }
@@ -79,7 +94,7 @@ export default function ClientMovieManager({ initialMovies, userId, username }: 
         ...(result.want || []),
         ...(result.shows || [])
       ]
-      
+
       setMovies(allMovies)
     } catch (error) {
       console.error('Failed to fetch movies:', error)
@@ -87,25 +102,25 @@ export default function ClientMovieManager({ initialMovies, userId, username }: 
   }
 
   const handleAddMovie = async (movieData: { title: string; rating: string; tags: string; type: string; posterUrl?: string; overview?: string } | string, type?: string, rating?: string, posterUrl?: string, overview?: string) => {
-    const requestData = typeof movieData === 'string' 
+    const requestData = typeof movieData === 'string'
       ? {
-          userId,
-          title: movieData,
-          type: type || 'want',
-          rating: rating || '',
-          tags: '',
-          poster_url: posterUrl,
-          overview: overview
-        }
+        userId,
+        title: movieData,
+        type: type || 'want',
+        rating: rating || '',
+        tags: '',
+        poster_url: posterUrl,
+        overview: overview
+      }
       : {
-          userId,
-          title: movieData.title,
-          type: movieData.type,
-          rating: movieData.rating,
-          tags: movieData.tags,
-          poster_url: movieData.posterUrl,
-          overview: movieData.overview
-        }
+        userId,
+        title: movieData.title,
+        type: movieData.type,
+        rating: movieData.rating,
+        tags: movieData.tags,
+        poster_url: movieData.posterUrl,
+        overview: movieData.overview
+      }
 
     const response = await fetch('/api/user-movies', {
       method: 'POST',
@@ -177,12 +192,30 @@ export default function ClientMovieManager({ initialMovies, userId, username }: 
   }
 
   const getFilteredMovies = () => {
-    const filteredByType = movies.filter(m => m.type === activeTab)
-    
-    let filtered = filteredByType
+    let filtered = movies.filter(m => m.type === activeTab)
+
+    if (selectedProvider !== 'all') {
+      filtered = filtered.filter(m => {
+        if (!m.providers) return false
+
+        // Check US and IN regions for the selected provider
+        // This logic checks if ANY of the provider arrays (flatrate) contains the selected provider
+        const checkRegion = (regionCode: string) => {
+          const region = m.providers[regionCode]
+          if (!region || !region.flatrate) return false
+          return region.flatrate.some((p: any) =>
+            p.provider_name.toLowerCase().includes(selectedProvider.toLowerCase()) ||
+            selectedProvider.toLowerCase().includes(p.provider_name.toLowerCase())
+          )
+        }
+
+        return checkRegion('US') || checkRegion('IN')
+      })
+    }
+
     if (searchQuery.trim()) {
       const query = searchQuery.toLowerCase()
-      filtered = filteredByType.filter(m => 
+      filtered = filtered.filter(m =>
         m.title.toLowerCase().includes(query) ||
         m.tags?.toLowerCase().includes(query)
       )
@@ -273,7 +306,7 @@ export default function ClientMovieManager({ initialMovies, userId, username }: 
             placeholder="Search movies by title or tags..."
             className="flex-1 min-w-[200px] px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
-          
+
           <select
             value={sortBy}
             onChange={(e) => {
@@ -289,7 +322,20 @@ export default function ClientMovieManager({ initialMovies, userId, username }: 
             <option value="rating-desc" className="bg-gray-900">Rating (High-Low)</option>
             <option value="rating-asc" className="bg-gray-900">Rating (Low-High)</option>
           </select>
-          
+
+          <select
+            value={selectedProvider}
+            onChange={(e) => {
+              setSelectedProvider(e.target.value)
+              setCurrentPage(1)
+            }}
+            className="px-3 py-2 bg-white/10 border border-white/20 rounded-lg text-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
+            {COMMON_PROVIDERS.map(p => (
+              <option key={p.id} value={p.id} className="bg-gray-900">{p.name}</option>
+            ))}
+          </select>
+
           <select
             value={itemsPerPage}
             onChange={(e) => {
@@ -303,15 +349,14 @@ export default function ClientMovieManager({ initialMovies, userId, username }: 
             <option value={48} className="bg-gray-900">48 per page</option>
             <option value={96} className="bg-gray-900">96 per page</option>
           </select>
-          
+
           <div className="flex gap-2 bg-white/10 rounded-lg p-1">
             <button
               onClick={() => handleViewModeChange('grid')}
-              className={`px-4 py-2 rounded transition-colors ${
-                viewMode === 'grid'
+              className={`px-4 py-2 rounded transition-colors ${viewMode === 'grid'
                   ? 'bg-blue-600 text-white'
                   : 'text-white/70 hover:text-white'
-              }`}
+                }`}
               title="Grid view"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -320,11 +365,10 @@ export default function ClientMovieManager({ initialMovies, userId, username }: 
             </button>
             <button
               onClick={() => handleViewModeChange('list')}
-              className={`px-4 py-2 rounded transition-colors ${
-                viewMode === 'list'
+              className={`px-4 py-2 rounded transition-colors ${viewMode === 'list'
                   ? 'bg-blue-600 text-white'
                   : 'text-white/70 hover:text-white'
-              }`}
+                }`}
               title="List view"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -342,11 +386,10 @@ export default function ClientMovieManager({ initialMovies, userId, username }: 
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
-              className={`flex-1 px-4 py-3 rounded-lg font-medium transition-colors ${
-                activeTab === tab
+              className={`flex-1 px-4 py-3 rounded-lg font-medium transition-colors ${activeTab === tab
                   ? 'bg-blue-600 text-white'
                   : 'bg-white/5 text-white/70 hover:bg-white/10 hover:text-white'
-              }`}
+                }`}
             >
               {getTabLabel(tab)}
               <span className="ml-2 text-sm opacity-75">
@@ -364,13 +407,13 @@ export default function ClientMovieManager({ initialMovies, userId, username }: 
             {getTabLabel(activeTab)}
           </h2>
           <p className="text-white/60 text-sm">
-            {searchQuery 
+            {searchQuery
               ? `${totalFilteredMovies} result${totalFilteredMovies !== 1 ? 's' : ''}`
               : `${totalFilteredMovies} movie${totalFilteredMovies !== 1 ? 's' : ''}`
             }
           </p>
         </div>
-        
+
         {viewMode === 'grid' ? (
           <MovieGrid
             movies={paginatedMovies}

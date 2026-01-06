@@ -10,7 +10,7 @@ class MemoryStore {
     this.store = new Map()
   }
 
-  async increment(key: string): Promise<{ success: boolean; limit: number; remaining: number; reset: number }> {
+  async increment(key: string, limit: number): Promise<{ success: boolean; limit: number; remaining: number; reset: number }> {
     const now = Date.now()
     const item = this.store.get(key)
 
@@ -22,19 +22,19 @@ class MemoryStore {
       })
       return {
         success: true,
-        limit: 10,
-        remaining: 9,
+        limit: limit,
+        remaining: limit - 1,
         reset: now + 10000,
       }
     }
 
     // Increment count
     item.count++
-    
-    if (item.count > 10) {
+
+    if (item.count > limit) {
       return {
         success: false,
-        limit: 10,
+        limit: limit,
         remaining: 0,
         reset: item.reset,
       }
@@ -42,8 +42,8 @@ class MemoryStore {
 
     return {
       success: true,
-      limit: 10,
-      remaining: 10 - item.count,
+      limit: limit,
+      remaining: limit - item.count,
       reset: item.reset,
     }
   }
@@ -74,7 +74,7 @@ export async function rateLimit(identifier: string, limit: number = 10): Promise
       })
 
       const result = await ratelimit.limit(identifier)
-      
+
       return {
         success: result.success,
         limit: result.limit,
@@ -83,21 +83,21 @@ export async function rateLimit(identifier: string, limit: number = 10): Promise
       }
     } catch (error) {
       console.error('Upstash rate limit error, falling back to memory:', error)
-      return memoryStore.increment(identifier)
+      return memoryStore.increment(identifier, limit)
     }
   }
 
   // Fallback to in-memory rate limiting
-  return memoryStore.increment(identifier)
+  return memoryStore.increment(identifier, limit)
 }
 
 // Specific rate limiters for different endpoints
 export async function rateLimitAuth(identifier: string) {
-  return rateLimit(`auth:${identifier}`, 5) // 5 attempts per 10 seconds
+  return rateLimit(`auth:${identifier}`, 10) // 10 attempts per 10 seconds
 }
 
 export async function rateLimitAPI(identifier: string) {
-  return rateLimit(`api:${identifier}`, 20) // 20 requests per 10 seconds
+  return rateLimit(`api:${identifier}`, 60) // 60 requests per 10 seconds (increased for local dev)
 }
 
 export async function rateLimitAI(identifier: string) {

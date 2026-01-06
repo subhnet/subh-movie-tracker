@@ -25,11 +25,11 @@ interface MovieGridProps {
 }
 
 // Memoize individual movie card for better performance
-const MovieCard = memo(({ 
-  movie, 
-  onMove, 
-  onEdit, 
-  onDelete, 
+const MovieCard = memo(({
+  movie,
+  onMove,
+  onEdit,
+  onDelete,
   onViewDetails,
   currentType,
   isEditing,
@@ -109,9 +109,9 @@ const MovieCard = memo(({
     <div className="group relative bg-white/5 backdrop-blur-sm rounded-xl border border-white/10 transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:border-white/30">
       {/* Glow effect */}
       <div className="absolute inset-0 bg-gradient-to-br from-blue-500/0 to-purple-500/0 group-hover:from-blue-500/20 group-hover:to-purple-500/20 transition-all duration-300 pointer-events-none rounded-xl"></div>
-      
+
       {/* Poster */}
-      <div 
+      <div
         className="relative aspect-[2/3] bg-gradient-to-br from-gray-800 to-gray-900 rounded-t-xl overflow-visible cursor-pointer"
         onClick={() => onViewDetails(movie)}
         title="Click to view details"
@@ -124,9 +124,9 @@ const MovieCard = memo(({
             priority={priority}
           />
         </div>
-        
+
         {/* Rating badge */}
-        {movie.rating && (
+        {movie.rating && !isNaN(parseFloat(movie.rating)) && (
           <div className="absolute top-3 right-3 bg-gradient-to-br from-yellow-400 to-orange-500 px-3 py-1.5 rounded-full shadow-lg transform transition-all duration-300 group-hover:scale-110 z-10">
             <span className="text-white text-xs font-black flex items-center gap-1">
               <svg className="w-3 h-3 fill-current" viewBox="0 0 20 20">
@@ -136,7 +136,7 @@ const MovieCard = memo(({
             </span>
           </div>
         )}
-        
+
         {/* Actions overlay */}
         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center gap-3 z-20">
           <div className="relative group/move">
@@ -180,7 +180,7 @@ const MovieCard = memo(({
               )}
             </div>
           </div>
-          
+
           <button
             onClick={() => onEdit(movie)}
             className="w-10 h-10 bg-purple-600/90 hover:bg-purple-600 backdrop-blur-sm text-white rounded-full transition-all flex items-center justify-center shadow-lg hover:scale-110 transform"
@@ -191,7 +191,7 @@ const MovieCard = memo(({
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
             </svg>
           </button>
-          
+
           <button
             onClick={() => onDelete(movie.id)}
             className="w-10 h-10 bg-red-600/90 hover:bg-red-600 backdrop-blur-sm text-white rounded-full transition-all disabled:opacity-50 flex items-center justify-center shadow-lg hover:scale-110 transform"
@@ -205,7 +205,7 @@ const MovieCard = memo(({
           </button>
         </div>
       </div>
-      
+
       {/* Movie info */}
       <div className="p-3">
         <h3 className="text-white font-semibold text-sm mb-1 line-clamp-2 min-h-[2.5rem]">
@@ -274,7 +274,7 @@ export default function MovieGrid({ movies, onMoveMovie, onUpdateMovie, onDelete
 
   const handleDelete = async (movieId: string) => {
     if (!confirm('Are you sure you want to delete this movie?')) return
-    
+
     setIsDeleting(movieId)
     try {
       await onDeleteMovie(movieId)
@@ -296,14 +296,30 @@ export default function MovieGrid({ movies, onMoveMovie, onUpdateMovie, onDelete
     setSelectedMovie(null)
   }
 
-  const handleOverviewFetched = async (movieId: string, overview: string, posterUrl?: string) => {
+  const handleOverviewFetched = async (movieId: string, overview: string, posterUrl?: string, forceUpdate = false, providers?: any) => {
     try {
       // Update the movie in the database with the fetched overview
       const updates: any = { overview }
-      if (posterUrl && !selectedMovie?.poster_url) {
+
+      // Update poster if forced or if currently missing
+      if (posterUrl && (forceUpdate || !selectedMovie?.poster_url)) {
         updates.poster_url = posterUrl
       }
-      
+
+      // Update providers if available
+      if (providers) {
+        updates.providers = providers
+      }
+
+      // Update local state so modal reflects changes immediately
+      if (selectedMovie) {
+        setSelectedMovie({
+          ...selectedMovie,
+          ...updates,
+          poster_url: updates.poster_url || selectedMovie.poster_url
+        })
+      }
+
       await onUpdateMovie(movieId, updates)
     } catch (error) {
       console.error('Failed to save fetched overview:', error)
@@ -344,7 +360,7 @@ export default function MovieGrid({ movies, onMoveMovie, onUpdateMovie, onDelete
       </div>
 
       {/* Movie Details Modal */}
-      <MovieDetailsModal 
+      <MovieDetailsModal
         movie={selectedMovie}
         isOpen={isDetailsModalOpen}
         onClose={handleCloseDetailsModal}
