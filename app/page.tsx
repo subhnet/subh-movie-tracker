@@ -91,7 +91,7 @@ export default async function Dashboard() {
           {/* Manage Collection Card */}
           <a href="/manage-movies" className="block group relative overflow-hidden rounded-2xl h-48 transition-all hover:scale-[1.01] hover:shadow-xl hover:shadow-pink-500/10 border border-white/5">
             <div className="absolute inset-0 bg-gradient-to-br from-red-600/90 to-orange-600/90 transition-all duration-500"></div>
-            <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1536440136628-849c177e76a1?auto=format&fit=crop&q=80')] bg-cover bg-center mix-blend-overlay opacity-30"></div>
+            <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1536440136628-849c177e76a1?auto=format&fit=crop&q=80&w=800')] bg-cover bg-center mix-blend-overlay opacity-30"></div>
             <div className="relative h-full p-6 flex flex-col justify-between z-10">
               <div className="flex justify-between items-start">
                 <span className="p-2.5 bg-white/20 backdrop-blur-md rounded-xl">
@@ -108,7 +108,7 @@ export default async function Dashboard() {
           {/* AI Assistant Mini Card */}
           <a href="/chat" className="block group relative overflow-hidden rounded-2xl h-48 transition-all hover:scale-[1.01] hover:shadow-xl hover:shadow-blue-500/10 border border-white/5">
             <div className="absolute inset-0 bg-gradient-to-br from-blue-600/90 to-indigo-600/90 transition-all duration-500"></div>
-            <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1531297461136-82lw9b29154a?auto=format&fit=crop&q=80')] bg-cover bg-center mix-blend-overlay opacity-30"></div>
+            <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1531297461136-82lw9b29154a?auto=format&fit=crop&q=80&w=800')] bg-cover bg-center mix-blend-overlay opacity-30"></div>
             <div className="relative h-full p-6 flex flex-col justify-between z-10">
               <div className="flex justify-between items-start">
                 <span className="p-2.5 bg-white/20 backdrop-blur-md rounded-xl">
