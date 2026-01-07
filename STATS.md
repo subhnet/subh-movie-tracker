@@ -1,20 +1,20 @@
 # 🎬 Movie Tracker Statistics
 
-*Last Updated: 1/6/2026, 1:00:06 AM*
+*Last Updated: 1/7/2026, 1:00:41 AM*
 
 ---
 
 ## 🍿 Watched Movies
 
-- **Total Watched:** 593
-- **Rated:** 593
+- **Total Watched:** 594
+- **Rated:** 594
 - **Unrated:** 0
 - **Average Rating:** 7.03/10
 
 ### Rating Distribution
 
 - **10★**: 20 ████
-- **9★**: 35 ███████
+- **9★**: 36 ████████
 - **8★**: 146 ██████████████████████████████
 - **7★**: 214 ███████████████████████████████████████████
 - **6★**: 124 █████████████████████████
@@ -39,26 +39,26 @@
 
 ### 📅 Watching Patterns
 
-- **Movies with watch dates:** 593
-- **Most active month:** 2026-01 (299 movies)
+- **Movies with watch dates:** 594
+- **Most active month:** 2026-01 (300 movies)
 
 **By Year:**
-- 2026: 299 movies
+- 2026: 300 movies
 - 2025: 294 movies
 
 ## 📝 Want to Watch
 
-- **Total on Watchlist:** 197
+- **Total on Watchlist:** 196
 - **Pre-rated:** 0
-- **Completion Rate:** 75.1%
+- **Completion Rate:** 75.2%
 
 ### Recently Added to Watchlist
 
-1. Eko
-2. Stand by Me
-3. Dead Poets Society
-4. Casino
-5. The Shadow's Edge
+1. Stand by Me
+2. Dead Poets Society
+3. Casino
+4. The Shadow's Edge
+5. Mulholland Drive
 
 ## 📺 TV Shows
 
@@ -77,8 +77,8 @@
 ## 📊 Overall Summary
 
 - **Total Tracked Content:** 887
-- **Movies Watched:** 593
-- **Movies to Watch:** 197
+- **Movies Watched:** 594
+- **Movies to Watch:** 196
 - **TV Shows:** 97
 - **Overall Average Rating:** 7.03/10
 
