@@ -8,9 +8,12 @@ const nextConfig = {
   // Experimental features
   experimental: {
     serverActions: {
-      allowedOrigins: ['localhost:3000'],
+      allowedOrigins: ['localhost:3000', 'cinepath.vercel.app'],
     },
   },
+  poweredByHeader: false,
+  reactStrictMode: true,
+  compress: true,
   images: {
     remotePatterns: [
       {

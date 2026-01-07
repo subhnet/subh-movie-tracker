@@ -1,9 +1,9 @@
 import { NextResponse } from 'next/server'
-import OpenAI from 'openai'
 import { z } from 'zod'
 import { getDashboardData } from '@/lib/csv-reader'
 import { supabase } from '@/lib/supabase'
 import { rateLimitAI } from '@/lib/rate-limit'
+import { getAIProvider } from '@/lib/ai-service'
 
 // Movie type definition
 interface Movie {
@@ -17,16 +17,6 @@ interface Movie {
 const recommendRequestSchema = z.object({
   type: z.enum(['general', 'watchlist']).default('general'),
   userId: z.string().uuid().optional()
-})
-
-// Configure OpenRouter using OpenAI SDK
-const openai = new OpenAI({
-  apiKey: process.env.OPENROUTER_API_KEY || '',
-  baseURL: 'https://openrouter.ai/api/v1',
-  defaultHeaders: {
-    'HTTP-Referer': process.env.OPENROUTER_APP_URL || 'http://localhost:3000',
-    'X-Title': process.env.OPENROUTER_APP_NAME || 'Movie Tracker',
-  },
 })
 
 export async function POST(request: Request) {
@@ -212,152 +202,82 @@ Return JSON object:
 }`
     }
 
-    // Call OpenRouter (Using Google Gemini 2.0 Flash - Free & Powerful)
-    const response = await openai.chat.completions.create({
-      model: 'google/gemini-2.0-flash-exp:free',
-      messages: [
-        {
-          role: 'system',
-          content: 'You are CineMate, an elite film curator with encyclopedic knowledge of cinema history, directors, and screenwriting. Your recommendations are insightful, personalized, and go beyond surface-level genre matches. You speak eloquently but concisely.'
-        },
-        {
-          role: 'user',
-          content: prompt
-        }
-      ],
-      temperature: 0.8, // Slightly higher for more creative/diverse picks
-      max_tokens: 3000,
-      response_format: { type: 'json_object' } as any,
-    })
+    // Call AI Provider (Gemini or OpenRouter logic)
+    const systemPrompt = 'You are CineMate, an elite film curator with encyclopedic knowledge of cinema history, directors, and screenwriting. Your recommendations are insightful, personalized, and go beyond surface-level genre matches. You speak eloquently but concisely.'
 
-    const content = response.choices[0]?.message?.content || '{}'
-
-    console.log('OpenRouter response:', content)
-
-    // Parse recommendations
-    let recommendations
     try {
-      // Try to extract JSON from markdown code blocks if present
-      let jsonContent = content.trim()
-      if (jsonContent.includes('```json')) {
-        jsonContent = jsonContent.split('```json')[1].split('```')[0].trim()
-      } else if (jsonContent.includes('```')) {
-        jsonContent = jsonContent.split('```')[1].split('```')[0].trim()
+      const provider = getAIProvider()
+      const recommendationsResponse = await provider.generateResponse(systemPrompt, prompt)
+
+      // Parse recommendations
+      let recommendations = recommendationsResponse
+
+      // Handle raw array or nested object formats
+      if (typeof recommendations === 'string') {
+        try {
+          recommendations = JSON.parse(recommendations)
+        } catch (e) {
+          // ignore parsing error if it's already an object
+        }
       }
 
-      const parsed = JSON.parse(jsonContent)
-
-      // Handle different response formats
-      if (Array.isArray(parsed)) {
-        recommendations = parsed
-      } else if (parsed.recommendations && Array.isArray(parsed.recommendations)) {
-        recommendations = parsed.recommendations
-      } else if (parsed.movies && Array.isArray(parsed.movies)) {
-        recommendations = parsed.movies
-      } else if (typeof parsed === 'object') {
-        // If it's a single object, wrap it in an array
-        recommendations = [parsed]
+      // Normalize response structure
+      if (Array.isArray(recommendations)) {
+        // perfect
+      } else if (recommendations.recommendations && Array.isArray(recommendations.recommendations)) {
+        recommendations = recommendations.recommendations
+      } else if (recommendations.movies && Array.isArray(recommendations.movies)) {
+        recommendations = recommendations.movies
+      } else if (typeof recommendations === 'object') {
+        recommendations = [recommendations]
       } else {
-        throw new Error('Unexpected response format')
+        console.error('Unexpected recommendations format:', recommendations)
+        throw new Error('AI returned unexpected format')
       }
 
-      // Filter out any recommendations that are already watched (case-insensitive match)
+      // Filter out already watched
       const watchedTitlesLower = allWatchedTitles.map(t => t.toLowerCase().trim())
-      const filteredRecommendations = recommendations.filter((rec: any) => {
+      recommendations = recommendations.filter((rec: any) => {
+        if (!rec || !rec.title) return false
         const recTitle = rec.title.toLowerCase().trim()
         return !watchedTitlesLower.includes(recTitle)
       })
 
-      // Log if any were filtered out
-      if (filteredRecommendations.length < recommendations.length) {
-        console.log(`Filtered out ${recommendations.length - filteredRecommendations.length} already-watched movies`)
-        const filtered = recommendations.filter((rec: any) => {
-          const recTitle = rec.title.toLowerCase().trim()
-          return watchedTitlesLower.includes(recTitle)
-        })
-        console.log('Filtered titles:', filtered.map((r: any) => r.title))
+      return NextResponse.json({ recommendations })
+
+    } catch (aiError: any) {
+      console.error('AI Provider Error:', aiError)
+
+      // Specialized error messaging
+      if (aiError.message.includes('GEMINI_API_KEY is missing')) {
+        return NextResponse.json(
+          { error: 'Gemini API Key is missing. Please add GEMINI_API_KEY to your .env file.' },
+          { status: 500 }
+        )
+      }
+      if (aiError.message.includes('OPENROUTER_API_KEY is missing')) {
+        return NextResponse.json(
+          { error: 'OpenRouter API Key is missing. Please add a key or switch AI_PROVIDER to gemini.' },
+          { status: 500 }
+        )
       }
 
-      recommendations = filteredRecommendations
-
-    } catch (parseError: any) {
-      console.error('JSON parsing error:', parseError.message)
-      console.error('Raw content:', content)
-
-      // Return error with the actual parsing issue
-      return NextResponse.json(
-        {
-          error: 'Failed to parse AI response. The model returned invalid JSON.',
-          recommendations: [],
-          debug: { content: content.substring(0, 500) }
-        },
-        { status: 500 }
-      )
+      throw aiError // Re-throw to be caught by outer catch
     }
 
-    return NextResponse.json({ recommendations })
-
   } catch (error: any) {
-    console.error('Error generating recommendations:', error)
+    console.error('Error in recommend route:', error)
 
-    // Handle Zod validation errors
     if (error.name === 'ZodError') {
       return NextResponse.json(
-        {
-          error: 'Invalid request data',
-          details: error.errors.map((e: any) => `${e.path.join('.')}: ${e.message}`),
-          recommendations: []
-        },
+        { error: 'Invalid request data', details: error.errors },
         { status: 400 }
       )
     }
 
-    console.error('Error details:', {
-      message: error.message,
-      status: error.status,
-      code: error.code,
-      type: error.type
-    })
-
-    // Provide helpful error messages
-    if (error.code === 'insufficient_quota' || error.status === 402) {
-      return NextResponse.json(
-        {
-          error: 'OpenRouter API quota exceeded. Please add credits to your OpenRouter account.',
-          recommendations: []
-        },
-        { status: 402 }
-      )
-    }
-
-    if (error.status === 401 || error.message?.includes('401')) {
-      return NextResponse.json(
-        {
-          error: 'Invalid OpenRouter API key. Please check your API key in .env.local',
-          recommendations: []
-        },
-        { status: 401 }
-      )
-    }
-
-    if (!process.env.OPENROUTER_API_KEY) {
-      return NextResponse.json(
-        {
-          error: 'OpenRouter API key not configured. Add OPENROUTER_API_KEY to .env.local',
-          recommendations: []
-        },
-        { status: 500 }
-      )
-    }
-
     return NextResponse.json(
-      {
-        error: `API Error: ${error.message || 'Failed to generate recommendations'}`,
-        recommendations: [],
-        debug: { status: error.status, code: error.code }
-      },
+      { error: `API Error: ${error.message || 'Failed to generate recommendations'}` },
       { status: 500 }
     )
   }
 }
-
