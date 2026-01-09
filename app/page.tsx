@@ -2,8 +2,6 @@ import { redirect } from 'next/navigation'
 import { getServerUser } from '@/lib/auth-server'
 import { fetchUserMovies } from '@/lib/data-fetcher'
 import StatCards from './components/StatCards'
-import RatingChart from './components/RatingChart'
-import TopRatedTable from './components/TopRatedTable'
 import ClientDashboard from './components/ClientDashboard'
 
 export default async function Dashboard() {
@@ -19,7 +17,7 @@ export default async function Dashboard() {
   const allMovies = [...data.watched, ...data.wants, ...data.shows]
 
   return (
-    <div className="max-w-[1600px] mx-auto space-y-6 pb-20 pt-28">
+    <div className="max-w-[1600px] mx-auto space-y-6 pb-20">
       {/* Hero Header - More Compact */}
       <header className="relative mb-6">
         {/* Subtle background glow, less overwhelming than before */}
@@ -55,89 +53,60 @@ export default async function Dashboard() {
         />
       </div>
 
-      {/* Analytics Grid - Charts & Tables Combined */}
-      <div className="grid grid-cols-1 xl:grid-cols-3 gap-6 px-4 md:px-0">
-        {/* Charts Column (2/3 width) */}
-        <div className="xl:col-span-2 space-y-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {/* Movie Ratings Chart */}
-            <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-5 h-64 flex flex-col">
-              <RatingChart
-                title="Movie Rating Distribution"
-                distribution={data.watchedStats.distribution}
-                color="rgba(96, 165, 250, 0.9)"
-              />
+      {/* Feature Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 px-4 md:px-0">
+        {/* Manage Collection Card */}
+        <a href="/manage-movies" className="block group relative overflow-hidden rounded-2xl h-48 transition-all hover:scale-[1.01] hover:shadow-xl hover:shadow-pink-500/10 border border-white/5">
+          <div className="absolute inset-0 bg-gradient-to-br from-red-600/90 to-orange-600/90 transition-all duration-500"></div>
+          <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1536440136628-849c177e76a1?auto=format&fit=crop&q=80&w=800')] bg-cover bg-center mix-blend-overlay opacity-30"></div>
+          <div className="relative h-full p-6 flex flex-col justify-between z-10">
+            <div className="flex justify-between items-start">
+              <span className="p-2.5 bg-white/20 backdrop-blur-md rounded-xl">
+                <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" /></svg>
+              </span>
             </div>
-
-            {/* TV Ratings Chart */}
-            <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-5 h-64 flex flex-col">
-              <RatingChart
-                title="TV Show Rating Distribution"
-                distribution={data.showsStats.distribution}
-                color="rgba(244, 114, 182, 0.9)"
-              />
+            <div>
+              <h3 className="text-2xl font-black text-white mb-1">Manage Library</h3>
+              <p className="text-white/80 text-sm font-medium">Organize your {allMovies.length} items</p>
             </div>
           </div>
+        </a>
 
-          {/* Top Rated Tables */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <TopRatedTable title="🎬 Top Movies" movies={topRatedMovies} />
-            <TopRatedTable title="📺 Top Shows" movies={topRatedShows} />
-          </div>
-        </div>
-
-        {/* Sidebar / Feature Column (1/3 width) */}
-        <div className="space-y-4">
-          {/* Manage Collection Card */}
-          <a href="/manage-movies" className="block group relative overflow-hidden rounded-2xl h-48 transition-all hover:scale-[1.01] hover:shadow-xl hover:shadow-pink-500/10 border border-white/5">
-            <div className="absolute inset-0 bg-gradient-to-br from-red-600/90 to-orange-600/90 transition-all duration-500"></div>
-            <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1536440136628-849c177e76a1?auto=format&fit=crop&q=80&w=800')] bg-cover bg-center mix-blend-overlay opacity-30"></div>
-            <div className="relative h-full p-6 flex flex-col justify-between z-10">
-              <div className="flex justify-between items-start">
-                <span className="p-2.5 bg-white/20 backdrop-blur-md rounded-xl">
-                  <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" /></svg>
-                </span>
-              </div>
-              <div>
-                <h3 className="text-2xl font-black text-white mb-1">Manage Library</h3>
-                <p className="text-white/80 text-sm font-medium">Organize your {allMovies.length} items</p>
-              </div>
+        {/* Analytics Card (New) */}
+        <a href="/analytics" className="block group relative overflow-hidden rounded-2xl h-48 transition-all hover:scale-[1.01] hover:shadow-xl hover:shadow-cyan-500/10 border border-white/5">
+          <div className="absolute inset-0 bg-gradient-to-br from-cyan-600/90 to-blue-600/90 transition-all duration-500"></div>
+          <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=800')] bg-cover bg-center mix-blend-overlay opacity-30"></div>
+          <div className="relative h-full p-6 flex flex-col justify-between z-10">
+            <div className="flex justify-between items-start">
+              <span className="p-2.5 bg-white/20 backdrop-blur-md rounded-xl">
+                <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>
+              </span>
+              <span className="px-2 py-1 bg-white/20 backdrop-blur-md rounded-lg text-[10px] font-bold text-white uppercase">New</span>
             </div>
-          </a>
-
-          {/* AI Assistant Mini Card */}
-          <a href="/chat" className="block group relative overflow-hidden rounded-2xl h-48 transition-all hover:scale-[1.01] hover:shadow-xl hover:shadow-blue-500/10 border border-white/5">
-            <div className="absolute inset-0 bg-gradient-to-br from-blue-600/90 to-indigo-600/90 transition-all duration-500"></div>
-            <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1531297461136-82lw9b29154a?auto=format&fit=crop&q=80&w=800')] bg-cover bg-center mix-blend-overlay opacity-30"></div>
-            <div className="relative h-full p-6 flex flex-col justify-between z-10">
-              <div className="flex justify-between items-start">
-                <span className="p-2.5 bg-white/20 backdrop-blur-md rounded-xl">
-                  <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" /></svg>
-                </span>
-                <span className="px-2 py-1 bg-white/20 backdrop-blur-md rounded-lg text-[10px] font-bold text-white uppercase">Beta</span>
-              </div>
-              <div>
-                <h3 className="text-2xl font-black text-white mb-1">Ask CineMate</h3>
-                <p className="text-white/80 text-sm font-medium">Get insights on your viewing habits</p>
-              </div>
-            </div>
-          </a>
-
-          {/* Quick Tip */}
-          <div className="bg-white/5 border border-white/5 rounded-2xl p-5 backdrop-blur-md">
-            <div className="flex items-start gap-3">
-              <div className="flex-shrink-0 w-8 h-8 rounded-full bg-yellow-500/20 flex items-center justify-center text-yellow-400">
-                💡
-              </div>
-              <div>
-                <h4 className="text-sm font-bold text-white mb-1">Did you know?</h4>
-                <p className="text-xs text-white/60 leading-relaxed">
-                  You can drag and drop movies in your watchlist to reorder your priority list.
-                </p>
-              </div>
+            <div>
+              <h3 className="text-2xl font-black text-white mb-1">Analytics</h3>
+              <p className="text-white/80 text-sm font-medium">Rating distributions & top lists</p>
             </div>
           </div>
-        </div>
+        </a>
+
+        {/* AI Assistant Mini Card */}
+        <a href="/chat" className="block group relative overflow-hidden rounded-2xl h-48 transition-all hover:scale-[1.01] hover:shadow-xl hover:shadow-blue-500/10 border border-white/5">
+          <div className="absolute inset-0 bg-gradient-to-br from-blue-600/90 to-indigo-600/90 transition-all duration-500"></div>
+          <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1531297461136-82lw9b29154a?auto=format&fit=crop&q=80&w=800')] bg-cover bg-center mix-blend-overlay opacity-30"></div>
+          <div className="relative h-full p-6 flex flex-col justify-between z-10">
+            <div className="flex justify-between items-start">
+              <span className="p-2.5 bg-white/20 backdrop-blur-md rounded-xl">
+                <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" /></svg>
+              </span>
+              <span className="px-2 py-1 bg-white/20 backdrop-blur-md rounded-lg text-[10px] font-bold text-white uppercase">Beta</span>
+            </div>
+            <div>
+              <h3 className="text-2xl font-black text-white mb-1">Ask CineMate</h3>
+              <p className="text-white/80 text-sm font-medium">Get insights on your viewing habits</p>
+            </div>
+          </div>
+        </a>
       </div>
 
       <ClientDashboard

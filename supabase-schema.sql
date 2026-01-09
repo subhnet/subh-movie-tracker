@@ -22,6 +22,9 @@ CREATE TABLE movies (
   tags TEXT,
   type VARCHAR(20) NOT NULL CHECK (type IN ('watched', 'want', 'show')),
   poster_url TEXT,
+  overview TEXT,
+  providers JSONB,
+  credits JSONB,
   created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );

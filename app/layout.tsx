@@ -75,7 +75,7 @@ export default function RootLayout({
       </head>
       <body className="min-h-screen bg-gradient-to-br from-primary-500 via-secondary-500 to-primary-600">
         <Navbar />
-        <main className="py-12 px-4 sm:px-6 lg:px-8">
+        <main className="pt-24 pb-12 px-4 sm:px-6 lg:px-8">
           {children}
         </main>
         <footer className="text-center text-white/70 py-10 text-sm border-t border-white/10 mt-12">

@@ -124,12 +124,25 @@ export default function MovieList({ movies, onMoveMovie, onUpdateMovie, onDelete
     setSelectedMovie(null)
   }
 
-  const handleOverviewFetched = async (movieId: string, overview: string, posterUrl?: string) => {
+  const handleOverviewFetched = async (movieId: string, overview: string, posterUrl?: string, forceUpdate = false, providers?: any, credits?: any) => {
     try {
       // Update the movie in the database with the fetched overview
       const updates: any = { overview }
-      if (posterUrl && !selectedMovie?.poster_url) {
+      if (posterUrl && (!selectedMovie?.poster_url || forceUpdate)) {
         updates.poster_url = posterUrl
+      }
+      if (providers) {
+        updates.providers = providers
+      }
+      if (credits) {
+        updates.credits = credits
+      }
+      if (selectedMovie) {
+        setSelectedMovie({
+          ...selectedMovie,
+          ...updates,
+          poster_url: updates.poster_url || selectedMovie.poster_url
+        })
       }
 
       await onUpdateMovie(movieId, updates)

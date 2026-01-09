@@ -19,7 +19,7 @@ interface Movie {
 interface MovieGridProps {
   movies: Movie[]
   onMoveMovie: (movieId: string, newType: string) => Promise<void>
-  onUpdateMovie: (movieId: string, updates: { title?: string; rating?: string; tags?: string; poster_url?: string }) => Promise<void>
+  onUpdateMovie: (movieId: string, updates: { title?: string; rating?: string; tags?: string; poster_url?: string; overview?: string; providers?: any; credits?: any }) => Promise<void>
   onDeleteMovie: (movieId: string) => Promise<void>
   currentType: string
   isLoading?: boolean
@@ -305,7 +305,7 @@ export default function MovieGrid({ movies, onMoveMovie, onUpdateMovie, onDelete
     setSelectedMovie(null)
   }
 
-  const handleOverviewFetched = async (movieId: string, overview: string, posterUrl?: string, forceUpdate = false, providers?: any) => {
+  const handleOverviewFetched = async (movieId: string, overview: string, posterUrl?: string, forceUpdate = false, providers?: any, credits?: any) => {
     try {
       const updates: any = { overview }
       if (posterUrl && (forceUpdate || !selectedMovie?.poster_url)) {
@@ -313,6 +313,9 @@ export default function MovieGrid({ movies, onMoveMovie, onUpdateMovie, onDelete
       }
       if (providers) {
         updates.providers = providers
+      }
+      if (credits) {
+        updates.credits = credits
       }
       if (selectedMovie) {
         setSelectedMovie({

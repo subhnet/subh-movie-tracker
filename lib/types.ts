@@ -1,3 +1,15 @@
+export interface Credit {
+  name: string
+  profile_path?: string | null
+  job?: string // For crew
+  character?: string // For cast
+}
+
+export interface Credits {
+  cast: Credit[]
+  crew: Credit[]
+}
+
 export interface Movie {
   title: string;
   rating: string;
@@ -13,6 +25,7 @@ export interface Movie {
   type?: string;
   created_at?: string;
   user_id?: string;
+  credits?: Credits;
 }
 
 export interface MovieStats {

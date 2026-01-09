@@ -26,7 +26,8 @@ const updateMovieSchema = z.object({
   posterUrl: z.string().url().optional().or(z.literal('')),
   poster_url: z.string().url().optional().or(z.literal('')),
   overview: z.string().max(2000).optional(),
-  providers: z.any().optional()
+  providers: z.any().optional(),
+  credits: z.any().optional()
 })
 
 // ... (inside PUT)
@@ -75,7 +76,8 @@ export async function GET(request: Request) {
     // Fetch from database
     let query = supabase
       .from('movies')
-      .select('*')
+      // Optimize: Exclude heavy columns like credits/overview. Include providers for filtering.
+      .select('id, title, rating, tags, type, poster_url, providers, created_at, user_id')
       .eq('user_id', userId)
       .order('created_at', { ascending: false })
 
@@ -238,6 +240,7 @@ export async function PUT(request: Request) {
     if (poster_url !== undefined) updateData.poster_url = poster_url
     if (overview !== undefined) updateData.overview = overview
     if (providers !== undefined) updateData.providers = providers
+    if (validatedData.credits !== undefined) updateData.credits = validatedData.credits
 
     // Update in database
     const { data: updatedMovie, error: updateError } = await supabase

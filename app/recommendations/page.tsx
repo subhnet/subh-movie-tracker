@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import { getUser } from '@/lib/auth'
 import { useRouter } from 'next/navigation'
 import type { Recommendation } from '@/lib/types'
+import MovieDetailsModal from '../components/MovieDetailsModal'
 
 export default function RecommendationsPage() {
   const router = useRouter()
@@ -13,6 +14,8 @@ export default function RecommendationsPage() {
   const [type, setType] = useState<'general' | 'watchlist'>('general')
   const [user, setUser] = useState<any>(null)
   const [addingMovie, setAddingMovie] = useState<number | null>(null)
+  const [selectedMovie, setSelectedMovie] = useState<any>(null)
+  const [isModalOpen, setIsModalOpen] = useState(false)
 
   useEffect(() => {
     setUser(getUser())
@@ -123,6 +126,19 @@ export default function RecommendationsPage() {
     } finally {
       setAddingMovie(null)
     }
+  }
+
+  const handleMovieClick = (rec: Recommendation) => {
+    setSelectedMovie({
+      id: 'temp-' + Date.now(),
+      title: rec.title,
+      rating: '',
+      tags: rec.genres?.join(', ') || '',
+      type: 'want', // Default to 'want' for search context (movies)
+      poster_url: rec.posterUrl,
+      // Leave overview/providers/credits empty to trigger auto-fetch in modal
+    })
+    setIsModalOpen(true)
   }
 
   return (
@@ -256,7 +272,7 @@ export default function RecommendationsPage() {
 
       {/* Results Section */}
       {recommendations.length > 0 && (
-        <div className="animate-in fade-in slide-in-from-bottom-8 duration-700">
+        <div className="animate-in fade-in slide-in-from-bottom-8 duration-700 pb-20">
           <div className="flex items-center gap-3 mb-8">
             <h2 className="text-3xl font-bold text-white">Your Personalized Picks</h2>
             <div className="h-px flex-1 bg-gradient-to-r from-white/20 to-transparent"></div>
@@ -266,7 +282,8 @@ export default function RecommendationsPage() {
             {recommendations.map((rec, index) => (
               <div
                 key={index}
-                className="group relative"
+                className="group relative cursor-pointer"
+                onClick={() => handleMovieClick(rec)}
               >
                 <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 via-purple-500/10 to-pink-500/10 rounded-3xl blur-xl group-hover:blur-2xl transition-all duration-300 opacity-50"></div>
                 <div className="relative bg-white/5 backdrop-blur-xl rounded-3xl p-6 md:p-8 shadow-2xl border border-white/10 hover:border-white/20 transition-all duration-300">
@@ -288,6 +305,10 @@ export default function RecommendationsPage() {
                         <div className="absolute top-3 left-3 w-10 h-10 rounded-xl bg-black/60 backdrop-blur-md flex items-center justify-center text-white font-bold border border-white/20 shadow-lg">
                           #{index + 1}
                         </div>
+                        {/* Overlay hint */}
+                        <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                          <span className="text-white text-xs font-bold uppercase tracking-wider bg-black/60 px-3 py-1 rounded-full backdrop-blur-md border border-white/20">View Details</span>
+                        </div>
                       </div>
                     </div>
 
@@ -295,7 +316,7 @@ export default function RecommendationsPage() {
                     <div className="flex-1 min-w-0 text-center md:text-left flex flex-col">
                       <div className="mb-4">
                         <div className="flex flex-wrap items-center justify-center md:justify-start gap-3 mb-2">
-                          <h3 className="text-3xl font-bold text-white tracking-tight">
+                          <h3 className="text-3xl font-bold text-white tracking-tight group-hover:text-blue-200 transition-colors">
                             {rec.title}
                           </h3>
                           <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-500/20 text-green-300 border border-green-500/30">
@@ -322,10 +343,13 @@ export default function RecommendationsPage() {
                         </p>
                       </div>
 
-                      {/* Add to List Buttons */}
+                      {/* Add to List Buttons (Stop Propagation to prevent opening modal if button clicked) */}
                       <div className="mt-auto flex flex-wrap gap-3 justify-center md:justify-start">
                         <button
-                          onClick={() => handleAddToList(rec, 'want', index)}
+                          onClick={(e) => {
+                            e.stopPropagation()
+                            handleAddToList(rec, 'want', index)
+                          }}
                           disabled={addingMovie === index}
                           className="flex items-center gap-2 bg-white text-black px-6 py-3 rounded-xl font-bold hover:bg-white/90 transition-all disabled:opacity-50 disabled:cursor-not-allowed text-sm shadow-lg hover:shadow-white/20 active:translate-y-0.5"
                         >
@@ -335,7 +359,10 @@ export default function RecommendationsPage() {
                           Add to Watchlist
                         </button>
                         <button
-                          onClick={() => handleAddToList(rec, 'watched', index)}
+                          onClick={(e) => {
+                            e.stopPropagation()
+                            handleAddToList(rec, 'watched', index)
+                          }}
                           className="flex items-center gap-2 bg-white/5 text-white px-6 py-3 rounded-xl font-bold hover:bg-white/10 transition-all text-sm border border-white/10 hover:border-white/20 active:translate-y-0.5"
                         >
                           <span className="text-lg">👀</span>
@@ -350,6 +377,23 @@ export default function RecommendationsPage() {
           </div>
         </div>
       )}
+
+      {/* Movie Details Modal */}
+      {selectedMovie && (
+        <MovieDetailsModal
+          movie={selectedMovie}
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          onMoveMovie={async (movieId, newType) => {
+            // Find the recommendation object since handleAddToList needs it
+            const rec = recommendations.find(r => r.title === selectedMovie.title)
+            if (rec) {
+              await handleAddToList(rec, newType as any, -1)
+            }
+          }}
+        />
+      )}
     </div>
   )
 }
+

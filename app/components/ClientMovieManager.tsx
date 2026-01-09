@@ -132,7 +132,18 @@ export default function ClientMovieManager({ initialMovies, userId, username }: 
       body: JSON.stringify(requestData)
     })
 
-    const result = await response.json()
+    let result
+    try {
+      const text = await response.text()
+      try {
+        result = JSON.parse(text)
+      } catch (e) {
+        console.error('Failed to parse response:', text)
+        throw new Error('Server returned invalid response')
+      }
+    } catch (e: any) {
+      throw new Error(e.message || 'Network error')
+    }
 
     if (!response.ok) {
       throw new Error(result.error || 'Failed to add movie')
@@ -162,7 +173,7 @@ export default function ClientMovieManager({ initialMovies, userId, username }: 
     await fetchMovies()
   }
 
-  const handleUpdateMovie = async (movieId: string, updates: { title?: string; rating?: string; tags?: string }) => {
+  const handleUpdateMovie = async (movieId: string, updates: { title?: string; rating?: string; tags?: string; poster_url?: string; overview?: string; providers?: any; credits?: any }) => {
     const response = await fetch('/api/user-movies', {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
@@ -327,8 +338,8 @@ export default function ClientMovieManager({ initialMovies, userId, username }: 
                   key={tab}
                   onClick={() => setActiveTab(tab)}
                   className={`relative px-6 py-2.5 rounded-xl text-sm font-bold transition-all whitespace-nowrap ${activeTab === tab
-                      ? 'text-white shadow-lg'
-                      : 'text-white/40 hover:text-white hover:bg-white/5'
+                    ? 'text-white shadow-lg'
+                    : 'text-white/40 hover:text-white hover:bg-white/5'
                     }`}
                 >
                   {activeTab === tab && (

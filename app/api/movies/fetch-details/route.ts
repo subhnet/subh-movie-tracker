@@ -82,17 +82,39 @@ async function fetchFromTMDB(title: string, type: string, apiKey: string) {
 
   const movie = data.results[0]
 
-  // Fetch cast information
-  let cast: string[] = []
+  // Fetch cast and crew information
+  let credits = { cast: [], crew: [] }
   try {
     const creditsUrl = `${TMDB_API_BASE}/${mediaType}/${movie.id}/credits?api_key=${apiKey}`
     const creditsResponse = await fetch(creditsUrl)
     if (creditsResponse.ok) {
       const creditsData = await creditsResponse.json()
-      // Get top 5 cast members
-      cast = creditsData.cast
-        ?.slice(0, 5)
-        .map((actor: any) => actor.name) || []
+
+      const cast = creditsData.cast
+        ?.slice(0, 10)
+        .map((person: any) => ({
+          name: person.name,
+          profile_path: person.profile_path ? `https://image.tmdb.org/t/p/w185${person.profile_path}` : null,
+          character: person.character
+        })) || []
+
+      // Get Director for movies or Creator for TV (mapped from crew usually)
+      const crew = creditsData.crew
+        ?.filter((person: any) => person.job === 'Director')
+        .slice(0, 5)
+        .map((person: any) => ({
+          name: person.name,
+          profile_path: person.profile_path ? `https://image.tmdb.org/t/p/w185${person.profile_path}` : null,
+          job: person.job
+        })) || []
+
+      // For TV shows, created_by is often on the main object, but let's stick to standard credits first.
+      // If it's a TV show, we might want 'Executive Producer' if 'Director' is missing or handled differently,
+      // but often specific episodes have directors.
+      // For general 'Creator', TMDB has `created_by` on the show details, but we are in search context.
+      // Let's stick to what we can get from credits endpoint effectively.
+
+      credits = { cast, crew }
     }
   } catch (error) {
     console.error('Failed to fetch TMDB cast:', error)
@@ -109,7 +131,7 @@ async function fetchFromTMDB(title: string, type: string, apiKey: string) {
       : null,
     rating: movie.vote_average ? movie.vote_average.toFixed(1) : null,
     year: dateString ? new Date(dateString).getFullYear() : null,
-    cast,
+    credits, // Return the structured credits object
     providers: await fetchTMDBProviders(movie.id, mediaType, apiKey),
     source: 'tmdb'
   }

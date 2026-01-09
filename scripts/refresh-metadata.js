@@ -70,11 +70,20 @@ async function run() {
                 ? `https://image.tmdb.org/t/p/w500${tmdbResult.poster_path}`
                 : null;
 
+            let credits = null;
+            const creditsResponse = await fetch(
+                `https://api.themoviedb.org/3/${endpoints}/${tmdbResult.id}/credits?api_key=${TMDB_API_KEY}`
+            );
+            if (creditsResponse.ok) {
+                credits = await creditsResponse.json();
+            }
+
             const updateData = {};
 
             if (!movie.poster_url && posterUrl) updateData.poster_url = posterUrl;
             if (!movie.overview && tmdbResult.overview) updateData.overview = tmdbResult.overview;
             if (providers) updateData.providers = providers;
+            if (credits) updateData.credits = credits;
 
             if (Object.keys(updateData).length > 0) {
                 const { error: updateError } = await supabase

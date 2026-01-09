@@ -43,14 +43,14 @@ export async function POST(request: Request) {
     // Rate limiting - 5 AI requests per 10 seconds
     const ip = request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip') || 'anonymous'
     const rateLimitResult = await rateLimitAI(ip)
-    
+
     if (!rateLimitResult.success) {
       return NextResponse.json(
-        { 
+        {
           error: 'Too many requests. Please wait a moment before trying again.',
           retryAfter: Math.ceil((rateLimitResult.reset - Date.now()) / 1000)
         },
-        { 
+        {
           status: 429,
           headers: {
             'Retry-After': String(Math.ceil((rateLimitResult.reset - Date.now()) / 1000)),
@@ -66,7 +66,7 @@ export async function POST(request: Request) {
     const body = await request.json()
     const validatedData = chatRequestSchema.parse(body)
     const { message, conversationHistory = [], userId } = validatedData
-    
+
     if (!message || typeof message !== 'string') {
       return NextResponse.json(
         { error: 'Message is required' },
@@ -79,9 +79,10 @@ export async function POST(request: Request) {
     if (userId) {
       const { data: movies, error } = await supabase
         .from('movies')
-        .select('*')
+        // Optimize: Only fetch columns needed for AI context
+        .select('title, rating, type, tags')
         .eq('user_id', userId)
-      
+
       if (error) {
         console.error('Error fetching user movies:', error)
         throw new Error('Failed to fetch user movies')
@@ -227,7 +228,7 @@ Remember: You're a knowledgeable friend helping them discover great movies based
 
     const assistantMessage = response.choices[0]?.message?.content || 'I apologize, but I had trouble generating a response. Please try again.'
 
-    return NextResponse.json({ 
+    return NextResponse.json({
       message: assistantMessage,
       conversationHistory: [
         ...conversationHistory,
@@ -235,28 +236,28 @@ Remember: You're a knowledgeable friend helping them discover great movies based
         { role: 'assistant', content: assistantMessage }
       ]
     })
-    
+
   } catch (error: any) {
     console.error('Error in chat:', error)
-    
+
     // Handle Zod validation errors
     if (error.name === 'ZodError') {
       return NextResponse.json(
-        { 
+        {
           error: 'Invalid request data',
           details: error.errors.map((e: any) => `${e.path.join('.')}: ${e.message}`)
         },
         { status: 400 }
       )
     }
-    
+
     console.error('Error details:', {
       message: error.message,
       status: error.status,
       code: error.code,
       type: error.type
     })
-    
+
     // Provide helpful error messages
     if (error.code === 'insufficient_quota' || error.status === 402) {
       return NextResponse.json(
@@ -264,21 +265,21 @@ Remember: You're a knowledgeable friend helping them discover great movies based
         { status: 402 }
       )
     }
-    
+
     if (error.status === 401 || error.message?.includes('401')) {
       return NextResponse.json(
         { error: 'AI service authentication failed. Please contact support.' },
         { status: 401 }
       )
     }
-    
+
     if (!process.env.OPENROUTER_API_KEY) {
       return NextResponse.json(
         { error: 'AI service not configured. Please contact administrator.' },
         { status: 500 }
       )
     }
-    
+
     return NextResponse.json(
       { error: `Chat error: ${error.message || 'Failed to process message'}` },
       { status: 500 }

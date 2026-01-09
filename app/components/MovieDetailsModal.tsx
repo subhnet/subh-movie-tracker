@@ -13,19 +13,20 @@ interface Movie {
   overview?: string | null
   created_at?: string
   providers?: any
+  credits?: any
 }
 
 interface MovieDetailsModalProps {
   movie: Movie | null
   isOpen: boolean
   onClose: () => void
-  onOverviewFetched?: (movieId: string, overview: string, posterUrl?: string, forceUpdate?: boolean, providers?: any) => void
+  onOverviewFetched?: (movieId: string, overview: string, posterUrl?: string, forceUpdate?: boolean, providers?: any, credits?: any) => void
   onMoveMovie?: (movieId: string, newType: string) => Promise<void>
 }
 
 export default function MovieDetailsModal({ movie, isOpen, onClose, onOverviewFetched, onMoveMovie }: MovieDetailsModalProps) {
   const [fetchedOverview, setFetchedOverview] = useState<string | null>(null)
-  const [fetchedCast, setFetchedCast] = useState<string[] | null>(null)
+  const [fetchedCredits, setFetchedCredits] = useState<{ cast: any[], crew: any[] } | null>(null)
   const [fetchedProviders, setFetchedProviders] = useState<any | null>(null)
   const [selectedCountry, setSelectedCountry] = useState('US')
   const [isLoadingOverview, setIsLoadingOverview] = useState(false)
@@ -65,12 +66,17 @@ export default function MovieDetailsModal({ movie, isOpen, onClose, onOverviewFe
   useEffect(() => {
     if (!isOpen || !movie) {
       setFetchedOverview(null)
-      setFetchedCast(null)
+      setFetchedCredits(null)
       setFetchedProviders(null)
       setFetchError(false)
       setFetchSource(null)
       return
     }
+
+    // Initialize with existing data if available
+    if (movie.overview) setFetchedOverview(movie.overview)
+    if (movie.credits) setFetchedCredits(movie.credits)
+    if (movie.providers) setFetchedProviders(movie.providers)
 
     // Prevent infinite loop: if we just fetched for this movie ID, don't fetch again
     // even if the movie object reference changed (which happens on db update)
@@ -79,6 +85,11 @@ export default function MovieDetailsModal({ movie, isOpen, onClose, onOverviewFe
     }
 
     lastFetchedIdRef.current = movie.id
+
+    // Check if we need to fetch anything
+    const missingData = !movie.overview || !movie.credits || !movie.providers
+
+    if (!missingData) return
 
     // Fetch overview and cast from API
     const fetchDetails = async () => {
@@ -98,9 +109,18 @@ export default function MovieDetailsModal({ movie, isOpen, onClose, onOverviewFe
           if (data.data.overview) {
             setFetchedOverview(data.data.overview)
           }
-          if (data.data.cast && data.data.cast.length > 0) {
-            setFetchedCast(data.data.cast)
+
+          // Handle both TMDB structured credits and OMDb flat cast array
+          if (data.data.credits) {
+            setFetchedCredits(data.data.credits)
+          } else if (data.data.cast && Array.isArray(data.data.cast)) {
+            // Adapt OMDb cast array to credits structure
+            setFetchedCredits({
+              cast: data.data.cast.map((name: string) => ({ name, profile_path: null })),
+              crew: []
+            })
           }
+
           if (data.data.providers) {
             setFetchedProviders(data.data.providers)
           }
@@ -108,7 +128,12 @@ export default function MovieDetailsModal({ movie, isOpen, onClose, onOverviewFe
 
           // Optionally call the callback to update the database
           if (onOverviewFetched && data.data.overview) {
-            onOverviewFetched(movie.id, data.data.overview, data.data.poster)
+            const creditsToSave = data.data.credits || (data.data.cast ? {
+              cast: data.data.cast.map((name: string) => ({ name, profile_path: null })),
+              crew: []
+            } : null)
+
+            onOverviewFetched(movie.id, data.data.overview, data.data.poster, false, data.data.providers, creditsToSave)
           }
         } else {
           setFetchError(true)
@@ -137,18 +162,30 @@ export default function MovieDetailsModal({ movie, isOpen, onClose, onOverviewFe
 
       if (data.found) {
         if (data.data.overview) setFetchedOverview(data.data.overview)
-        if (data.data.cast && data.data.cast.length > 0) setFetchedCast(data.data.cast)
+
+        let newCredits = null
+        if (data.data.credits) {
+          setFetchedCredits(data.data.credits)
+          newCredits = data.data.credits
+        } else if (data.data.cast && Array.isArray(data.data.cast)) {
+          newCredits = {
+            cast: data.data.cast.map((name: string) => ({ name, profile_path: null })),
+            crew: []
+          }
+          setFetchedCredits(newCredits)
+        }
+
         if (data.data.providers) setFetchedProviders(data.data.providers)
         setFetchSource(data.source)
 
         // Force update the movie record
         if (onOverviewFetched) {
-          // Basic update of overview/poster
+          // Basic update of overview/poster/credits
           if (data.data.overview) {
-            onOverviewFetched(movie.id, data.data.overview, data.data.poster, true, data.data.providers)
-          } else if (data.data.providers) {
-            // Even if overview didn't change, we might want to save providers
-            onOverviewFetched(movie.id, movie.overview || '', movie.poster_url || data.data.poster, false, data.data.providers)
+            onOverviewFetched(movie.id, data.data.overview, data.data.poster, true, data.data.providers, newCredits)
+          } else if (data.data.providers || newCredits) {
+            // Even if overview didn't change, we might want to save providers or credits
+            onOverviewFetched(movie.id, movie.overview || '', movie.poster_url || data.data.poster, false, data.data.providers, newCredits)
           }
         }
       } else {
@@ -160,6 +197,69 @@ export default function MovieDetailsModal({ movie, isOpen, onClose, onOverviewFe
     } finally {
       setIsLoadingOverview(false)
     }
+  }
+
+  // ... existing code ...
+
+  {/* Cast & Crew */ }
+  {
+    fetchedCredits && (
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {fetchedCredits.cast && fetchedCredits.cast.length > 0 && (
+          <div className="bg-white/5 rounded-xl p-4 border border-white/10 backdrop-blur-sm">
+            <h3 className="text-white font-semibold text-sm mb-3 flex items-center gap-2">
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+              </svg>
+              Top Cast
+            </h3>
+            <div className="flex flex-wrap gap-2">
+              {fetchedCredits.cast.slice(0, 5).map((person: any, index: number) => (
+                <div key={index} className="flex items-center gap-2 bg-blue-500/10 px-2 py-1.5 rounded-lg border border-blue-500/20">
+                  {person.profile_path ? (
+                    <img
+                      src={`https://image.tmdb.org/t/p/w200${person.profile_path}`}
+                      alt={person.name}
+                      className="w-6 h-6 rounded-full object-cover"
+                    />
+                  ) : (
+                    <div className="w-6 h-6 rounded-full bg-blue-500/30 flex items-center justify-center text-[8px]">👤</div>
+                  )}
+                  <span className="text-blue-200 text-xs font-medium">{person.name}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {fetchedCredits.crew && fetchedCredits.crew.filter((p: any) => p.job === 'Director').length > 0 && (
+          <div className="bg-white/5 rounded-xl p-4 border border-white/10 backdrop-blur-sm">
+            <h3 className="text-white font-semibold text-sm mb-3 flex items-center gap-2">
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+              </svg>
+              Director
+            </h3>
+            <div className="flex flex-wrap gap-2">
+              {fetchedCredits.crew.filter((p: any) => p.job === 'Director').slice(0, 2).map((person: any, index: number) => (
+                <div key={index} className="flex items-center gap-2 bg-purple-500/10 px-2 py-1.5 rounded-lg border border-purple-500/20">
+                  {person.profile_path ? (
+                    <img
+                      src={`https://image.tmdb.org/t/p/w200${person.profile_path}`}
+                      alt={person.name}
+                      className="w-6 h-6 rounded-full object-cover"
+                    />
+                  ) : (
+                    <div className="w-6 h-6 rounded-full bg-purple-500/30 flex items-center justify-center text-[8px]">🎬</div>
+                  )}
+                  <span className="text-purple-200 text-xs font-medium">{person.name}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+    )
   }
 
   const handleMoveMovie = async (newType: string) => {
@@ -310,25 +410,62 @@ export default function MovieDetailsModal({ movie, isOpen, onClose, onOverviewFe
                   </div>
                 )}
 
-                {/* Cast */}
-                {fetchedCast && fetchedCast.length > 0 && (
-                  <div className="bg-white/5 rounded-xl p-4 border border-white/10 backdrop-blur-sm">
-                    <h3 className="text-white font-semibold text-sm mb-2 flex items-center gap-2">
-                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                      </svg>
-                      Cast
-                    </h3>
-                    <div className="flex flex-wrap gap-2">
-                      {fetchedCast.map((actor, index) => (
-                        <span
-                          key={index}
-                          className="bg-blue-500/20 text-blue-300 px-3 py-1 rounded-full text-xs font-medium border border-blue-500/30"
-                        >
-                          {actor}
-                        </span>
-                      ))}
-                    </div>
+
+
+                {/* Cast & Crew Compact */}
+                {fetchedCredits && (
+                  <div className="bg-white/5 rounded-xl p-4 border border-white/10 backdrop-blur-sm space-y-4">
+
+                    {/* Director */}
+                    {fetchedCredits.crew && fetchedCredits.crew.filter((p: any) => p.job === 'Director').length > 0 && (
+                      <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
+                        <h3 className="text-white/60 text-xs font-semibold uppercase tracking-wider flex items-center gap-2 shrink-0">
+                          <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                          </svg>
+                          Director
+                        </h3>
+                        <div className="flex flex-wrap gap-2">
+                          {fetchedCredits.crew.filter((p: any) => p.job === 'Director').slice(0, 2).map((person: any, index: number) => (
+                            <div key={index} className="flex items-center gap-2 bg-purple-500/10 px-2 py-1 rounded-md border border-purple-500/20">
+                              <span className="text-purple-200 text-xs font-medium">{person.name}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Cast Horizontal Scroll */}
+                    {fetchedCredits.cast && fetchedCredits.cast.length > 0 && (
+                      <div className="space-y-2">
+                        <h3 className="text-white/60 text-xs font-semibold uppercase tracking-wider flex items-center gap-2">
+                          <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                          </svg>
+                          Top Cast
+                        </h3>
+                        <div className="flex gap-3 overflow-x-auto pb-2 -mx-1 px-1 scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent">
+                          {fetchedCredits.cast.slice(0, 10).map((person: any, index: number) => (
+                            <div key={index} className="flex-shrink-0 w-16 flex flex-col items-center gap-1.5 group">
+                              {person.profile_path ? (
+                                <img
+                                  src={`https://image.tmdb.org/t/p/w200${person.profile_path}`}
+                                  alt={person.name}
+                                  className="w-14 h-14 rounded-full object-cover border-2 border-white/10 group-hover:border-blue-500/50 transition-colors"
+                                />
+                              ) : (
+                                <div className="w-14 h-14 rounded-full bg-blue-500/20 flex items-center justify-center border-2 border-white/10 group-hover:border-blue-500/50 transition-colors">
+                                  <span className="text-xs">👤</span>
+                                </div>
+                              )}
+                              <span className="text-[10px] text-center text-white/70 group-hover:text-white transition-colors leading-tight line-clamp-2 w-full break-words">
+                                {person.name}
+                              </span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
                   </div>
                 )}
 

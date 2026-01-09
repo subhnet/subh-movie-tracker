@@ -54,7 +54,8 @@ export async function POST(request: Request) {
       // Fetch directly from Supabase instead of making HTTP call
       const { data: movies, error } = await supabase
         .from('movies')
-        .select('*')
+        // Optimize: Only fetch columns needed for AI context context
+        .select('title, rating, type, tags')
         .eq('user_id', userId)
 
       if (error) {
