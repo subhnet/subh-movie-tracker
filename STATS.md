@@ -1,6 +1,6 @@
 # 🎬 Movie Tracker Statistics
 
-*Last Updated: 1/13/2026, 12:56:32 AM*
+*Last Updated: 1/14/2026, 1:02:30 AM*
 
 ---
 
@@ -48,17 +48,17 @@
 
 ## 📝 Want to Watch
 
-- **Total on Watchlist:** 195
+- **Total on Watchlist:** 196
 - **Pre-rated:** 0
-- **Completion Rate:** 75.3%
+- **Completion Rate:** 75.2%
 
 ### Recently Added to Watchlist
 
-1. Stand by Me
-2. Dead Poets Society
-3. Casino
-4. The Shadow's Edge
-5. Mulholland Drive
+1. No Other Choice
+2. Stand by Me
+3. Dead Poets Society
+4. Casino
+5. The Shadow's Edge
 
 ## 📺 TV Shows
 
@@ -76,9 +76,9 @@
 
 ## 📊 Overall Summary
 
-- **Total Tracked Content:** 887
+- **Total Tracked Content:** 888
 - **Movies Watched:** 595
-- **Movies to Watch:** 195
+- **Movies to Watch:** 196
 - **TV Shows:** 97
 - **Overall Average Rating:** 7.03/10
 
