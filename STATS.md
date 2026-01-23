@@ -1,23 +1,23 @@
 # 🎬 Movie Tracker Statistics
 
-*Last Updated: 1/22/2026, 1:01:38 AM*
+*Last Updated: 1/23/2026, 1:01:39 AM*
 
 ---
 
 ## 🍿 Watched Movies
 
-- **Total Watched:** 596
-- **Rated:** 596
+- **Total Watched:** 601
+- **Rated:** 601
 - **Unrated:** 0
-- **Average Rating:** 7.03/10
+- **Average Rating:** 7.02/10
 
 ### Rating Distribution
 
 - **10★**: 20 ████
 - **9★**: 36 ████████
 - **8★**: 146 ██████████████████████████████
-- **7★**: 216 ████████████████████████████████████████████
-- **6★**: 124 █████████████████████████
+- **7★**: 218 ████████████████████████████████████████████
+- **6★**: 127 ██████████████████████████
 - **5★**: 36 ████████
 - **4★**: 11 ███
 - **3★**: 5 █
@@ -39,26 +39,26 @@
 
 ### 📅 Watching Patterns
 
-- **Movies with watch dates:** 596
-- **Most active month:** 2026-01 (302 movies)
+- **Movies with watch dates:** 601
+- **Most active month:** 2026-01 (307 movies)
 
 **By Year:**
-- 2026: 302 movies
+- 2026: 307 movies
 - 2025: 294 movies
 
 ## 📝 Want to Watch
 
-- **Total on Watchlist:** 196
+- **Total on Watchlist:** 197
 - **Pre-rated:** 0
 - **Completion Rate:** 75.3%
 
 ### Recently Added to Watchlist
 
-1. No Other Choice
-2. Stand by Me
-3. Dead Poets Society
-4. Casino
-5. The Shadow's Edge
+1. Adios Amigo
+2. No Other Choice
+3. Stand by Me
+4. Dead Poets Society
+5. Casino
 
 ## 📺 TV Shows
 
@@ -76,11 +76,11 @@
 
 ## 📊 Overall Summary
 
-- **Total Tracked Content:** 889
-- **Movies Watched:** 596
-- **Movies to Watch:** 196
+- **Total Tracked Content:** 895
+- **Movies Watched:** 601
+- **Movies to Watch:** 197
 - **TV Shows:** 97
-- **Overall Average Rating:** 7.03/10
+- **Overall Average Rating:** 7.02/10
 
 ---
 
