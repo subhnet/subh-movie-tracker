@@ -1,6 +1,6 @@
 # 🎬 Movie Tracker Statistics
 
-*Last Updated: 1/30/2026, 1:09:34 AM*
+*Last Updated: 1/31/2026, 1:06:44 AM*
 
 ---
 
@@ -48,17 +48,17 @@
 
 ## 📝 Want to Watch
 
-- **Total on Watchlist:** 197
+- **Total on Watchlist:** 198
 - **Pre-rated:** 0
-- **Completion Rate:** 75.4%
+- **Completion Rate:** 75.3%
 
 ### Recently Added to Watchlist
 
-1. Adios Amigo
-2. No Other Choice
-3. Stand by Me
-4. Dead Poets Society
-5. Casino
+1. Send Help
+2. Adios Amigo
+3. No Other Choice
+4. Stand by Me
+5. Dead Poets Society
 
 ## 📺 TV Shows
 
@@ -76,9 +76,9 @@
 
 ## 📊 Overall Summary
 
-- **Total Tracked Content:** 897
+- **Total Tracked Content:** 898
 - **Movies Watched:** 603
-- **Movies to Watch:** 197
+- **Movies to Watch:** 198
 - **TV Shows:** 97
 - **Overall Average Rating:** 7.02/10
 
