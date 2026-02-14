@@ -44,6 +44,32 @@ A comprehensive personal movie tracking system that scrapes data from Must app, 
 
 ### Installation
 
+#### Using Docker (Recommended)
+
+Quickly spin up the application without installing Node.js or libraries locally.
+
+```bash
+# Clone the repository
+git clone <your-repo-url>
+cd subh-movie-tracker
+
+# Create .env file
+cp .env.example .env
+
+# Build and start the container
+docker-compose up -d
+
+# View the app
+# Open http://localhost:3000 in your browser
+```
+
+To run the scraper manually using Docker:
+```bash
+docker-compose exec app npm run fetch
+```
+
+#### Manual Installation
+
 ```bash
 # Clone the repository
 git clone <your-repo-url>

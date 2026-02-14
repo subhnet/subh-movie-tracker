@@ -127,9 +127,9 @@ function calculateStats(movies: Movie[]): Stats {
  * Fetch all movies for a user from the database
  * Optimized to prevent timeouts by fetching lightweight list separately from heavy stats data
  */
-export async function fetchUserMovies(userId: string): Promise<DashboardData> {
+export async function fetchUserMovies(userId: string, includeCredits: boolean = true): Promise<DashboardData> {
   // 1. Fetch lightweight movie list (minimal columns) for Dashboard
-  // Dashboard only needs title, rating, type (and tags for type checking)
+  // ... (keep existing fetch)
   const { data: movies, error } = await supabase
     .from('movies')
     // Include tags because it's required by the Movie interface
@@ -147,55 +147,66 @@ export async function fetchUserMovies(userId: string): Promise<DashboardData> {
   const wants = movies?.filter(m => m.type === 'want') || []
   const shows = movies?.filter(m => m.type === 'show') || []
 
-  // 2. Calculate stats by fetching heavy data (credits) in chunks
-  // to avoid statement timeout
+  // 2. Calculate stats
+  // If includeCredits is FALSE, we can calculate everything from the lightweight list instantly
+  // If includeCredits is TRUE, we need to fetch chunks to get the credits column
   const statsAcc = {
     watched: createStatsAccumulator(),
     want: createStatsAccumulator(),
     show: createStatsAccumulator()
   }
 
-  try {
-    const CHUNK_SIZE = 50
-    // Get total count first
-    const { count } = await supabase
-      .from('movies')
-      .select('*', { count: 'exact', head: true })
-      .eq('user_id', userId)
-
-    const totalMovies = count || 0
-
-    // Fetch in chunks
-    for (let i = 0; i < totalMovies; i += CHUNK_SIZE) {
-      const { data: chunk, error: chunkError } = await supabase
+  if (!includeCredits) {
+    // FAST PATH: Calculate stats from the already fetched list
+    movies?.forEach(m => {
+      // @ts-ignore
+      if (statsAcc[m.type]) {
+        // @ts-ignore
+        updateStatsAccumulator(statsAcc[m.type], m)
+      }
+    })
+  } else {
+    // SLOW PATH: Fetch heavy data (credits) in chunks
+    try {
+      const CHUNK_SIZE = 50
+      // Get total count first
+      const { count } = await supabase
         .from('movies')
-        .select('type, rating, credits')
+        .select('*', { count: 'exact', head: true })
         .eq('user_id', userId)
-        .range(i, i + CHUNK_SIZE - 1)
 
-      if (chunkError) {
-        console.error('Error fetching stats chunk:', chunkError)
-        // Continue with partial stats rather than failing completely
-        continue
-      }
+      const totalMovies = count || 0
 
-      if (chunk) {
-        chunk.forEach((m: any) => {
-          // @ts-ignore
-          if (statsAcc[m.type]) {
+      // Fetch in chunks
+      for (let i = 0; i < totalMovies; i += CHUNK_SIZE) {
+        const { data: chunk, error: chunkError } = await supabase
+          .from('movies')
+          .select('type, rating, credits')
+          .eq('user_id', userId)
+          .range(i, i + CHUNK_SIZE - 1)
+
+        if (chunkError) {
+          console.error('Error fetching stats chunk:', chunkError)
+          continue
+        }
+
+        if (chunk) {
+          chunk.forEach((m: any) => {
             // @ts-ignore
-            updateStatsAccumulator(statsAcc[m.type], m)
-          }
-        })
+            if (statsAcc[m.type]) {
+              // @ts-ignore
+              updateStatsAccumulator(statsAcc[m.type], m)
+            }
+          })
+        }
       }
+    } catch (err) {
+      console.error('Error calculating dashboard stats:', err)
     }
-  } catch (err) {
-    console.error('Error calculating dashboard stats:', err)
-    // Fallback: return empty stats if calculation fails, but at least show the list
   }
 
   return {
-    watched, // These are lightweight movies (missing credits), but modals will fetch details on demand
+    watched,
     wants,
     shows,
     watchedStats: finalizeStats(statsAcc.watched),
@@ -207,22 +218,69 @@ export async function fetchUserMovies(userId: string): Promise<DashboardData> {
 /**
  * Fetch all movies (combined) for a user
  */
-export async function fetchAllUserMovies(userId: string): Promise<Movie[]> {
-  const { data: movies, error } = await supabase
-    .from('movies')
-    // Exclude overview to save bandwidth (lazy loaded in modals)
-    // Include providers because ClientMovieManager filters by it
-    .select('id, title, rating, tags, type, created_at, user_id, poster_url, providers')
-    .eq('user_id', userId)
-    .order('created_at', { ascending: false })
+export async function fetchAllUserMovies(userId: string, limit?: number): Promise<Movie[]> {
+  // Optimization: Fetch in chunks to avoid statement timeouts for large libraries
+  const CHUNK_SIZE = 500
+  let allMovies: Movie[] = []
 
-  if (error) {
-    console.error('Database error fetching all movies:', JSON.stringify(error, null, 2))
+  try {
+    // If a limit is provided (for initial page load), just fetch that many and return
+    if (limit) {
+      const { data: movies, error } = await supabase
+        .from('movies')
+        .select('id, title, rating, tags, type, created_at, user_id, poster_url, providers')
+        .eq('user_id', userId)
+        .order('created_at', { ascending: false })
+        .limit(limit)
+
+      if (error) throw error
+      return movies || []
+    }
+
+    // Otherwise fetch all (chunked)
+    // 1. Get total count
+    const { count, error: countError } = await supabase
+      .from('movies')
+      .select('*', { count: 'exact', head: true })
+      .eq('user_id', userId)
+
+    if (countError) throw countError
+
+    const total = count || 0
+
+    // 2. Fetch in chunks
+    for (let i = 0; i < total; i += CHUNK_SIZE) {
+      const { data: chunk, error } = await supabase
+        .from('movies')
+        .select('id, title, rating, tags, type, created_at, user_id, poster_url, providers')
+        .eq('user_id', userId)
+        .order('created_at', { ascending: false })
+        .range(i, i + CHUNK_SIZE - 1)
+
+      if (error) throw error
+
+      if (chunk) {
+        allMovies = [...allMovies, ...chunk]
+      }
+    }
+
+    return allMovies
+  } catch (error: any) {
+    console.error('Database error fetching all movies:', error)
+    // If chunking fails (e.g. still too slow), try fallback to simpler query without providers
+    // This is a fail-safe to at least show the list
+    if (error.code === '57014' || error.message?.includes('timeout')) {
+      console.warn('Timeout detected, trying fallback fetch without heavy columns...')
+      const { data: fallbackRequest } = await supabase
+        .from('movies')
+        .select('id, title, rating, tags, type, created_at, user_id, poster_url') // No providers
+        .eq('user_id', userId)
+        .order('created_at', { ascending: false })
+        .limit(limit || 2000)
+
+      return fallbackRequest || []
+    }
+
     throw new Error(`Failed to fetch movies: ${error.message || 'Unknown error'}`)
   }
-
-
-  return movies || []
 }
-
-

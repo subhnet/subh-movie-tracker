@@ -11,7 +11,8 @@ export default async function Dashboard() {
     redirect('/login')
   }
 
-  const data = await fetchUserMovies(user.id)
+  // Fetch movies excluding credits for super fast load
+  const data = await fetchUserMovies(user.id, false)
   const topRatedMovies = data.watched.filter((m) => parseFloat(m.rating) >= 8).sort((a, b) => parseFloat(b.rating) - parseFloat(a.rating))
   const topRatedShows = data.shows.filter((m) => parseFloat(m.rating) >= 8).sort((a, b) => parseFloat(b.rating) - parseFloat(a.rating))
   const allMovies = [...data.watched, ...data.wants, ...data.shows]

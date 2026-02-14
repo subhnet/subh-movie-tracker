@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    container_name: movie-tracker
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./.env:/app/.env
+      - ./watched_titles.csv:/app/watched_titles.csv
+      - ./wants_titles.csv:/app/wants_titles.csv
+      - ./shows_titles.csv:/app/shows_titles.csv
+      - ./STATS.md:/app/STATS.md
+      - ./index.html:/app/index.html
+      - ./backups:/app/backups
+    environment:
+      - NODE_ENV=production
+    restart: unless-stopped

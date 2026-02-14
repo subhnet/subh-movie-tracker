@@ -55,11 +55,19 @@ export default function ClientMovieManager({ initialMovies, userId, username }: 
     { id: 'Max', name: 'HBO Max' }
   ]
 
+  // Initial load complete?
+  const [isFullListLoaded, setIsFullListLoaded] = useState(false)
+
   // Load view preference from localStorage
   useEffect(() => {
     const savedViewMode = localStorage.getItem('movieViewMode') as ViewMode
     if (savedViewMode) {
       setViewMode(savedViewMode)
+    }
+
+    // Background fetch the rest of the movies
+    if (!isFullListLoaded) {
+      fetchMovies(false)
     }
   }, [])
 
@@ -98,6 +106,7 @@ export default function ClientMovieManager({ initialMovies, userId, username }: 
       ]
 
       setMovies(allMovies)
+      setIsFullListLoaded(true)
     } catch (error) {
       console.error('Failed to fetch movies:', error)
     } finally {
