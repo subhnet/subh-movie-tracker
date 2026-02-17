@@ -1,6 +1,6 @@
 # 🎬 Movie Tracker Statistics
 
-*Last Updated: 2/16/2026, 1:14:49 AM*
+*Last Updated: 2/17/2026, 1:13:53 AM*
 
 ---
 
@@ -48,17 +48,17 @@
 
 ## 📝 Want to Watch
 
-- **Total on Watchlist:** 198
+- **Total on Watchlist:** 199
 - **Pre-rated:** 0
-- **Completion Rate:** 75.3%
+- **Completion Rate:** 75.2%
 
 ### Recently Added to Watchlist
 
-1. Send Help
-2. Adios Amigo
-3. No Other Choice
-4. Stand by Me
-5. Dead Poets Society
+1. Shaun of the Dead
+2. Send Help
+3. Adios Amigo
+4. No Other Choice
+5. Stand by Me
 
 ## 📺 TV Shows
 
@@ -76,9 +76,9 @@
 
 ## 📊 Overall Summary
 
-- **Total Tracked Content:** 899
+- **Total Tracked Content:** 900
 - **Movies Watched:** 604
-- **Movies to Watch:** 198
+- **Movies to Watch:** 199
 - **TV Shows:** 97
 - **Overall Average Rating:** 7.03/10
 
