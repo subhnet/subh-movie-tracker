@@ -1,13 +1,13 @@
 # 🎬 Movie Tracker Statistics
 
-*Last Updated: 2/17/2026, 1:13:53 AM*
+*Last Updated: 2/18/2026, 1:16:17 AM*
 
 ---
 
 ## 🍿 Watched Movies
 
-- **Total Watched:** 604
-- **Rated:** 604
+- **Total Watched:** 605
+- **Rated:** 605
 - **Unrated:** 0
 - **Average Rating:** 7.03/10
 
@@ -16,7 +16,7 @@
 - **10★**: 20 ████
 - **9★**: 37 ████████
 - **8★**: 146 ██████████████████████████████
-- **7★**: 220 ████████████████████████████████████████████
+- **7★**: 221 █████████████████████████████████████████████
 - **6★**: 127 ██████████████████████████
 - **5★**: 36 ████████
 - **4★**: 11 ███
@@ -39,26 +39,26 @@
 
 ### 📅 Watching Patterns
 
-- **Movies with watch dates:** 604
+- **Movies with watch dates:** 605
 - **Most active month:** 2026-01 (308 movies)
 
 **By Year:**
-- 2026: 310 movies
+- 2026: 311 movies
 - 2025: 294 movies
 
 ## 📝 Want to Watch
 
-- **Total on Watchlist:** 199
+- **Total on Watchlist:** 231
 - **Pre-rated:** 0
-- **Completion Rate:** 75.2%
+- **Completion Rate:** 72.4%
 
 ### Recently Added to Watchlist
 
-1. Shaun of the Dead
-2. Send Help
-3. Adios Amigo
-4. No Other Choice
-5. Stand by Me
+1. Thalavan
+2. Memories
+3. Babylon
+4. The Amateur
+5. The Teachers' Lounge
 
 ## 📺 TV Shows
 
@@ -76,9 +76,9 @@
 
 ## 📊 Overall Summary
 
-- **Total Tracked Content:** 900
-- **Movies Watched:** 604
-- **Movies to Watch:** 199
+- **Total Tracked Content:** 933
+- **Movies Watched:** 605
+- **Movies to Watch:** 231
 - **TV Shows:** 97
 - **Overall Average Rating:** 7.03/10
 
