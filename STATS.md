@@ -1,13 +1,13 @@
 # 🎬 Movie Tracker Statistics
 
-*Last Updated: 2/18/2026, 1:16:17 AM*
+*Last Updated: 2/19/2026, 1:15:22 AM*
 
 ---
 
 ## 🍿 Watched Movies
 
-- **Total Watched:** 605
-- **Rated:** 605
+- **Total Watched:** 607
+- **Rated:** 607
 - **Unrated:** 0
 - **Average Rating:** 7.03/10
 
@@ -16,9 +16,9 @@
 - **10★**: 20 ████
 - **9★**: 37 ████████
 - **8★**: 146 ██████████████████████████████
-- **7★**: 221 █████████████████████████████████████████████
-- **6★**: 127 ██████████████████████████
-- **5★**: 36 ████████
+- **7★**: 223 █████████████████████████████████████████████
+- **6★**: 126 ██████████████████████████
+- **5★**: 37 ████████
 - **4★**: 11 ███
 - **3★**: 5 █
 - **2★**: 1 █
@@ -39,26 +39,26 @@
 
 ### 📅 Watching Patterns
 
-- **Movies with watch dates:** 605
+- **Movies with watch dates:** 607
 - **Most active month:** 2026-01 (308 movies)
 
 **By Year:**
-- 2026: 311 movies
+- 2026: 313 movies
 - 2025: 294 movies
 
 ## 📝 Want to Watch
 
-- **Total on Watchlist:** 231
+- **Total on Watchlist:** 230
 - **Pre-rated:** 0
-- **Completion Rate:** 72.4%
+- **Completion Rate:** 72.5%
 
 ### Recently Added to Watchlist
 
-1. Thalavan
-2. Memories
-3. Babylon
-4. The Amateur
-5. The Teachers' Lounge
+1. Michael
+2. Thalavan
+3. Memories
+4. Babylon
+5. The Amateur
 
 ## 📺 TV Shows
 
@@ -76,9 +76,9 @@
 
 ## 📊 Overall Summary
 
-- **Total Tracked Content:** 933
-- **Movies Watched:** 605
-- **Movies to Watch:** 231
+- **Total Tracked Content:** 934
+- **Movies Watched:** 607
+- **Movies to Watch:** 230
 - **TV Shows:** 97
 - **Overall Average Rating:** 7.03/10
 
