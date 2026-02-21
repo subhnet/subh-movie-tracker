@@ -1,15 +1,15 @@
 # 🎬 Movie Tracker Statistics
 
-*Last Updated: 2/20/2026, 1:10:58 AM*
+*Last Updated: 2/21/2026, 1:08:59 AM*
 
 ---
 
 ## 🍿 Watched Movies
 
-- **Total Watched:** 607
-- **Rated:** 607
+- **Total Watched:** 608
+- **Rated:** 608
 - **Unrated:** 0
-- **Average Rating:** 7.03/10
+- **Average Rating:** 7.02/10
 
 ### Rating Distribution
 
@@ -18,7 +18,7 @@
 - **8★**: 146 ██████████████████████████████
 - **7★**: 223 █████████████████████████████████████████████
 - **6★**: 126 ██████████████████████████
-- **5★**: 37 ████████
+- **5★**: 38 ████████
 - **4★**: 11 ███
 - **3★**: 5 █
 - **2★**: 1 █
@@ -39,26 +39,26 @@
 
 ### 📅 Watching Patterns
 
-- **Movies with watch dates:** 607
+- **Movies with watch dates:** 608
 - **Most active month:** 2026-01 (308 movies)
 
 **By Year:**
-- 2026: 313 movies
+- 2026: 314 movies
 - 2025: 294 movies
 
 ## 📝 Want to Watch
 
-- **Total on Watchlist:** 230
+- **Total on Watchlist:** 231
 - **Pre-rated:** 0
 - **Completion Rate:** 72.5%
 
 ### Recently Added to Watchlist
 
-1. Michael
-2. Thalavan
-3. Memories
-4. Babylon
-5. The Amateur
+1. Chatha Pacha: The Ring of Rowdies
+2. Michael
+3. Thalavan
+4. Memories
+5. Babylon
 
 ## 📺 TV Shows
 
@@ -76,11 +76,11 @@
 
 ## 📊 Overall Summary
 
-- **Total Tracked Content:** 934
-- **Movies Watched:** 607
-- **Movies to Watch:** 230
+- **Total Tracked Content:** 936
+- **Movies Watched:** 608
+- **Movies to Watch:** 231
 - **TV Shows:** 97
-- **Overall Average Rating:** 7.03/10
+- **Overall Average Rating:** 7.02/10
 
 ---
 
