@@ -1,6 +1,6 @@
 # 🎬 Movie Tracker Statistics
 
-*Last Updated: 2/21/2026, 1:08:59 AM*
+*Last Updated: 2/22/2026, 1:14:17 AM*
 
 ---
 
@@ -48,17 +48,17 @@
 
 ## 📝 Want to Watch
 
-- **Total on Watchlist:** 231
+- **Total on Watchlist:** 232
 - **Pre-rated:** 0
-- **Completion Rate:** 72.5%
+- **Completion Rate:** 72.4%
 
 ### Recently Added to Watchlist
 
-1. Chatha Pacha: The Ring of Rowdies
-2. Michael
-3. Thalavan
-4. Memories
-5. Babylon
+1. Good Night
+2. Chatha Pacha: The Ring of Rowdies
+3. Michael
+4. Thalavan
+5. Memories
 
 ## 📺 TV Shows
 
@@ -76,9 +76,9 @@
 
 ## 📊 Overall Summary
 
-- **Total Tracked Content:** 936
+- **Total Tracked Content:** 937
 - **Movies Watched:** 608
-- **Movies to Watch:** 231
+- **Movies to Watch:** 232
 - **TV Shows:** 97
 - **Overall Average Rating:** 7.02/10
 
