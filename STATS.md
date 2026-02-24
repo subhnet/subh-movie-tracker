@@ -1,6 +1,6 @@
 # 🎬 Movie Tracker Statistics
 
-*Last Updated: 2/23/2026, 1:13:59 AM*
+*Last Updated: 2/24/2026, 1:12:23 AM*
 
 ---
 
@@ -63,8 +63,8 @@
 ## 📺 TV Shows
 
 - **Total Shows:** 97
-- **Rated:** 74
-- **Average Rating:** 7.05/10
+- **Rated:** 75
+- **Average Rating:** 7.04/10
 
 ### Top Rated Shows
 
