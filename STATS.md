@@ -1,6 +1,6 @@
 # 🎬 Movie Tracker Statistics
 
-*Last Updated: 3/1/2026, 1:19:49 AM*
+*Last Updated: 3/2/2026, 1:12:14 AM*
 
 ---
 
@@ -54,16 +54,16 @@
 
 ### Recently Added to Watchlist
 
-1. Good Night
-2. Chatha Pacha: The Ring of Rowdies
-3. Michael
-4. Thalavan
-5. Memories
+1. The Song of Sparrows
+2. Good Night
+3. Chatha Pacha: The Ring of Rowdies
+4. Michael
+5. Thalavan
 
 ## 📺 TV Shows
 
-- **Total Shows:** 97
-- **Rated:** 76
+- **Total Shows:** 98
+- **Rated:** 77
 - **Average Rating:** 7.05/10
 
 ### Top Rated Shows
@@ -76,10 +76,10 @@
 
 ## 📊 Overall Summary
 
-- **Total Tracked Content:** 937
+- **Total Tracked Content:** 938
 - **Movies Watched:** 608
 - **Movies to Watch:** 232
-- **TV Shows:** 97
+- **TV Shows:** 98
 - **Overall Average Rating:** 7.02/10
 
 ---
