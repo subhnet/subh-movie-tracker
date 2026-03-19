@@ -1,13 +1,13 @@
 # 🎬 Movie Tracker Statistics
 
-*Last Updated: 3/18/2026, 1:17:36 AM*
+*Last Updated: 3/19/2026, 1:17:10 AM*
 
 ---
 
 ## 🍿 Watched Movies
 
-- **Total Watched:** 613
-- **Rated:** 613
+- **Total Watched:** 616
+- **Rated:** 616
 - **Unrated:** 0
 - **Average Rating:** 7.02/10
 
@@ -16,8 +16,8 @@
 - **10★**: 20 ████
 - **9★**: 37 ████████
 - **8★**: 147 ██████████████████████████████
-- **7★**: 226 ██████████████████████████████████████████████
-- **6★**: 126 ██████████████████████████
+- **7★**: 228 ██████████████████████████████████████████████
+- **6★**: 127 ██████████████████████████
 - **5★**: 38 ████████
 - **4★**: 12 ███
 - **3★**: 5 █
@@ -39,23 +39,23 @@
 
 ### 📅 Watching Patterns
 
-- **Movies with watch dates:** 613
+- **Movies with watch dates:** 616
 - **Most active month:** 2026-01 (308 movies)
 
 **By Year:**
-- 2026: 319 movies
+- 2026: 322 movies
 - 2025: 294 movies
 
 ## 📝 Want to Watch
 
-- **Total on Watchlist:** 229
+- **Total on Watchlist:** 225
 - **Pre-rated:** 0
-- **Completion Rate:** 72.8%
+- **Completion Rate:** 73.2%
 
 ### Recently Added to Watchlist
 
-1. The Song of Sparrows
-2. Chatha Pacha: The Ring of Rowdies
+1. Disclosure Day
+2. The Song of Sparrows
 3. Michael
 4. Thalavan
 5. Memories
@@ -76,9 +76,9 @@
 
 ## 📊 Overall Summary
 
-- **Total Tracked Content:** 940
-- **Movies Watched:** 613
-- **Movies to Watch:** 229
+- **Total Tracked Content:** 939
+- **Movies Watched:** 616
+- **Movies to Watch:** 225
 - **TV Shows:** 98
 - **Overall Average Rating:** 7.02/10
 
