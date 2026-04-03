@@ -1,20 +1,20 @@
 # 🎬 Movie Tracker Statistics
 
-*Last Updated: 4/2/2026, 1:19:28 AM*
+*Last Updated: 4/3/2026, 1:21:56 AM*
 
 ---
 
 ## 🍿 Watched Movies
 
-- **Total Watched:** 619
-- **Rated:** 619
+- **Total Watched:** 620
+- **Rated:** 620
 - **Unrated:** 0
-- **Average Rating:** 7.01/10
+- **Average Rating:** 7.02/10
 
 ### Rating Distribution
 
 - **10★**: 20 ████
-- **9★**: 37 ████████
+- **9★**: 38 ████████
 - **8★**: 147 ██████████████████████████████
 - **7★**: 228 ██████████████████████████████████████████████
 - **6★**: 130 ██████████████████████████
@@ -39,26 +39,26 @@
 
 ### 📅 Watching Patterns
 
-- **Movies with watch dates:** 619
+- **Movies with watch dates:** 620
 - **Most active month:** 2026-01 (308 movies)
 
 **By Year:**
-- 2026: 325 movies
+- 2026: 326 movies
 - 2025: 294 movies
 
 ## 📝 Want to Watch
 
-- **Total on Watchlist:** 223
+- **Total on Watchlist:** 222
 - **Pre-rated:** 0
-- **Completion Rate:** 73.5%
+- **Completion Rate:** 73.6%
 
 ### Recently Added to Watchlist
 
-1. Dhurandhar: The Revenge
-2. Disclosure Day
-3. The Song of Sparrows
-4. Michael
-5. Thalavan
+1. Disclosure Day
+2. The Song of Sparrows
+3. Michael
+4. Thalavan
+5. Memories
 
 ## 📺 TV Shows
 
@@ -77,10 +77,10 @@
 ## 📊 Overall Summary
 
 - **Total Tracked Content:** 940
-- **Movies Watched:** 619
-- **Movies to Watch:** 223
+- **Movies Watched:** 620
+- **Movies to Watch:** 222
 - **TV Shows:** 98
-- **Overall Average Rating:** 7.01/10
+- **Overall Average Rating:** 7.02/10
 
 ---
 
