@@ -1,6 +1,6 @@
 # 🎬 Movie Tracker Statistics
 
-*Last Updated: 4/6/2026, 1:25:24 AM*
+*Last Updated: 4/7/2026, 1:23:12 AM*
 
 ---
 
@@ -48,17 +48,17 @@
 
 ## 📝 Want to Watch
 
-- **Total on Watchlist:** 224
+- **Total on Watchlist:** 226
 - **Pre-rated:** 0
-- **Completion Rate:** 73.5%
+- **Completion Rate:** 73.3%
 
 ### Recently Added to Watchlist
 
-1. No Exit
-2. Secret Window
-3. Disclosure Day
-4. The Song of Sparrows
-5. Michael
+1. About Time
+2. October Sky
+3. No Exit
+4. Secret Window
+5. Disclosure Day
 
 ## 📺 TV Shows
 
@@ -76,9 +76,9 @@
 
 ## 📊 Overall Summary
 
-- **Total Tracked Content:** 943
+- **Total Tracked Content:** 945
 - **Movies Watched:** 621
-- **Movies to Watch:** 224
+- **Movies to Watch:** 226
 - **TV Shows:** 98
 - **Overall Average Rating:** 7.02/10
 
