@@ -1,6 +1,6 @@
 # 🎬 Movie Tracker Statistics
 
-*Last Updated: 4/8/2026, 1:24:01 AM*
+*Last Updated: 4/9/2026, 1:15:03 AM*
 
 ---
 
@@ -48,17 +48,17 @@
 
 ## 📝 Want to Watch
 
-- **Total on Watchlist:** 226
+- **Total on Watchlist:** 227
 - **Pre-rated:** 0
-- **Completion Rate:** 73.3%
+- **Completion Rate:** 73.2%
 
 ### Recently Added to Watchlist
 
-1. About Time
-2. October Sky
-3. No Exit
-4. Secret Window
-5. Disclosure Day
+1. A Time to Kill
+2. About Time
+3. October Sky
+4. No Exit
+5. Secret Window
 
 ## 📺 TV Shows
 
@@ -76,9 +76,9 @@
 
 ## 📊 Overall Summary
 
-- **Total Tracked Content:** 945
+- **Total Tracked Content:** 946
 - **Movies Watched:** 621
-- **Movies to Watch:** 226
+- **Movies to Watch:** 227
 - **TV Shows:** 98
 - **Overall Average Rating:** 7.02/10
 
