@@ -1,15 +1,15 @@
 # 🎬 Movie Tracker Statistics
 
-*Last Updated: 4/10/2026, 1:24:52 AM*
+*Last Updated: 4/12/2026, 1:29:17 AM*
 
 ---
 
 ## 🍿 Watched Movies
 
-- **Total Watched:** 621
-- **Rated:** 621
+- **Total Watched:** 622
+- **Rated:** 622
 - **Unrated:** 0
-- **Average Rating:** 7.02/10
+- **Average Rating:** 7.01/10
 
 ### Rating Distribution
 
@@ -17,7 +17,7 @@
 - **9★**: 38 ████████
 - **8★**: 147 ██████████████████████████████
 - **7★**: 229 ██████████████████████████████████████████████
-- **6★**: 130 ██████████████████████████
+- **6★**: 131 ███████████████████████████
 - **5★**: 38 ████████
 - **4★**: 12 ███
 - **3★**: 5 █
@@ -39,26 +39,26 @@
 
 ### 📅 Watching Patterns
 
-- **Movies with watch dates:** 621
+- **Movies with watch dates:** 622
 - **Most active month:** 2026-01 (308 movies)
 
 **By Year:**
-- 2026: 327 movies
+- 2026: 328 movies
 - 2025: 294 movies
 
 ## 📝 Want to Watch
 
 - **Total on Watchlist:** 227
 - **Pre-rated:** 0
-- **Completion Rate:** 73.2%
+- **Completion Rate:** 73.3%
 
 ### Recently Added to Watchlist
 
-1. A Time to Kill
-2. About Time
-3. October Sky
-4. No Exit
-5. Secret Window
+1. Dia
+2. A Time to Kill
+3. About Time
+4. October Sky
+5. No Exit
 
 ## 📺 TV Shows
 
@@ -76,11 +76,11 @@
 
 ## 📊 Overall Summary
 
-- **Total Tracked Content:** 946
-- **Movies Watched:** 621
+- **Total Tracked Content:** 947
+- **Movies Watched:** 622
 - **Movies to Watch:** 227
 - **TV Shows:** 98
-- **Overall Average Rating:** 7.02/10
+- **Overall Average Rating:** 7.01/10
 
 ---
 
