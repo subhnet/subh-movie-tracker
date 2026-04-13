@@ -1,23 +1,23 @@
 # 🎬 Movie Tracker Statistics
 
-*Last Updated: 4/12/2026, 1:29:17 AM*
+*Last Updated: 4/13/2026, 1:31:16 AM*
 
 ---
 
 ## 🍿 Watched Movies
 
-- **Total Watched:** 622
-- **Rated:** 622
+- **Total Watched:** 623
+- **Rated:** 623
 - **Unrated:** 0
-- **Average Rating:** 7.01/10
+- **Average Rating:** 7.02/10
 
 ### Rating Distribution
 
 - **10★**: 20 ████
 - **9★**: 38 ████████
-- **8★**: 147 ██████████████████████████████
-- **7★**: 229 ██████████████████████████████████████████████
-- **6★**: 131 ███████████████████████████
+- **8★**: 148 ██████████████████████████████
+- **7★**: 230 ██████████████████████████████████████████████
+- **6★**: 130 ██████████████████████████
 - **5★**: 38 ████████
 - **4★**: 12 ███
 - **3★**: 5 █
@@ -39,26 +39,26 @@
 
 ### 📅 Watching Patterns
 
-- **Movies with watch dates:** 622
+- **Movies with watch dates:** 623
 - **Most active month:** 2026-01 (308 movies)
 
 **By Year:**
-- 2026: 328 movies
+- 2026: 329 movies
 - 2025: 294 movies
 
 ## 📝 Want to Watch
 
-- **Total on Watchlist:** 227
+- **Total on Watchlist:** 230
 - **Pre-rated:** 0
-- **Completion Rate:** 73.3%
+- **Completion Rate:** 73.0%
 
 ### Recently Added to Watchlist
 
-1. Dia
-2. A Time to Kill
-3. About Time
-4. October Sky
-5. No Exit
+1. Mystic River
+2. Brothers
+3. Sudani from Nigeria
+4. Dia
+5. A Time to Kill
 
 ## 📺 TV Shows
 
@@ -76,11 +76,11 @@
 
 ## 📊 Overall Summary
 
-- **Total Tracked Content:** 947
-- **Movies Watched:** 622
-- **Movies to Watch:** 227
+- **Total Tracked Content:** 951
+- **Movies Watched:** 623
+- **Movies to Watch:** 230
 - **TV Shows:** 98
-- **Overall Average Rating:** 7.01/10
+- **Overall Average Rating:** 7.02/10
 
 ---
 
