@@ -1,13 +1,13 @@
 # 🎬 Movie Tracker Statistics
 
-*Last Updated: 4/18/2026, 1:22:23 AM*
+*Last Updated: 4/19/2026, 1:44:08 AM*
 
 ---
 
 ## 🍿 Watched Movies
 
-- **Total Watched:** 624
-- **Rated:** 624
+- **Total Watched:** 625
+- **Rated:** 625
 - **Unrated:** 0
 - **Average Rating:** 7.02/10
 
@@ -16,7 +16,7 @@
 - **10★**: 20 ████
 - **9★**: 38 ████████
 - **8★**: 148 ██████████████████████████████
-- **7★**: 231 ███████████████████████████████████████████████
+- **7★**: 232 ███████████████████████████████████████████████
 - **6★**: 130 ██████████████████████████
 - **5★**: 38 ████████
 - **4★**: 12 ███
@@ -39,11 +39,11 @@
 
 ### 📅 Watching Patterns
 
-- **Movies with watch dates:** 624
+- **Movies with watch dates:** 625
 - **Most active month:** 2026-01 (308 movies)
 
 **By Year:**
-- 2026: 330 movies
+- 2026: 331 movies
 - 2025: 294 movies
 
 ## 📝 Want to Watch
@@ -54,11 +54,11 @@
 
 ### Recently Added to Watchlist
 
-1. The Furious
-2. Mystic River
-3. Brothers
-4. Sudani from Nigeria
-5. Dia
+1. Sambhavam Adhyayam Onnu
+2. The Furious
+3. Mystic River
+4. Brothers
+5. Sudani from Nigeria
 
 ## 📺 TV Shows
 
@@ -76,8 +76,8 @@
 
 ## 📊 Overall Summary
 
-- **Total Tracked Content:** 953
-- **Movies Watched:** 624
+- **Total Tracked Content:** 954
+- **Movies Watched:** 625
 - **Movies to Watch:** 231
 - **TV Shows:** 98
 - **Overall Average Rating:** 7.02/10
