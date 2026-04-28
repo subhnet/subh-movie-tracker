@@ -1,6 +1,6 @@
 # 🎬 Movie Tracker Statistics
 
-*Last Updated: 4/27/2026, 1:50:23 AM*
+*Last Updated: 4/28/2026, 1:57:51 AM*
 
 ---
 
@@ -48,17 +48,17 @@
 
 ## 📝 Want to Watch
 
-- **Total on Watchlist:** 230
+- **Total on Watchlist:** 231
 - **Pre-rated:** 0
-- **Completion Rate:** 73.2%
+- **Completion Rate:** 73.1%
 
 ### Recently Added to Watchlist
 
-1. All We Imagine as Light
-2. Sambhavam Adhyayam Onnu
-3. The Furious
-4. Mystic River
-5. Brothers
+1. 100 METERS
+2. All We Imagine as Light
+3. Sambhavam Adhyayam Onnu
+4. The Furious
+5. Mystic River
 
 ## 📺 TV Shows
 
@@ -76,9 +76,9 @@
 
 ## 📊 Overall Summary
 
-- **Total Tracked Content:** 955
+- **Total Tracked Content:** 956
 - **Movies Watched:** 627
-- **Movies to Watch:** 230
+- **Movies to Watch:** 231
 - **TV Shows:** 98
 - **Overall Average Rating:** 7.02/10
 
