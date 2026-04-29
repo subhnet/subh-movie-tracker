@@ -1,6 +1,6 @@
 # 🎬 Movie Tracker Statistics
 
-*Last Updated: 4/28/2026, 1:57:51 AM*
+*Last Updated: 4/29/2026, 2:00:33 AM*
 
 ---
 
@@ -48,17 +48,17 @@
 
 ## 📝 Want to Watch
 
-- **Total on Watchlist:** 231
+- **Total on Watchlist:** 234
 - **Pre-rated:** 0
-- **Completion Rate:** 73.1%
+- **Completion Rate:** 72.8%
 
 ### Recently Added to Watchlist
 
-1. 100 METERS
-2. All We Imagine as Light
-3. Sambhavam Adhyayam Onnu
-4. The Furious
-5. Mystic River
+1. The Intern
+2. Eddie the Eagle
+3. The Secret Life of Walter Mitty
+4. 100 METERS
+5. All We Imagine as Light
 
 ## 📺 TV Shows
 
@@ -76,9 +76,9 @@
 
 ## 📊 Overall Summary
 
-- **Total Tracked Content:** 956
+- **Total Tracked Content:** 959
 - **Movies Watched:** 627
-- **Movies to Watch:** 231
+- **Movies to Watch:** 234
 - **TV Shows:** 98
 - **Overall Average Rating:** 7.02/10
 
