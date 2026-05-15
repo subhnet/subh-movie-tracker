@@ -1,15 +1,15 @@
 # 🎬 Movie Tracker Statistics
 
-*Last Updated: 5/14/2026, 2:10:37 AM*
+*Last Updated: 5/15/2026, 2:08:44 AM*
 
 ---
 
 ## 🍿 Watched Movies
 
-- **Total Watched:** 627
-- **Rated:** 627
+- **Total Watched:** 628
+- **Rated:** 628
 - **Unrated:** 0
-- **Average Rating:** 7.02/10
+- **Average Rating:** 7.01/10
 
 ### Rating Distribution
 
@@ -17,7 +17,7 @@
 - **9★**: 38 ████████
 - **8★**: 148 ██████████████████████████████
 - **7★**: 233 ███████████████████████████████████████████████
-- **6★**: 131 ███████████████████████████
+- **6★**: 132 ███████████████████████████
 - **5★**: 38 ████████
 - **4★**: 12 ███
 - **3★**: 5 █
@@ -39,26 +39,26 @@
 
 ### 📅 Watching Patterns
 
-- **Movies with watch dates:** 627
+- **Movies with watch dates:** 628
 - **Most active month:** 2026-01 (308 movies)
 
 **By Year:**
-- 2026: 333 movies
+- 2026: 334 movies
 - 2025: 294 movies
 
 ## 📝 Want to Watch
 
-- **Total on Watchlist:** 234
+- **Total on Watchlist:** 233
 - **Pre-rated:** 0
-- **Completion Rate:** 72.8%
+- **Completion Rate:** 72.9%
 
 ### Recently Added to Watchlist
 
 1. The Intern
 2. Eddie the Eagle
 3. The Secret Life of Walter Mitty
-4. 100 METERS
-5. All We Imagine as Light
+4. All We Imagine as Light
+5. Sambhavam Adhyayam Onnu
 
 ## 📺 TV Shows
 
@@ -77,10 +77,10 @@
 ## 📊 Overall Summary
 
 - **Total Tracked Content:** 959
-- **Movies Watched:** 627
-- **Movies to Watch:** 234
+- **Movies Watched:** 628
+- **Movies to Watch:** 233
 - **TV Shows:** 98
-- **Overall Average Rating:** 7.02/10
+- **Overall Average Rating:** 7.01/10
 
 ---
 
