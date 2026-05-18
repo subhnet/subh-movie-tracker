@@ -1,6 +1,6 @@
 # 🎬 Movie Tracker Statistics
 
-*Last Updated: 5/17/2026, 2:02:57 AM*
+*Last Updated: 5/18/2026, 2:14:59 AM*
 
 ---
 
@@ -48,17 +48,17 @@
 
 ## 📝 Want to Watch
 
-- **Total on Watchlist:** 233
+- **Total on Watchlist:** 236
 - **Pre-rated:** 0
-- **Completion Rate:** 72.9%
+- **Completion Rate:** 72.7%
 
 ### Recently Added to Watchlist
 
-1. The Intern
-2. Eddie the Eagle
-3. The Secret Life of Walter Mitty
-4. All We Imagine as Light
-5. Sambhavam Adhyayam Onnu
+1. The Odyssey
+2. The Punisher: One Last Kill
+3. Athiradi
+4. The Intern
+5. Eddie the Eagle
 
 ## 📺 TV Shows
 
@@ -76,9 +76,9 @@
 
 ## 📊 Overall Summary
 
-- **Total Tracked Content:** 959
+- **Total Tracked Content:** 962
 - **Movies Watched:** 628
-- **Movies to Watch:** 233
+- **Movies to Watch:** 236
 - **TV Shows:** 98
 - **Overall Average Rating:** 7.01/10
 
