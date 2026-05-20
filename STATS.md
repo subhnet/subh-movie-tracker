@@ -1,13 +1,13 @@
 # 🎬 Movie Tracker Statistics
 
-*Last Updated: 5/19/2026, 2:14:08 AM*
+*Last Updated: 5/20/2026, 2:13:03 AM*
 
 ---
 
 ## 🍿 Watched Movies
 
-- **Total Watched:** 628
-- **Rated:** 628
+- **Total Watched:** 630
+- **Rated:** 630
 - **Unrated:** 0
 - **Average Rating:** 7.01/10
 
@@ -17,8 +17,8 @@
 - **9★**: 38 ████████
 - **8★**: 148 ██████████████████████████████
 - **7★**: 233 ███████████████████████████████████████████████
-- **6★**: 132 ███████████████████████████
-- **5★**: 38 ████████
+- **6★**: 133 ███████████████████████████
+- **5★**: 39 ████████
 - **4★**: 12 ███
 - **3★**: 5 █
 - **2★**: 1 █
@@ -39,26 +39,26 @@
 
 ### 📅 Watching Patterns
 
-- **Movies with watch dates:** 628
+- **Movies with watch dates:** 630
 - **Most active month:** 2026-01 (308 movies)
 
 **By Year:**
-- 2026: 334 movies
+- 2026: 336 movies
 - 2025: 294 movies
 
 ## 📝 Want to Watch
 
-- **Total on Watchlist:** 236
+- **Total on Watchlist:** 235
 - **Pre-rated:** 0
-- **Completion Rate:** 72.7%
+- **Completion Rate:** 72.8%
 
 ### Recently Added to Watchlist
 
 1. The Odyssey
-2. The Punisher: One Last Kill
-3. Athiradi
-4. The Intern
-5. Eddie the Eagle
+2. Athiradi
+3. The Intern
+4. Eddie the Eagle
+5. The Secret Life of Walter Mitty
 
 ## 📺 TV Shows
 
@@ -76,9 +76,9 @@
 
 ## 📊 Overall Summary
 
-- **Total Tracked Content:** 962
-- **Movies Watched:** 628
-- **Movies to Watch:** 236
+- **Total Tracked Content:** 963
+- **Movies Watched:** 630
+- **Movies to Watch:** 235
 - **TV Shows:** 98
 - **Overall Average Rating:** 7.01/10
 
