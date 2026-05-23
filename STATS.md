@@ -1,6 +1,6 @@
 # 🎬 Movie Tracker Statistics
 
-*Last Updated: 5/22/2026, 2:15:32 AM*
+*Last Updated: 5/23/2026, 2:02:21 AM*
 
 ---
 
@@ -48,21 +48,21 @@
 
 ## 📝 Want to Watch
 
-- **Total on Watchlist:** 233
+- **Total on Watchlist:** 234
 - **Pre-rated:** 0
-- **Completion Rate:** 73.1%
+- **Completion Rate:** 73.0%
 
 ### Recently Added to Watchlist
 
-1. The Odyssey
-2. Athiradi
-3. The Intern
-4. Eddie the Eagle
-5. The Secret Life of Walter Mitty
+1. Madhuvidhu
+2. The Odyssey
+3. Athiradi
+4. The Intern
+5. Eddie the Eagle
 
 ## 📺 TV Shows
 
-- **Total Shows:** 98
+- **Total Shows:** 99
 - **Rated:** 77
 - **Average Rating:** 7.05/10
 
@@ -76,10 +76,10 @@
 
 ## 📊 Overall Summary
 
-- **Total Tracked Content:** 963
+- **Total Tracked Content:** 965
 - **Movies Watched:** 632
-- **Movies to Watch:** 233
-- **TV Shows:** 98
+- **Movies to Watch:** 234
+- **TV Shows:** 99
 - **Overall Average Rating:** 7/10
 
 ---
