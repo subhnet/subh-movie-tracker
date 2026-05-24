@@ -1,6 +1,6 @@
 # 🎬 Movie Tracker Statistics
 
-*Last Updated: 5/23/2026, 2:02:21 AM*
+*Last Updated: 5/24/2026, 2:11:34 AM*
 
 ---
 
@@ -48,17 +48,17 @@
 
 ## 📝 Want to Watch
 
-- **Total on Watchlist:** 234
+- **Total on Watchlist:** 235
 - **Pre-rated:** 0
-- **Completion Rate:** 73.0%
+- **Completion Rate:** 72.9%
 
 ### Recently Added to Watchlist
 
-1. Madhuvidhu
-2. The Odyssey
-3. Athiradi
-4. The Intern
-5. Eddie the Eagle
+1. Lost in Translation
+2. Madhuvidhu
+3. The Odyssey
+4. Athiradi
+5. The Intern
 
 ## 📺 TV Shows
 
@@ -76,9 +76,9 @@
 
 ## 📊 Overall Summary
 
-- **Total Tracked Content:** 965
+- **Total Tracked Content:** 966
 - **Movies Watched:** 632
-- **Movies to Watch:** 234
+- **Movies to Watch:** 235
 - **TV Shows:** 99
 - **Overall Average Rating:** 7/10
 
