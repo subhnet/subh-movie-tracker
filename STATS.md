@@ -1,6 +1,6 @@
 # 🎬 Movie Tracker Statistics
 
-*Last Updated: 5/27/2026, 2:30:28 AM*
+*Last Updated: 5/28/2026, 2:03:34 AM*
 
 ---
 
@@ -48,17 +48,17 @@
 
 ## 📝 Want to Watch
 
-- **Total on Watchlist:** 235
+- **Total on Watchlist:** 238
 - **Pre-rated:** 0
-- **Completion Rate:** 72.9%
+- **Completion Rate:** 72.6%
 
 ### Recently Added to Watchlist
 
-1. Lost in Translation
-2. Madhuvidhu
-3. The Odyssey
-4. Athiradi
-5. The Intern
+1. Behind Her Eyes
+2. Remarkably Bright Creatures
+3. Eternity
+4. Lost in Translation
+5. Madhuvidhu
 
 ## 📺 TV Shows
 
@@ -76,9 +76,9 @@
 
 ## 📊 Overall Summary
 
-- **Total Tracked Content:** 966
+- **Total Tracked Content:** 969
 - **Movies Watched:** 632
-- **Movies to Watch:** 235
+- **Movies to Watch:** 238
 - **TV Shows:** 99
 - **Overall Average Rating:** 7/10
 
