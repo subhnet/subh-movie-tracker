@@ -1,6 +1,6 @@
 # 🎬 Movie Tracker Statistics
 
-*Last Updated: 5/29/2026, 2:09:10 AM*
+*Last Updated: 6/2/2026, 2:39:10 AM*
 
 ---
 
