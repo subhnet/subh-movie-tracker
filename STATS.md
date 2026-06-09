@@ -1,6 +1,6 @@
 # 🎬 Movie Tracker Statistics
 
-*Last Updated: 6/8/2026, 2:39:11 AM*
+*Last Updated: 6/9/2026, 2:04:31 AM*
 
 ---
 
@@ -48,21 +48,21 @@
 
 ## 📝 Want to Watch
 
-- **Total on Watchlist:** 238
+- **Total on Watchlist:** 240
 - **Pre-rated:** 0
-- **Completion Rate:** 72.6%
+- **Completion Rate:** 72.5%
 
 ### Recently Added to Watchlist
 
-1. Behind Her Eyes
-2. Remarkably Bright Creatures
-3. Eternity
-4. Lost in Translation
-5. Madhuvidhu
+1. Fall
+2. Obsession
+3. Behind Her Eyes
+4. Remarkably Bright Creatures
+5. Eternity
 
 ## 📺 TV Shows
 
-- **Total Shows:** 99
+- **Total Shows:** 100
 - **Rated:** 77
 - **Average Rating:** 7.05/10
 
@@ -76,10 +76,10 @@
 
 ## 📊 Overall Summary
 
-- **Total Tracked Content:** 969
+- **Total Tracked Content:** 972
 - **Movies Watched:** 632
-- **Movies to Watch:** 238
-- **TV Shows:** 99
+- **Movies to Watch:** 240
+- **TV Shows:** 100
 - **Overall Average Rating:** 7/10
 
 ---
