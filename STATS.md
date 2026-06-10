@@ -1,13 +1,13 @@
 # 🎬 Movie Tracker Statistics
 
-*Last Updated: 6/9/2026, 2:04:31 AM*
+*Last Updated: 6/10/2026, 2:29:39 AM*
 
 ---
 
 ## 🍿 Watched Movies
 
-- **Total Watched:** 632
-- **Rated:** 632
+- **Total Watched:** 633
+- **Rated:** 633
 - **Unrated:** 0
 - **Average Rating:** 7/10
 
@@ -15,7 +15,7 @@
 
 - **10★**: 20 ████
 - **9★**: 38 ████████
-- **8★**: 149 ██████████████████████████████
+- **8★**: 150 ██████████████████████████████
 - **7★**: 233 ███████████████████████████████████████████████
 - **6★**: 133 ███████████████████████████
 - **5★**: 39 ████████
@@ -39,11 +39,11 @@
 
 ### 📅 Watching Patterns
 
-- **Movies with watch dates:** 632
+- **Movies with watch dates:** 633
 - **Most active month:** 2026-01 (308 movies)
 
 **By Year:**
-- 2026: 338 movies
+- 2026: 339 movies
 - 2025: 294 movies
 
 ## 📝 Want to Watch
@@ -54,15 +54,15 @@
 
 ### Recently Added to Watchlist
 
-1. Fall
-2. Obsession
-3. Behind Her Eyes
-4. Remarkably Bright Creatures
-5. Eternity
+1. Cape Fear
+2. Fall
+3. Obsession
+4. Behind Her Eyes
+5. Remarkably Bright Creatures
 
 ## 📺 TV Shows
 
-- **Total Shows:** 100
+- **Total Shows:** 101
 - **Rated:** 77
 - **Average Rating:** 7.05/10
 
@@ -76,10 +76,10 @@
 
 ## 📊 Overall Summary
 
-- **Total Tracked Content:** 972
-- **Movies Watched:** 632
+- **Total Tracked Content:** 974
+- **Movies Watched:** 633
 - **Movies to Watch:** 240
-- **TV Shows:** 100
+- **TV Shows:** 101
 - **Overall Average Rating:** 7/10
 
 ---
