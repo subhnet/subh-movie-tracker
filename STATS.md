@@ -1,6 +1,6 @@
 # 🎬 Movie Tracker Statistics
 
-*Last Updated: 6/25/2026, 2:13:37 AM*
+*Last Updated: 6/26/2026, 2:15:20 AM*
 
 ---
 
@@ -48,17 +48,17 @@
 
 ## 📝 Want to Watch
 
-- **Total on Watchlist:** 237
+- **Total on Watchlist:** 238
 - **Pre-rated:** 0
-- **Completion Rate:** 72.9%
+- **Completion Rate:** 72.8%
 
 ### Recently Added to Watchlist
 
-1. Cape Fear
-2. Fall
-3. Obsession
-4. Behind Her Eyes
-5. Remarkably Bright Creatures
+1. Balan - The Boy
+2. Cape Fear
+3. Fall
+4. Obsession
+5. Behind Her Eyes
 
 ## 📺 TV Shows
 
@@ -76,9 +76,9 @@
 
 ## 📊 Overall Summary
 
-- **Total Tracked Content:** 975
+- **Total Tracked Content:** 976
 - **Movies Watched:** 637
-- **Movies to Watch:** 237
+- **Movies to Watch:** 238
 - **TV Shows:** 101
 - **Overall Average Rating:** 7/10
 
