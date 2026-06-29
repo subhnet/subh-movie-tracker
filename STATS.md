@@ -1,13 +1,13 @@
 # 🎬 Movie Tracker Statistics
 
-*Last Updated: 6/28/2026, 2:31:45 AM*
+*Last Updated: 6/29/2026, 2:32:04 AM*
 
 ---
 
 ## 🍿 Watched Movies
 
-- **Total Watched:** 637
-- **Rated:** 637
+- **Total Watched:** 638
+- **Rated:** 638
 - **Unrated:** 0
 - **Average Rating:** 7/10
 
@@ -16,7 +16,7 @@
 - **10★**: 20 ████
 - **9★**: 38 ████████
 - **8★**: 150 ██████████████████████████████
-- **7★**: 235 ███████████████████████████████████████████████
+- **7★**: 236 ████████████████████████████████████████████████
 - **6★**: 134 ███████████████████████████
 - **5★**: 39 ████████
 - **4★**: 12 ███
@@ -39,26 +39,26 @@
 
 ### 📅 Watching Patterns
 
-- **Movies with watch dates:** 637
+- **Movies with watch dates:** 638
 - **Most active month:** 2026-01 (308 movies)
 
 **By Year:**
-- 2026: 343 movies
+- 2026: 344 movies
 - 2025: 294 movies
 
 ## 📝 Want to Watch
 
-- **Total on Watchlist:** 238
+- **Total on Watchlist:** 239
 - **Pre-rated:** 0
-- **Completion Rate:** 72.8%
+- **Completion Rate:** 72.7%
 
 ### Recently Added to Watchlist
 
-1. Balan - The Boy
-2. Cape Fear
-3. Fall
-4. Obsession
-5. Behind Her Eyes
+1. The Sheep Detectives
+2. Drishyam 3
+3. Balan - The Boy
+4. Cape Fear
+5. Fall
 
 ## 📺 TV Shows
 
@@ -76,9 +76,9 @@
 
 ## 📊 Overall Summary
 
-- **Total Tracked Content:** 976
-- **Movies Watched:** 637
-- **Movies to Watch:** 238
+- **Total Tracked Content:** 978
+- **Movies Watched:** 638
+- **Movies to Watch:** 239
 - **TV Shows:** 101
 - **Overall Average Rating:** 7/10
 
