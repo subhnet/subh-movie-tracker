@@ -1,15 +1,15 @@
 # 🎬 Movie Tracker Statistics
 
-*Last Updated: 7/7/2026, 2:04:09 AM*
+*Last Updated: 7/8/2026, 1:45:18 AM*
 
 ---
 
 ## 🍿 Watched Movies
 
-- **Total Watched:** 640
-- **Rated:** 640
+- **Total Watched:** 642
+- **Rated:** 642
 - **Unrated:** 0
-- **Average Rating:** 7/10
+- **Average Rating:** 6.99/10
 
 ### Rating Distribution
 
@@ -17,9 +17,9 @@
 - **9★**: 38 ████████
 - **8★**: 151 ███████████████████████████████
 - **7★**: 237 ████████████████████████████████████████████████
-- **6★**: 134 ███████████████████████████
+- **6★**: 135 ███████████████████████████
 - **5★**: 39 ████████
-- **4★**: 12 ███
+- **4★**: 13 ███
 - **3★**: 6 ██
 - **2★**: 1 █
 - **1★**: 2 █
@@ -39,26 +39,26 @@
 
 ### 📅 Watching Patterns
 
-- **Movies with watch dates:** 640
+- **Movies with watch dates:** 642
 - **Most active month:** 2026-01 (308 movies)
 
 **By Year:**
-- 2026: 346 movies
+- 2026: 348 movies
 - 2025: 294 movies
 
 ## 📝 Want to Watch
 
-- **Total on Watchlist:** 237
+- **Total on Watchlist:** 236
 - **Pre-rated:** 0
-- **Completion Rate:** 73.0%
+- **Completion Rate:** 73.1%
 
 ### Recently Added to Watchlist
 
-1. Drishyam 3
-2. Balan - The Boy
-3. Cape Fear
-4. Fall
-5. Behind Her Eyes
+1. Satluj
+2. Drishyam 3
+3. Balan - The Boy
+4. Cape Fear
+5. Fall
 
 ## 📺 TV Shows
 
@@ -76,11 +76,11 @@
 
 ## 📊 Overall Summary
 
-- **Total Tracked Content:** 978
-- **Movies Watched:** 640
-- **Movies to Watch:** 237
+- **Total Tracked Content:** 979
+- **Movies Watched:** 642
+- **Movies to Watch:** 236
 - **TV Shows:** 101
-- **Overall Average Rating:** 7/10
+- **Overall Average Rating:** 6.99/10
 
 ---
 
