@@ -1,6 +1,6 @@
 # 🎬 Movie Tracker Statistics
 
-*Last Updated: 7/17/2026, 1:46:03 AM*
+*Last Updated: 7/18/2026, 1:26:58 AM*
 
 ---
 
@@ -48,17 +48,17 @@
 
 ## 📝 Want to Watch
 
-- **Total on Watchlist:** 235
+- **Total on Watchlist:** 236
 - **Pre-rated:** 0
-- **Completion Rate:** 73.3%
+- **Completion Rate:** 73.2%
 
 ### Recently Added to Watchlist
 
-1. Satluj
-2. Drishyam 3
-3. Balan - The Boy
-4. Cape Fear
-5. Fall
+1. The Runner
+2. Satluj
+3. Drishyam 3
+4. Balan - The Boy
+5. Cape Fear
 
 ## 📺 TV Shows
 
@@ -76,9 +76,9 @@
 
 ## 📊 Overall Summary
 
-- **Total Tracked Content:** 980
+- **Total Tracked Content:** 981
 - **Movies Watched:** 644
-- **Movies to Watch:** 235
+- **Movies to Watch:** 236
 - **TV Shows:** 101
 - **Overall Average Rating:** 6.99/10
 
