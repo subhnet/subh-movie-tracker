@@ -1,13 +1,13 @@
 # 🎬 Movie Tracker Statistics
 
-*Last Updated: 7/25/2026, 1:46:43 AM*
+*Last Updated: 7/26/2026, 1:49:17 AM*
 
 ---
 
 ## 🍿 Watched Movies
 
-- **Total Watched:** 646
-- **Rated:** 646
+- **Total Watched:** 647
+- **Rated:** 647
 - **Unrated:** 0
 - **Average Rating:** 6.99/10
 
@@ -15,7 +15,7 @@
 
 - **10★**: 20 ████
 - **9★**: 38 ████████
-- **8★**: 152 ███████████████████████████████
+- **8★**: 153 ███████████████████████████████
 - **7★**: 239 ████████████████████████████████████████████████
 - **6★**: 136 ████████████████████████████
 - **5★**: 39 ████████
@@ -39,26 +39,26 @@
 
 ### 📅 Watching Patterns
 
-- **Movies with watch dates:** 646
+- **Movies with watch dates:** 647
 - **Most active month:** 2026-01 (308 movies)
 
 **By Year:**
-- 2026: 352 movies
+- 2026: 353 movies
 - 2025: 294 movies
 
 ## 📝 Want to Watch
 
-- **Total on Watchlist:** 234
+- **Total on Watchlist:** 233
 - **Pre-rated:** 0
-- **Completion Rate:** 73.4%
+- **Completion Rate:** 73.5%
 
 ### Recently Added to Watchlist
 
 1. The Runner
 2. Balan - The Boy
 3. Cape Fear
-4. Fall
-5. Behind Her Eyes
+4. Behind Her Eyes
+5. Remarkably Bright Creatures
 
 ## 📺 TV Shows
 
@@ -77,8 +77,8 @@
 ## 📊 Overall Summary
 
 - **Total Tracked Content:** 981
-- **Movies Watched:** 646
-- **Movies to Watch:** 234
+- **Movies Watched:** 647
+- **Movies to Watch:** 233
 - **TV Shows:** 101
 - **Overall Average Rating:** 6.99/10
 
