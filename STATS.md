@@ -1,6 +1,6 @@
 # 🎬 Movie Tracker Statistics
 
-*Last Updated: 8/9/2026, 12:55:22 AM*
+*Last Updated: 8/10/2026, 12:57:12 AM*
 
 ---
 
@@ -48,17 +48,17 @@
 
 ## 📝 Want to Watch
 
-- **Total on Watchlist:** 234
+- **Total on Watchlist:** 236
 - **Pre-rated:** 0
-- **Completion Rate:** 73.5%
+- **Completion Rate:** 73.3%
 
 ### Recently Added to Watchlist
 
-1. Spider-Man: Brand New Day
-2. The Runner
-3. Balan - The Boy
-4. Cape Fear
-5. Behind Her Eyes
+1. The Adjustment Bureau
+2. DC
+3. Spider-Man: Brand New Day
+4. The Runner
+5. Balan - The Boy
 
 ## 📺 TV Shows
 
@@ -76,9 +76,9 @@
 
 ## 📊 Overall Summary
 
-- **Total Tracked Content:** 984
+- **Total Tracked Content:** 986
 - **Movies Watched:** 649
-- **Movies to Watch:** 234
+- **Movies to Watch:** 236
 - **TV Shows:** 101
 - **Overall Average Rating:** 6.99/10
 
