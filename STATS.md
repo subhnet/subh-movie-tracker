@@ -1,6 +1,6 @@
 # 🎬 Movie Tracker Statistics
 
-*Last Updated: 8/11/2026, 12:56:40 AM*
+*Last Updated: 8/12/2026, 1:03:03 AM*
 
 ---
 
@@ -48,17 +48,17 @@
 
 ## 📝 Want to Watch
 
-- **Total on Watchlist:** 236
+- **Total on Watchlist:** 237
 - **Pre-rated:** 0
 - **Completion Rate:** 73.3%
 
 ### Recently Added to Watchlist
 
-1. The Adjustment Bureau
-2. DC
-3. Spider-Man: Brand New Day
-4. The Runner
-5. Balan - The Boy
+1. Ohh My Dog
+2. The Adjustment Bureau
+3. DC
+4. Spider-Man: Brand New Day
+5. The Runner
 
 ## 📺 TV Shows
 
@@ -76,9 +76,9 @@
 
 ## 📊 Overall Summary
 
-- **Total Tracked Content:** 986
+- **Total Tracked Content:** 987
 - **Movies Watched:** 649
-- **Movies to Watch:** 236
+- **Movies to Watch:** 237
 - **TV Shows:** 101
 - **Overall Average Rating:** 6.99/10
 
