@@ -1,21 +1,21 @@
 # 🎬 Movie Tracker Statistics
 
-*Last Updated: 8/14/2026, 1:03:59 AM*
+*Last Updated: 8/15/2026, 12:38:38 AM*
 
 ---
 
 ## 🍿 Watched Movies
 
-- **Total Watched:** 650
-- **Rated:** 650
+- **Total Watched:** 651
+- **Rated:** 651
 - **Unrated:** 0
-- **Average Rating:** 6.99/10
+- **Average Rating:** 7/10
 
 ### Rating Distribution
 
 - **10★**: 20 ████
 - **9★**: 39 ████████
-- **8★**: 153 ███████████████████████████████
+- **8★**: 154 ███████████████████████████████
 - **7★**: 240 ████████████████████████████████████████████████
 - **6★**: 137 ████████████████████████████
 - **5★**: 39 ████████
@@ -39,26 +39,26 @@
 
 ### 📅 Watching Patterns
 
-- **Movies with watch dates:** 650
+- **Movies with watch dates:** 651
 - **Most active month:** 2026-01 (308 movies)
 
 **By Year:**
-- 2026: 356 movies
+- 2026: 357 movies
 - 2025: 294 movies
 
 ## 📝 Want to Watch
 
 - **Total on Watchlist:** 235
 - **Pre-rated:** 0
-- **Completion Rate:** 73.4%
+- **Completion Rate:** 73.5%
 
 ### Recently Added to Watchlist
 
-1. Ohh My Dog
-2. The Adjustment Bureau
-3. DC
-4. Spider-Man: Brand New Day
-5. The Runner
+1. Heart of the Beast
+2. Ohh My Dog
+3. The Adjustment Bureau
+4. DC
+5. Spider-Man: Brand New Day
 
 ## 📺 TV Shows
 
@@ -76,11 +76,11 @@
 
 ## 📊 Overall Summary
 
-- **Total Tracked Content:** 986
-- **Movies Watched:** 650
+- **Total Tracked Content:** 987
+- **Movies Watched:** 651
 - **Movies to Watch:** 235
 - **TV Shows:** 101
-- **Overall Average Rating:** 6.99/10
+- **Overall Average Rating:** 7/10
 
 ---
 
