@@ -138,19 +138,18 @@ subh-movie-tracker/
 ├── package.json              # Dependencies and scripts
 ├── .env                      # Configuration (not in git)
 ├── .env.example             # Configuration template
-├── data/                     # Canonical scraped data
+├── index.html               # Generated HTML dashboard (if enabled)
+├── backups/                 # Timestamped backups (not in git)
+├── public/                  # The 3 canonical CSVs + Next.js static assets
 │   ├── watched_titles.csv   # Movies you've watched
 │   ├── wants_titles.csv     # Movies you want to watch
 │   └── shows_titles.csv     # TV shows you're tracking
-├── index.html               # Generated HTML dashboard (if enabled)
-├── backups/                 # Timestamped backups (not in git)
-├── public/                  # CSV mirrors read by the deployed app (Vercel fallback path)
-├── docs/                    # Documentation & generated reports
+├── docs/                    # Documentation, generated reports & archive
 │   ├── STATS.md             # Generated statistics report
 │   ├── supabase-schema.sql  # Supabase table definitions
-│   └── migrations/          # One-off SQL migrations applied to Supabase
-├── outputs/                  # Archived/old generated artifacts
-│   └── index.html.old       # Previous HTML dashboard snapshot
+│   ├── migrations/          # One-off SQL migrations applied to Supabase
+│   └── archive/             # Old/dead generated artifacts
+│       └── index.html.old  # Previous HTML dashboard snapshot
 └── scraper/                  # The scrape → CSV → stats → Supabase-sync pipeline
     ├── movies.js             # Main scraper script (Puppeteer)
     ├── analytics.js          # Statistics generation
@@ -172,13 +171,6 @@ Each CSV file has the following columns:
 | `notes` | Your personal notes | "Amazing plot twists!" |
 | `tags` | Semicolon-separated tags | "favorite;mind-bending" |
 | `rewatched` | Have you rewatched it? | "true" or "false" |
-
-> **Note:** the CSV writer (`ObjectsToCsv`) always writes columns in
-> alphabetical order on disk (`notes, rating, rewatched, scrapedDate, tags,
-> title, watchedDate`), not the order listed above. This is harmless — every
-> reader (`csvtojson`, `lib/csv-reader.ts`) parses by header name, not
-> position — but don't assume column *position* when editing by hand or
-> scripting against these files; always go by header name.
 
 ### Editing CSV Files
 

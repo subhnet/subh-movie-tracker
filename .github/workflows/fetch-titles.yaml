@@ -45,11 +45,8 @@ jobs:
           MUST_USERNAME: subhransu
         run: node scraper/sync-to-supabase.js
 
-      - name: Mirror CSVs to public/ (Vercel fallback path)
-        run: cp data/watched_titles.csv data/wants_titles.csv data/shows_titles.csv public/
-
       - name: Commit and Push Changes
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "🎬 Updated movie titles and stats (synced to database)"
-          file_pattern: "data/*.csv public/*.csv docs/STATS.md"
+          file_pattern: "public/*.csv docs/STATS.md"

@@ -6,9 +6,9 @@ const path = require('path');
 async function generateStatistics() {
   try {
     const stats = {
-      watched: await analyzeList(path.join('data', 'watched_titles.csv'), 'watched'),
-      wants: await analyzeList(path.join('data', 'wants_titles.csv'), 'wants'),
-      shows: await analyzeList(path.join('data', 'shows_titles.csv'), 'shows'),
+      watched: await analyzeList(path.join('public', 'watched_titles.csv'), 'watched'),
+      wants: await analyzeList(path.join('public', 'wants_titles.csv'), 'wants'),
+      shows: await analyzeList(path.join('public', 'shows_titles.csv'), 'shows'),
       timestamp: new Date().toISOString()
     };
 

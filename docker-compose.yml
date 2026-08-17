@@ -8,9 +8,9 @@ services:
       - "3000:3000"
     volumes:
       - ./.env:/app/.env
-      - ./data/watched_titles.csv:/app/data/watched_titles.csv
-      - ./data/wants_titles.csv:/app/data/wants_titles.csv
-      - ./data/shows_titles.csv:/app/data/shows_titles.csv
+      - ./public/watched_titles.csv:/app/public/watched_titles.csv
+      - ./public/wants_titles.csv:/app/public/wants_titles.csv
+      - ./public/shows_titles.csv:/app/public/shows_titles.csv
       - ./docs/STATS.md:/app/docs/STATS.md
       - ./index.html:/app/index.html
       - ./backups:/app/backups

@@ -16,14 +16,15 @@ There are effectively two data paths — know which one you're touching:
    This is what the deployed dashboard actually reads and writes
    (`app/components/ClientDashboard.tsx` calls `/api/user-movies`).
 2. **CSV/scraper path (secondary, git history + fallback):** `scraper/movies.js`
-   scrapes Must → writes `data/watched_titles.csv` / `data/wants_titles.csv` /
-   `data/shows_titles.csv` → `scraper/analytics.js` generates `docs/STATS.md` →
-   `scraper/sync-to-supabase.js` upserts the CSVs into Supabase. This whole
-   chain runs daily via `.github/workflows/fetch-titles.yaml` and commits the
-   CSV/stat changes back to the repo, so **git log on the CSVs and
-   `docs/STATS.md` is the watch history over time.** `/api/movies` and
-   `/api/stats` read CSVs directly via `lib/csv-reader.ts` but aren't called by
-   any current page — treat them as legacy/fallback, not the live data source.
+   scrapes Must → writes `public/watched_titles.csv` / `public/wants_titles.csv`
+   / `public/shows_titles.csv` → `scraper/analytics.js` generates
+   `docs/STATS.md` → `scraper/sync-to-supabase.js` upserts the CSVs into
+   Supabase. This whole chain runs daily via
+   `.github/workflows/fetch-titles.yaml` and commits the CSV/stat changes back
+   to the repo, so **git log on the CSVs and `docs/STATS.md` is the watch
+   history over time.** `/api/movies` and `/api/stats` read CSVs directly via
+   `lib/csv-reader.ts` but aren't called by any current page — treat them as
+   legacy/fallback, not the live data source.
 
 ## Folder layout
 
@@ -37,45 +38,48 @@ There are effectively two data paths — know which one you're touching:
 │   ├── migrate.js       # One-time CSV schema migration
 │   └── sync-to-supabase.js  # Upserts CSVs into Supabase
 ├── scripts/             # One-off/maintenance scripts (metadata refresh, debug), unrelated to scraper/
-├── data/                # Canonical scraped data (watched/wants/shows_titles.csv)
-├── docs/                # Docs & generated reports (STATS.md, supabase-schema.sql, migrations/)
-├── outputs/             # Archived old generated artifacts (e.g. index.html.old)
-├── public/              # Static assets + CSV mirrors (see "public/ CSV mirror" below)
+├── public/              # THE canonical home for watched/wants/shows_titles.csv, plus Next.js static assets
+├── docs/                # Docs, generated reports & dead artifacts (STATS.md, supabase-schema.sql, migrations/, archive/)
 ├── ios/                 # Capacitor iOS wrapper
 └── .github/workflows/fetch-titles.yaml   # Daily scrape → stats → Supabase sync → commit
 ```
 
-`lib/` vs `scraper/` vs `scripts/` is a real distinction, not just naming: `lib/`
-is imported by the live Next.js app at request time; `scraper/` is the
+`lib/` vs `scraper/` vs `scripts/` is a real distinction, not just naming:
+`lib/` is imported by the live Next.js app at request time; `scraper/` is the
 standalone Node pipeline invoked by `npm run fetch`/the GitHub Action and never
 imported by `app/`; `scripts/` is manually-run maintenance tooling invoked
-directly, never scheduled. `docs/` and `outputs/` were split out from root so
-history/reference material (generated stats, SQL schema/migrations, an old
-HTML dashboard snapshot) doesn't clutter the working root alongside live code
-and data. (Reorganized 2026-08-17 — `scraper/` was previously named `utils/`
-with `movies.js` living at repo root; `data/`, `docs/`, `outputs/` didn't exist
-and those files lived at root too.)
+directly, never scheduled. `docs/` holds everything that isn't live
+code/data — including `docs/archive/` for dead generated artifacts (e.g.
+`index.html.old`) — so history/reference material doesn't clutter root or
+sit in its own single-purpose folder.
 
-## public/ CSV mirror — read this before touching CSV paths
+**Reorg history**, in case old references or muscle memory point at stale
+paths: originally (before 2026-08-17) everything lived flat at repo root —
+`movies.js`, `utils/*.js`, `watched_titles.csv` etc., `STATS.md`,
+`supabase-schema.sql`, `migrations/`, `archive/index.html.old`. That was split
+into `scraper/` (renamed from `utils/`, `movies.js` moved in), `docs/`
+(STATS.md, schema, migrations), and a separate `data/` + `outputs/` for CSVs
+and the old HTML snapshot respectively. `data/` and `outputs/` were then
+immediately folded away again the same day: `data/` merged into `public/`
+(single copy instead of two kept in sync — see below), and `outputs/` became
+`docs/archive/`.
 
-`lib/csv-reader.ts` tries `public/<file>.csv` first when `VERCEL=1`, then falls
-back to `data/<file>.csv`. The `public/` copies exist because Vercel's
-serverless function file-tracing doesn't reliably bundle files that are only
-referenced via a dynamically-built path — copying them into `public/` (which is
-always included as a static asset) was the workaround.
+## Why the CSVs live in public/, not a separate data/ folder
 
-**This means `public/*.csv` must be kept in sync with `data/*.csv`.** The
-GitHub Action does this automatically (`Mirror CSVs to public/` step, added
-2026-08-17) after every scrape, and commits both locations
-(`file_pattern: "data/*.csv public/*.csv docs/STATS.md"`). Before that step
-existed, `public/` silently went stale (last real sync was 2026-01-06 vs. daily
-updates to the canonical CSVs) — if you ever see `/api/movies` or the
-CSV-fallback path in `/api/user-movies` serving old data in production, check
-this sync first.
+`public/` is a hard Next.js convention — anything inside it is auto-served as
+a static asset and, critically, is the one location Vercel's serverless
+file-tracing always bundles (file-tracing doesn't reliably bundle files only
+referenced via a dynamically-built path elsewhere in the repo). Since the
+CSVs *have* to be in `public/` for production to work at all, keeping a second
+copy in `data/` for "cleanliness" just meant two copies to keep in sync — and
+for a while they silently drifted (see git history around 2026-08-17 for the
+staleness incident this caused). `public/` is now the single source of truth:
+`scraper/movies.js` writes there directly, `lib/csv-reader.ts` reads only from
+there, and there is no mirror/sync step anymore.
 
-If you ever change the CSV filenames or add a new CSV, update it in **four**
-places: `scraper/movies.js` (writer), `lib/csv-reader.ts` (reader), the GitHub
-Action's mirror step + `file_pattern`, and `docker-compose.yml`'s volume mounts.
+If you ever change the CSV filenames or add a new CSV, update it in **three**
+places: `scraper/movies.js` (writer), `lib/csv-reader.ts` (reader), and
+`docker-compose.yml`'s volume mounts.
 
 ## Commands
 
@@ -90,19 +94,21 @@ npm run migrate           # One-time CSV schema migration (adds notes/tags/watch
 npm run refresh-metadata  # scripts/refresh-metadata.js — backfills poster/overview via TMDB
 ```
 
-`node scraper/sync-to-supabase.js` pushes the current `data/*.csv` files into
-Supabase (upsert, keyed by title+user) — this is what the GitHub Action runs
-after `scraper/movies.js`, requires `SUPABASE_URL` + `SUPABASE_SERVICE_ROLE_KEY`.
+`node scraper/sync-to-supabase.js` pushes the current `public/*.csv` files
+into Supabase (upsert, keyed by title+user) — this is what the GitHub Action
+runs after `scraper/movies.js`, requires `SUPABASE_URL` +
+`SUPABASE_SERVICE_ROLE_KEY`.
 
 ## Data model notes
 
-- CSV columns: `title, rating, watchedDate, scrapedDate, notes, tags, rewatched`.
-  Rating is `1-10` or `N/A`. Tags are semicolon-separated. On disk the writer
-  (`ObjectsToCsv`) always emits columns alphabetically (`notes, rating,
-  rewatched, scrapedDate, tags, title, watchedDate`) regardless of this
-  conceptual order — harmless since every reader parses by header name, not
-  position, but don't rely on column position when scripting against these
-  files.
+- CSV columns, in on-disk order: `title, rating, watchedDate, scrapedDate,
+  notes, tags, rewatched`. Rating is `1-10` or `N/A`. Tags are
+  semicolon-separated. (The writer previously passed `allColumns: true` to
+  `ObjectsToCsv`, which force-sorts columns alphabetically regardless of this
+  order — fixed by passing `allColumns: false` instead, since every row always
+  has the same 7 keys already. Every reader parses by header name anyway, so
+  this was cosmetic, but don't reintroduce `allColumns: true` unless rows can
+  have inconsistent shapes.)
 - Duplicate titles (e.g. a remake sharing its title with the original — Must
   doesn't disambiguate by year) can legitimately appear more than once in the
   same CSV with different ratings/notes. `saveTitlesToFile` in
@@ -121,10 +127,10 @@ after `scraper/movies.js`, requires `SUPABASE_URL` + `SUPABASE_SERVICE_ROLE_KEY`
 
 ## Exporting/backing up your data
 
-- The full watch history already lives in git — `git log -- data/watched_titles.csv`
+- The full watch history already lives in git — `git log -- public/watched_titles.csv`
   (or `docs/STATS.md`) gives you a dated history of every scrape.
-- For a point-in-time export, the three CSVs in `data/` are the whole dataset;
-  they're plain CSV so they open directly in Sheets/Excel/Numbers.
+- For a point-in-time export, the three CSVs in `public/` are the whole
+  dataset; they're plain CSV so they open directly in Sheets/Excel/Numbers.
 - `backups/` (gitignored) accumulates timestamped pre-scrape snapshots when
   `CREATE_BACKUP=true` — safe to prune periodically, not required for recovery
   since git history covers it.

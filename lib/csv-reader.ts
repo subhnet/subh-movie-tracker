@@ -6,57 +6,18 @@ const csv = require('csvtojson');
 
 export async function readMoviesFromCSV(filename: string): Promise<Movie[]> {
   try {
-    // For Vercel, prioritize public directory
-    const isVercel = process.env.VERCEL === '1';
-    
-    const pathsToTry = isVercel ? [
-      path.join(process.cwd(), 'public', filename),          // Public directory (Vercel)
-      path.join(process.cwd(), 'data', filename),            // data/ directory fallback
-    ] : [
-      path.join(process.cwd(), 'data', filename),            // data/ directory (local dev)
-      path.join(process.cwd(), 'public', filename),          // Public directory fallback
-    ];
-    
-    console.log(`🔍 Looking for ${filename}...`);
-    console.log(`   Environment: ${isVercel ? 'Vercel' : 'Local'}`);
-    console.log(`   Working directory: ${process.cwd()}`);
-    
-    let filePath = pathsToTry[0];
-    let fileFound = false;
-    
-    // Try each path until we find the file
-    for (const tryPath of pathsToTry) {
-      try {
-        await fs.access(tryPath);
-        filePath = tryPath;
-        fileFound = true;
-        console.log(`✅ Found ${filename} at: ${tryPath}`);
-        break;
-      } catch (err) {
-        console.log(`❌ Not found at: ${tryPath}`);
-      }
-    }
-    
-    if (!fileFound) {
-      console.error(`❌ ERROR: Could not find ${filename} in any location!`);
-      console.error(`   Tried paths:`, pathsToTry);
-      
-      // List what files ARE in the directories
-      try {
-        const dataPath = path.join(process.cwd(), 'data');
-        const dataFiles = await fs.readdir(dataPath);
-        console.log(`   Files in data/:`, dataFiles.filter(f => f.endsWith('.csv')));
+    // public/ is the single source for these CSVs: it's always bundled by
+    // Vercel's serverless file-tracing (unlike dynamically-referenced paths
+    // elsewhere in the repo), and it works identically in local dev.
+    const filePath = path.join(process.cwd(), 'public', filename);
 
-        const publicPath = path.join(process.cwd(), 'public');
-        const publicFiles = await fs.readdir(publicPath);
-        console.log(`   Files in public:`, publicFiles.filter(f => f.endsWith('.csv')));
-      } catch (e) {
-        console.error(`   Could not list directory contents:`, e);
-      }
-      
+    try {
+      await fs.access(filePath);
+    } catch (err) {
+      console.error(`❌ Could not find ${filename} at: ${filePath}`);
       return [];
     }
-    
+
     const data = await csv().fromFile(filePath);
     console.log(`✅ Successfully read ${data.length} items from ${filename}`);
     return data as Movie[];

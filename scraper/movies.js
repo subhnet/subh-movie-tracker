@@ -59,7 +59,7 @@ const logger = {
         page,
         'watched',
         `https://mustapp.com/@${CONFIG.username}/watched`,
-        path.join('data', 'watched_titles.csv')
+        path.join('public', 'watched_titles.csv')
       );
     }
 
@@ -69,7 +69,7 @@ const logger = {
         page,
         'wants',
         `https://mustapp.com/@${CONFIG.username}/wants`,
-        path.join('data', 'wants_titles.csv')
+        path.join('public', 'wants_titles.csv')
       );
     }
 
@@ -79,7 +79,7 @@ const logger = {
         page,
         'shows',
         `https://mustapp.com/@${CONFIG.username}/shows`,
-        path.join('data', 'shows_titles.csv')
+        path.join('public', 'shows_titles.csv')
       );
     }
 
@@ -265,7 +265,10 @@ async function saveTitlesToFile(titlesData, filename, listType) {
 
     // Save to CSV
     const csvWriter = new ObjectsToCsv(data);
-    await csvWriter.toDisk(filename, { allColumns: true });
+    // allColumns forces objects-to-csv to alphabetically sort column names;
+    // every row here always has the same 7 keys in the same order already,
+    // so leaving it off preserves that order (title, rating, watchedDate, ...).
+    await csvWriter.toDisk(filename, { allColumns: false });
     
   } catch (error) {
     logger.error(`Error saving to ${filename}: ${error.message}`);

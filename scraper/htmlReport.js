@@ -5,9 +5,9 @@ const path = require('path');
 async function generateHtmlReport() {
   try {
     // Load data
-    const watched = await loadCsvData(path.join('data', 'watched_titles.csv'));
-    const wants = await loadCsvData(path.join('data', 'wants_titles.csv'));
-    const shows = await loadCsvData(path.join('data', 'shows_titles.csv'));
+    const watched = await loadCsvData(path.join('public', 'watched_titles.csv'));
+    const wants = await loadCsvData(path.join('public', 'wants_titles.csv'));
+    const shows = await loadCsvData(path.join('public', 'shows_titles.csv'));
 
     // Calculate statistics
     const watchedStats = calculateStats(watched);

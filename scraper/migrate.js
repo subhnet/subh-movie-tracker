@@ -57,8 +57,11 @@ async function migrateCSV(filename) {
     console.log(`   💾 Backup created: ${backupFilename}`);
 
     // Write migrated data
+    // allColumns forces objects-to-csv to alphabetically sort column names;
+    // every row here always has the same 7 keys in the same order already,
+    // so leaving it off preserves that order (title, rating, watchedDate, ...).
     const csvWriter = new ObjectsToCsv(migratedData);
-    await csvWriter.toDisk(filename, { allColumns: true });
+    await csvWriter.toDisk(filename, { allColumns: false });
     
     console.log(`   ✅ Successfully migrated ${migratedData.length} rows`);
     console.log(`   📊 New columns: watchedDate, scrapedDate, notes, tags, rewatched`);
@@ -79,9 +82,9 @@ async function migrateAll() {
   console.log('  - rewatched: Whether you\'ve rewatched it\n');
   
   const files = [
-    path.join('data', 'watched_titles.csv'),
-    path.join('data', 'wants_titles.csv'),
-    path.join('data', 'shows_titles.csv')
+    path.join('public', 'watched_titles.csv'),
+    path.join('public', 'wants_titles.csv'),
+    path.join('public', 'shows_titles.csv')
   ];
 
   for (const file of files) {

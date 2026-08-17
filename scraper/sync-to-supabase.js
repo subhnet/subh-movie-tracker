@@ -161,9 +161,9 @@ async function main() {
     // Read CSV files
     console.log('📂 Reading CSV files...');
     const [watched, wants, shows] = await Promise.all([
-      readCSV(path.join('data', 'watched_titles.csv')),
-      readCSV(path.join('data', 'wants_titles.csv')),
-      readCSV(path.join('data', 'shows_titles.csv'))
+      readCSV(path.join('public', 'watched_titles.csv')),
+      readCSV(path.join('public', 'wants_titles.csv')),
+      readCSV(path.join('public', 'shows_titles.csv'))
     ]);
 
     console.log(`  ✓ Watched: ${watched.length} movies`);
