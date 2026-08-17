@@ -15,7 +15,6 @@ export interface Movie {
   rating: string;
   tags: string;
   watchedDate?: string;
-  scrapedDate?: string;
   notes?: string;
   rewatched?: string;
   poster_url?: string | null;

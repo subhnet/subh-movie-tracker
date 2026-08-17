@@ -208,7 +208,6 @@ function extractTitles(html) {
       titles.push({
         title,
         rating: rateStars || 'N/A',
-        scrapedDate: new Date().toISOString().split('T')[0], // YYYY-MM-DD format
         notes: '',
         tags: ''
       });
@@ -249,14 +248,14 @@ async function saveTitlesToFile(titlesData, filename, listType) {
     }
 
     // Merge new data with existing data
-    const data = titlesData.map(({ title, rating, scrapedDate }) => {
+    const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD format
+    const data = titlesData.map(({ title, rating }) => {
       const queue = existingByTitle[title];
       const existing = (queue && queue.length) ? queue.shift() : {};
       return {
         title,
         rating: rating || 'N/A',
-        watchedDate: existing.watchedDate || (listType === 'watched' ? scrapedDate : ''),
-        scrapedDate,
+        watchedDate: existing.watchedDate || (listType === 'watched' ? today : ''),
         notes: existing.notes || '',
         tags: existing.tags || '',
         rewatched: existing.rewatched || 'false'

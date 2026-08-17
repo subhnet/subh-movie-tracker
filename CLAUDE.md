@@ -101,14 +101,25 @@ runs after `scraper/movies.js`, requires `SUPABASE_URL` +
 
 ## Data model notes
 
-- CSV columns, in on-disk order: `title, rating, watchedDate, scrapedDate,
-  notes, tags, rewatched`. Rating is `1-10` or `N/A`. Tags are
-  semicolon-separated. (The writer previously passed `allColumns: true` to
-  `ObjectsToCsv`, which force-sorts columns alphabetically regardless of this
-  order — fixed by passing `allColumns: false` instead, since every row always
-  has the same 7 keys already. Every reader parses by header name anyway, so
-  this was cosmetic, but don't reintroduce `allColumns: true` unless rows can
-  have inconsistent shapes.)
+- CSV columns, in on-disk order: `title, rating, watchedDate, notes, tags,
+  rewatched`. Rating is `1-10` or `N/A`. Tags are semicolon-separated. (The
+  writer previously passed `allColumns: true` to `ObjectsToCsv`, which
+  force-sorts columns alphabetically regardless of this order — fixed by
+  passing `allColumns: false` instead, since every row always has the same
+  keys already. Every reader parses by header name anyway, so this was
+  cosmetic, but don't reintroduce `allColumns: true` unless rows can have
+  inconsistent shapes.)
+- There used to be a `scrapedDate` column, removed 2026-08-17. It was
+  restamped with today's date for *every* row on *every* scrape (see
+  `extractTitles` in `scraper/movies.js`), which meant every daily commit
+  rewrote every line of all three CSVs even when nothing about that row
+  actually changed — turning the git history into noise instead of a useful
+  diff-per-change log. It also silently broke `docs/STATS.md`'s "Recently
+  Added to Watchlist" section (removed along with the column), since sorting
+  by a value that's identical across every row on a given day never reflected
+  true add order. If you need "when was this added" again, key it off
+  something that only changes when the row is genuinely new/different — don't
+  restamp unconditionally.
 - Duplicate titles (e.g. a remake sharing its title with the original — Must
   doesn't disambiguate by year) can legitimately appear more than once in the
   same CSV with different ratings/notes. `saveTitlesToFile` in

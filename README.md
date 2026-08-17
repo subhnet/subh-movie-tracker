@@ -31,7 +31,6 @@ A comprehensive personal movie tracking system that scrapes data from Must app, 
 - **Personal Notes**: Add reviews and comments
 - **Custom Tags**: Categorize with tags (e.g., "favorite", "mind-bending")
 - **Rewatch Tracking**: Mark movies you've watched multiple times
-- **Scraped Dates**: Automatic timestamps for data tracking
 
 ### 🛠️ Technical Improvements
 - **Environment Variables**: Configurable via `.env` file
@@ -167,7 +166,6 @@ Each CSV file has the following columns:
 | `title` | Movie/show title | "Inception" |
 | `rating` | Your rating (1-10 or N/A) | "9" |
 | `watchedDate` | When you watched it (YYYY-MM-DD) | "2025-01-15" |
-| `scrapedDate` | When data was scraped | "2025-10-05" |
 | `notes` | Your personal notes | "Amazing plot twists!" |
 | `tags` | Semicolon-separated tags | "favorite;mind-bending" |
 | `rewatched` | Have you rewatched it? | "true" or "false" |
@@ -216,8 +214,8 @@ BACKUP_DIR=backups
 
 Edit your CSV files and add tags:
 ```csv
-title,rating,watchedDate,scrapedDate,notes,tags,rewatched
-Inception,9,2025-01-15,2025-10-05,Mind-blowing,favorite;sci-fi;mind-bending,false
+title,rating,watchedDate,notes,tags,rewatched
+Inception,9,2025-01-15,Mind-blowing,favorite;sci-fi;mind-bending,false
 ```
 
 ### Track Watch Dates

@@ -35,7 +35,6 @@ async function analyzeList(filename, listType) {
         averageRating: 0,
         ratingDistribution: {},
         topRated: [],
-        recentlyAdded: [],
         tags: {}
       };
     }
@@ -77,17 +76,6 @@ async function analyzeList(filename, listType) {
         tags: item.tags || ''
       }));
 
-    // Recently added (based on scrapedDate)
-    const recentlyAdded = data
-      .filter(item => item.scrapedDate)
-      .sort((a, b) => new Date(b.scrapedDate) - new Date(a.scrapedDate))
-      .slice(0, 10)
-      .map(item => ({
-        title: item.title,
-        rating: item.rating,
-        scrapedDate: item.scrapedDate
-      }));
-
     // Tags analysis
     const tags = {};
     data.forEach(item => {
@@ -115,7 +103,6 @@ async function analyzeList(filename, listType) {
       averageRating: parseFloat(averageRating),
       ratingDistribution,
       topRated,
-      recentlyAdded,
       tags,
       rewatched,
       watchingStats
@@ -129,7 +116,6 @@ async function analyzeList(filename, listType) {
       averageRating: 0,
       ratingDistribution: {},
       topRated: [],
-      recentlyAdded: [],
       tags: {},
       error: error.message
     };
@@ -241,15 +227,6 @@ async function generateMarkdownReport(stats) {
     lines.push(`- **Completion Rate:** ${completionRate}%`);
   }
   lines.push('');
-
-  // Recently Added to Watchlist
-  if (stats.wants.recentlyAdded.length > 0) {
-    lines.push('### Recently Added to Watchlist\n');
-    stats.wants.recentlyAdded.slice(0, 5).forEach((item, index) => {
-      lines.push(`${index + 1}. ${item.title}${item.rating !== 'N/A' ? ` (${item.rating}★)` : ''}`);
-    });
-    lines.push('');
-  }
 
   // TV Shows
   lines.push('## 📺 TV Shows\n');

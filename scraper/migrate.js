@@ -22,8 +22,7 @@ async function migrateCSV(filename) {
 
     // Check if already migrated
     const firstRow = data[0];
-    if (firstRow.hasOwnProperty('scrapedDate') && 
-        firstRow.hasOwnProperty('watchedDate') && 
+    if (firstRow.hasOwnProperty('watchedDate') &&
         firstRow.hasOwnProperty('notes') &&
         firstRow.hasOwnProperty('tags') &&
         firstRow.hasOwnProperty('rewatched')) {
@@ -44,7 +43,6 @@ async function migrateCSV(filename) {
         title: row.title || '',
         rating: rating,
         watchedDate: row.watchedDate || (listType === 'watched' ? today : ''),
-        scrapedDate: row.scrapedDate || today,
         notes: row.notes || '',
         tags: row.tags || '',
         rewatched: row.rewatched || 'false'
@@ -64,7 +62,7 @@ async function migrateCSV(filename) {
     await csvWriter.toDisk(filename, { allColumns: false });
     
     console.log(`   ✅ Successfully migrated ${migratedData.length} rows`);
-    console.log(`   📊 New columns: watchedDate, scrapedDate, notes, tags, rewatched`);
+    console.log(`   📊 New columns: watchedDate, notes, tags, rewatched`);
     
   } catch (error) {
     console.error(`   ❌ Error migrating ${filename}:`, error.message);
@@ -76,7 +74,6 @@ async function migrateAll() {
   console.log('🔄 Starting CSV migration...\n');
   console.log('This will add the following columns to your CSV files:');
   console.log('  - watchedDate: When you watched the item');
-  console.log('  - scrapedDate: When the data was scraped');
   console.log('  - notes: Personal notes about the item');
   console.log('  - tags: Custom tags (semicolon-separated)');
   console.log('  - rewatched: Whether you\'ve rewatched it\n');

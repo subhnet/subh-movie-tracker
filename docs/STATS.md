@@ -1,6 +1,6 @@
 # 🎬 Movie Tracker Statistics
 
-*Last Updated: 8/17/2026, 1:58:53 PM*
+*Last Updated: 8/17/2026, 2:10:56 PM*
 
 ---
 
@@ -51,14 +51,6 @@
 - **Total on Watchlist:** 234
 - **Pre-rated:** 0
 - **Completion Rate:** 73.6%
-
-### Recently Added to Watchlist
-
-1. Lanterns
-2. Heart of the Beast
-3. Ohh My Dog
-4. DC
-5. Spider-Man: Brand New Day
 
 ## 📺 TV Shows
 
