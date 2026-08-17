@@ -6,6 +6,7 @@
 const csv = require('csvtojson');
 const ObjectsToCsv = require('objects-to-csv');
 const fs = require('fs').promises;
+const path = require('path');
 
 async function migrateCSV(filename) {
   try {
@@ -78,9 +79,9 @@ async function migrateAll() {
   console.log('  - rewatched: Whether you\'ve rewatched it\n');
   
   const files = [
-    'watched_titles.csv',
-    'wants_titles.csv',
-    'shows_titles.csv'
+    path.join('data', 'watched_titles.csv'),
+    path.join('data', 'wants_titles.csv'),
+    path.join('data', 'shows_titles.csv')
   ];
 
   for (const file of files) {

@@ -8,10 +8,10 @@ services:
       - "3000:3000"
     volumes:
       - ./.env:/app/.env
-      - ./watched_titles.csv:/app/watched_titles.csv
-      - ./wants_titles.csv:/app/wants_titles.csv
-      - ./shows_titles.csv:/app/shows_titles.csv
-      - ./STATS.md:/app/STATS.md
+      - ./data/watched_titles.csv:/app/data/watched_titles.csv
+      - ./data/wants_titles.csv:/app/data/wants_titles.csv
+      - ./data/shows_titles.csv:/app/data/shows_titles.csv
+      - ./docs/STATS.md:/app/docs/STATS.md
       - ./index.html:/app/index.html
       - ./backups:/app/backups
     environment:

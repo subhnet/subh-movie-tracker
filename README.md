@@ -13,7 +13,7 @@ A comprehensive personal movie tracking system that scrapes data from Must app, 
 - **Git-Friendly**: All data in CSV format, perfect for version control
 
 ### 📊 Analytics & Reporting
-- **Statistics Dashboard**: Comprehensive STATS.md with insights
+- **Statistics Dashboard**: Comprehensive docs/STATS.md with insights
   - Total counts and averages
   - Rating distributions with visual bars
   - Top-rated content (8+ stars)
@@ -109,7 +109,7 @@ This will:
 1. Scrape watched movies, watchlist, and shows
 2. Back up existing CSV files
 3. Update CSV files (preserving your notes/tags)
-4. Generate statistics (STATS.md)
+4. Generate statistics (docs/STATS.md)
 5. Create HTML dashboard (index.html)
 
 #### Generate Statistics Only
@@ -117,7 +117,7 @@ This will:
 npm run stats
 ```
 
-Creates/updates `STATS.md` with:
+Creates/updates `docs/STATS.md` with:
 - Total counts and averages
 - Rating distributions
 - Top-rated content
@@ -135,20 +135,28 @@ Creates/updates `index.html` - open in browser to view beautiful visualizations.
 
 ```
 subh-movie-tracker/
-├── movies.js                  # Main scraper script
 ├── package.json              # Dependencies and scripts
 ├── .env                      # Configuration (not in git)
 ├── .env.example             # Configuration template
-├── watched_titles.csv       # Movies you've watched
-├── wants_titles.csv         # Movies you want to watch
-├── shows_titles.csv         # TV shows you're tracking
-├── STATS.md                 # Generated statistics report
-├── index.html               # Generated HTML dashboard
+├── data/                     # Canonical scraped data
+│   ├── watched_titles.csv   # Movies you've watched
+│   ├── wants_titles.csv     # Movies you want to watch
+│   └── shows_titles.csv     # TV shows you're tracking
+├── index.html               # Generated HTML dashboard (if enabled)
 ├── backups/                 # Timestamped backups (not in git)
-└── utils/
-    ├── analytics.js         # Statistics generation
-    ├── htmlReport.js        # HTML dashboard generation
-    └── migrate.js           # Data migration utility
+├── public/                  # CSV mirrors read by the deployed app (Vercel fallback path)
+├── docs/                    # Documentation & generated reports
+│   ├── STATS.md             # Generated statistics report
+│   ├── supabase-schema.sql  # Supabase table definitions
+│   └── migrations/          # One-off SQL migrations applied to Supabase
+├── outputs/                  # Archived/old generated artifacts
+│   └── index.html.old       # Previous HTML dashboard snapshot
+└── scraper/                  # The scrape → CSV → stats → Supabase-sync pipeline
+    ├── movies.js             # Main scraper script (Puppeteer)
+    ├── analytics.js          # Statistics generation
+    ├── htmlReport.js         # HTML dashboard generation
+    ├── migrate.js            # Data migration utility
+    └── sync-to-supabase.js   # Upserts CSVs into Supabase
 ```
 
 ## 📊 CSV Schema
@@ -164,6 +172,13 @@ Each CSV file has the following columns:
 | `notes` | Your personal notes | "Amazing plot twists!" |
 | `tags` | Semicolon-separated tags | "favorite;mind-bending" |
 | `rewatched` | Have you rewatched it? | "true" or "false" |
+
+> **Note:** the CSV writer (`ObjectsToCsv`) always writes columns in
+> alphabetical order on disk (`notes, rating, rewatched, scrapedDate, tags,
+> title, watchedDate`), not the order listed above. This is harmless — every
+> reader (`csvtojson`, `lib/csv-reader.ts`) parses by header name, not
+> position — but don't assume column *position* when editing by hand or
+> scripting against these files; always go by header name.
 
 ### Editing CSV Files
 
@@ -215,7 +230,7 @@ Inception,9,2025-01-15,2025-10-05,Mind-blowing,favorite;sci-fi;mind-bending,fals
 
 ### Track Watch Dates
 
-Set the `watchedDate` column to see patterns in `STATS.md`:
+Set the `watchedDate` column to see patterns in `docs/STATS.md`:
 ```csv
 title,rating,watchedDate,...
 Movie 1,8,2025-01-15,...
@@ -240,7 +255,7 @@ Your repository can run this automatically! The workflow:
 
 ## 📈 Statistics Examples
 
-The `STATS.md` file includes:
+The `docs/STATS.md` file includes:
 
 - **Watched Movies Stats**
   - Total watched, rated, unrated
@@ -267,7 +282,7 @@ The `STATS.md` file includes:
 2. **Git Commits**: Commit CSV changes to track history
 3. **Backup Folder**: Keep `backups/` in `.gitignore` (local only)
 4. **Add Metadata**: Regularly add notes and tags to your CSVs
-5. **Review Stats**: Check `STATS.md` to discover patterns
+5. **Review Stats**: Check `docs/STATS.md` to discover patterns
 
 ## 🐛 Troubleshooting
 

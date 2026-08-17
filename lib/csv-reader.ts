@@ -11,9 +11,9 @@ export async function readMoviesFromCSV(filename: string): Promise<Movie[]> {
     
     const pathsToTry = isVercel ? [
       path.join(process.cwd(), 'public', filename),          // Public directory (Vercel)
-      path.join(process.cwd(), filename),                    // Root directory fallback
+      path.join(process.cwd(), 'data', filename),            // data/ directory fallback
     ] : [
-      path.join(process.cwd(), filename),                    // Root directory (local dev)
+      path.join(process.cwd(), 'data', filename),            // data/ directory (local dev)
       path.join(process.cwd(), 'public', filename),          // Public directory fallback
     ];
     
@@ -43,9 +43,10 @@ export async function readMoviesFromCSV(filename: string): Promise<Movie[]> {
       
       // List what files ARE in the directories
       try {
-        const rootFiles = await fs.readdir(process.cwd());
-        console.log(`   Files in root:`, rootFiles.filter(f => f.endsWith('.csv')));
-        
+        const dataPath = path.join(process.cwd(), 'data');
+        const dataFiles = await fs.readdir(dataPath);
+        console.log(`   Files in data/:`, dataFiles.filter(f => f.endsWith('.csv')));
+
         const publicPath = path.join(process.cwd(), 'public');
         const publicFiles = await fs.readdir(publicPath);
         console.log(`   Files in public:`, publicFiles.filter(f => f.endsWith('.csv')));

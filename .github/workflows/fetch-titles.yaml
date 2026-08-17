@@ -36,17 +36,20 @@ jobs:
           echo "CREATE_BACKUP=false" >> .env
 
       - name: Fetch Titles and Generate Reports
-        run: node movies.js
+        run: node scraper/movies.js
 
       - name: Sync to Supabase Database
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
           MUST_USERNAME: subhransu
-        run: node utils/sync-to-supabase.js
+        run: node scraper/sync-to-supabase.js
+
+      - name: Mirror CSVs to public/ (Vercel fallback path)
+        run: cp data/watched_titles.csv data/wants_titles.csv data/shows_titles.csv public/
 
       - name: Commit and Push Changes
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "🎬 Updated movie titles and stats (synced to database)"
-          file_pattern: "*.csv STATS.md"
+          file_pattern: "data/*.csv public/*.csv docs/STATS.md"

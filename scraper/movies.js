@@ -59,7 +59,7 @@ const logger = {
         page,
         'watched',
         `https://mustapp.com/@${CONFIG.username}/watched`,
-        'watched_titles.csv'
+        path.join('data', 'watched_titles.csv')
       );
     }
 
@@ -69,7 +69,7 @@ const logger = {
         page,
         'wants',
         `https://mustapp.com/@${CONFIG.username}/wants`,
-        'wants_titles.csv'
+        path.join('data', 'wants_titles.csv')
       );
     }
 
@@ -79,7 +79,7 @@ const logger = {
         page,
         'shows',
         `https://mustapp.com/@${CONFIG.username}/shows`,
-        'shows_titles.csv'
+        path.join('data', 'shows_titles.csv')
       );
     }
 
@@ -89,7 +89,7 @@ const logger = {
     // Generate statistics
     if (CONFIG.generateStats) {
       logger.log('Generating statistics...');
-      const { generateStatistics } = require('./utils/analytics');
+      const { generateStatistics } = require('./analytics');
       await generateStatistics();
       logger.success('Statistics generated!');
     }
@@ -97,7 +97,7 @@ const logger = {
     // Generate HTML report
     if (CONFIG.generateHtmlReport) {
       logger.log('Generating HTML report...');
-      const { generateHtmlReport } = require('./utils/htmlReport');
+      const { generateHtmlReport } = require('./htmlReport');
       await generateHtmlReport();
       logger.success('HTML report generated!');
     }
@@ -222,20 +222,27 @@ function extractTitles(html) {
 async function saveTitlesToFile(titlesData, filename, listType) {
   try {
     // Check if file exists to preserve additional data
-    let existingData = {};
+    // Keyed by title -> queue of entries, since the same title can appear more
+    // than once (e.g. a remake sharing its title with the original — Must
+    // doesn't disambiguate by year). Matching positionally by occurrence order
+    // keeps each duplicate's own notes/tags/watchedDate intact across scrapes,
+    // instead of every duplicate collapsing onto whichever row parsed last.
+    let existingByTitle = {};
+    let existingCount = 0;
     try {
       const csv = require('csvtojson');
       const existingRows = await csv().fromFile(filename);
-      // Create a map of existing data by title
       existingRows.forEach(row => {
-        existingData[row.title] = {
+        if (!existingByTitle[row.title]) existingByTitle[row.title] = [];
+        existingByTitle[row.title].push({
           watchedDate: row.watchedDate || '',
           notes: row.notes || '',
           tags: row.tags || '',
           rewatched: row.rewatched || 'false'
-        };
+        });
+        existingCount++;
       });
-      logger.log(`Found ${Object.keys(existingData).length} existing entries, preserving user data...`);
+      logger.log(`Found ${existingCount} existing entries, preserving user data...`);
     } catch (err) {
       // File doesn't exist or is empty, that's okay
       logger.log(`No existing data found for ${filename}, creating new file...`);
@@ -243,7 +250,8 @@ async function saveTitlesToFile(titlesData, filename, listType) {
 
     // Merge new data with existing data
     const data = titlesData.map(({ title, rating, scrapedDate }) => {
-      const existing = existingData[title] || {};
+      const queue = existingByTitle[title];
+      const existing = (queue && queue.length) ? queue.shift() : {};
       return {
         title,
         rating: rating || 'N/A',

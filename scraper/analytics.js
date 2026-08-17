@@ -6,9 +6,9 @@ const path = require('path');
 async function generateStatistics() {
   try {
     const stats = {
-      watched: await analyzeList('watched_titles.csv', 'watched'),
-      wants: await analyzeList('wants_titles.csv', 'wants'),
-      shows: await analyzeList('shows_titles.csv', 'shows'),
+      watched: await analyzeList(path.join('data', 'watched_titles.csv'), 'watched'),
+      wants: await analyzeList(path.join('data', 'wants_titles.csv'), 'wants'),
+      shows: await analyzeList(path.join('data', 'shows_titles.csv'), 'shows'),
       timestamp: new Date().toISOString()
     };
 
@@ -299,8 +299,9 @@ async function generateMarkdownReport(stats) {
 
   // Write to file
   const content = lines.join('\n');
-  await fs.writeFile('STATS.md', content);
-  console.log('✅ Statistics saved to STATS.md');
+  await fs.mkdir('docs', { recursive: true });
+  await fs.writeFile(path.join('docs', 'STATS.md'), content);
+  console.log('✅ Statistics saved to docs/STATS.md');
 }
 
 module.exports = {

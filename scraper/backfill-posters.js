@@ -4,7 +4,7 @@
  * This script fetches poster URLs from TMDB for movies that don't have posters yet.
  * Run this once after setting up TMDB_API_KEY to add posters to existing movies.
  * 
- * Usage: node utils/backfill-posters.js
+ * Usage: node scraper/backfill-posters.js
  */
 
 const { createClient } = require('@supabase/supabase-js');
