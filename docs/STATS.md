@@ -1,6 +1,6 @@
 # 🎬 Movie Tracker Statistics
 
-*Last Updated: 8/27/2026, 5:42:53 AM*
+*Last Updated: 8/28/2026, 7:51:18 AM*
 
 ---
 
@@ -48,15 +48,15 @@
 
 ## 📝 Want to Watch
 
-- **Total on Watchlist:** 234
+- **Total on Watchlist:** 233
 - **Pre-rated:** 0
-- **Completion Rate:** 73.6%
+- **Completion Rate:** 73.7%
 
 ## 📺 TV Shows
 
-- **Total Shows:** 102
-- **Rated:** 79
-- **Average Rating:** 7.06/10
+- **Total Shows:** 103
+- **Rated:** 80
+- **Average Rating:** 7.09/10
 
 ### Top Rated Shows
 
@@ -64,14 +64,14 @@
 2. **Scam 1992: The Harshad Mehta Story** - 10★
 3. **Presumed Innocent** - 9★
 4. **Panchayat** - 9★
-5. **Fullmetal Alchemist: Brotherhood** - 9★
+5. **Operation Safed Sagar: The Untold Story of the Kargil War** - 9★
 
 ## 📊 Overall Summary
 
 - **Total Tracked Content:** 990
 - **Movies Watched:** 654
-- **Movies to Watch:** 234
-- **TV Shows:** 102
+- **Movies to Watch:** 233
+- **TV Shows:** 103
 - **Overall Average Rating:** 6.99/10
 
 ---
