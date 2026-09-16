@@ -1,6 +1,6 @@
 # 🎬 Movie Tracker Statistics
 
-*Last Updated: 9/15/2026, 2:24:51 AM*
+*Last Updated: 9/16/2026, 2:18:18 AM*
 
 ---
 
@@ -62,8 +62,8 @@
 
 1. **Friends** - 10★
 2. **Scam 1992: The Harshad Mehta Story** - 10★
-3. **Presumed Innocent** - 9★
-4. **Panchayat** - 9★
+3. **Panchayat** - 9★
+4. **Presumed Innocent** - 9★
 5. **Operation Safed Sagar: The Untold Story of the Kargil War** - 9★
 
 ## 📊 Overall Summary
