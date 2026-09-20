@@ -1,23 +1,23 @@
 # 🎬 Movie Tracker Statistics
 
-*Last Updated: 9/19/2026, 2:11:56 AM*
+*Last Updated: 9/20/2026, 2:19:04 AM*
 
 ---
 
 ## 🍿 Watched Movies
 
-- **Total Watched:** 657
-- **Rated:** 657
+- **Total Watched:** 659
+- **Rated:** 659
 - **Unrated:** 0
 - **Average Rating:** 6.99/10
 
 ### Rating Distribution
 
-- **10★**: 20 ████
+- **10★**: 21 █████
 - **9★**: 39 ████████
 - **8★**: 154 ███████████████████████████████
 - **7★**: 244 █████████████████████████████████████████████████
-- **6★**: 138 ████████████████████████████
+- **6★**: 139 ████████████████████████████
 - **5★**: 40 ████████
 - **4★**: 13 ███
 - **3★**: 6 ██
@@ -26,31 +26,31 @@
 
 ### 🌟 Top Rated (8+ Stars)
 
-1. **12 Angry Men** - 10★
-2. **The Wild Robot** - 10★
-3. **Isle of Dogs** - 10★
-4. **Everything Everywhere All at Once** - 10★
-5. **The Batman** - 10★
-6. **Sholay** - 10★
-7. **The Pursuit of Happyness** - 10★
-8. **Ending the Knight** - 10★
-9. **The Prestige** - 10★
-10. **Inception** - 10★
+1. **#Home** - 10★
+2. **12 Angry Men** - 10★
+3. **The Wild Robot** - 10★
+4. **Isle of Dogs** - 10★
+5. **Everything Everywhere All at Once** - 10★
+6. **The Batman** - 10★
+7. **Sholay** - 10★
+8. **The Pursuit of Happyness** - 10★
+9. **Ending the Knight** - 10★
+10. **The Prestige** - 10★
 
 ### 📅 Watching Patterns
 
-- **Movies with watch dates:** 657
+- **Movies with watch dates:** 659
 - **Most active month:** 2026-01 (306 movies)
 
 **By Year:**
-- 2026: 363 movies
+- 2026: 365 movies
 - 2025: 294 movies
 
 ## 📝 Want to Watch
 
-- **Total on Watchlist:** 233
+- **Total on Watchlist:** 232
 - **Pre-rated:** 0
-- **Completion Rate:** 73.8%
+- **Completion Rate:** 74.0%
 
 ## 📺 TV Shows
 
@@ -68,9 +68,9 @@
 
 ## 📊 Overall Summary
 
-- **Total Tracked Content:** 993
-- **Movies Watched:** 657
-- **Movies to Watch:** 233
+- **Total Tracked Content:** 994
+- **Movies Watched:** 659
+- **Movies to Watch:** 232
 - **TV Shows:** 103
 - **Overall Average Rating:** 6.99/10
 
