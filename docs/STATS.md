@@ -1,6 +1,6 @@
 # 🎬 Movie Tracker Statistics
 
-*Last Updated: 10/7/2026, 3:16:19 AM*
+*Last Updated: 10/8/2026, 3:32:02 AM*
 
 ---
 
@@ -55,16 +55,16 @@
 ## 📺 TV Shows
 
 - **Total Shows:** 103
-- **Rated:** 80
-- **Average Rating:** 7.09/10
+- **Rated:** 81
+- **Average Rating:** 7.11/10
 
 ### Top Rated Shows
 
 1. **Friends** - 10★
 2. **Scam 1992: The Harshad Mehta Story** - 10★
-3. **Panchayat** - 9★
-4. **Presumed Innocent** - 9★
-5. **Operation Safed Sagar: The Untold Story of the Kargil War** - 9★
+3. **Lanterns** - 9★
+4. **Panchayat** - 9★
+5. **Presumed Innocent** - 9★
 
 ## 📊 Overall Summary
 
