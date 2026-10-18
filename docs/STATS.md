@@ -1,6 +1,6 @@
 # 🎬 Movie Tracker Statistics
 
-*Last Updated: 10/17/2026, 2:05:19 AM*
+*Last Updated: 10/18/2026, 2:04:44 AM*
 
 ---
 
@@ -48,9 +48,9 @@
 
 ## 📝 Want to Watch
 
-- **Total on Watchlist:** 233
+- **Total on Watchlist:** 235
 - **Pre-rated:** 0
-- **Completion Rate:** 74.0%
+- **Completion Rate:** 73.9%
 
 ## 📺 TV Shows
 
@@ -68,9 +68,9 @@
 
 ## 📊 Overall Summary
 
-- **Total Tracked Content:** 1000
+- **Total Tracked Content:** 1002
 - **Movies Watched:** 664
-- **Movies to Watch:** 233
+- **Movies to Watch:** 235
 - **TV Shows:** 103
 - **Overall Average Rating:** 6.99/10
 
