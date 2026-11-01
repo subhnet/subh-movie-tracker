@@ -13,7 +13,9 @@
     "stats": "node -e \"require('./scraper/analytics').generateStatistics()\"",
     "report": "node -e \"require('./scraper/htmlReport').generateHtmlReport()\"",
     "migrate": "node scraper/migrate.js",
-    "refresh-metadata": "node scripts/refresh-metadata.js"
+    "refresh-metadata": "node scripts/refresh-metadata.js",
+    "export-trakt": "node scripts/export-trakt.js",
+    "export-simkl": "node scripts/export-simkl.js"
   },
   "author": "Subhransu",
   "license": "ISC",

@@ -1,0 +1,16 @@
+{
+  "name": "must-to-trakt-migration",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Conservative importer-file generator for backed-up Must movie and TV CSVs",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "export-trakt": "node scripts/export-trakt.js"
+  },
+  "dependencies": {
+    "csvtojson": "^2.0.10",
+    "dotenv": "^16.4.7"
+  }
+}

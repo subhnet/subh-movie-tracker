@@ -92,6 +92,8 @@ npm run stats             # Regenerate docs/STATS.md only, from existing CSVs
 npm run report            # Regenerate index.html dashboard only (legacy, rarely used)
 npm run migrate           # One-time CSV schema migration (adds notes/tags/watchedDate cols)
 npm run refresh-metadata  # scripts/refresh-metadata.js — backfills poster/overview via TMDB
+npm run export-trakt      # scripts/export-trakt.js — builds Trakt CSV-import files in exports/trakt/ (gitignored); needs TMDB_API_KEY
+npm run export-simkl      # scripts/export-simkl.js — builds Simkl CSV-import files in exports/simkl/ (gitignored); shares TMDB lookups/cache via scripts/lib/tmdb-resolve.js
 ```
 
 `node scraper/sync-to-supabase.js` pushes the current `public/*.csv` files
