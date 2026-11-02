@@ -1,0 +1,43 @@
+name: Trakt Backup
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 0 * * *"  # Runs daily at midnight UTC
+
+concurrency:
+  group: trakt-backup
+  cancel-in-progress: false
+
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+    permissions:
+      # Lets the default GITHUB_TOKEN commit and push the changed files.
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+
+      # Only the stats generator needs a dependency (csvtojson); skip install scripts.
+      - name: Install dependencies
+        run: npm ci --omit=dev --ignore-scripts
+
+      - name: Back up Trakt (CSVs, stats, JSON dump)
+        env:
+          TRAKT_CLIENT_ID: ${{ secrets.TRAKT_CLIENT_ID }}
+          TRAKT_USERNAME: subhnet
+        run: node scraper/trakt-backup.js
+
+      - name: Commit and Push Changes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "🎬 Trakt backup: updated titles, stats and JSON dump"
+          file_pattern: "public/*.csv docs/STATS.md docs/trakt-backup.json"

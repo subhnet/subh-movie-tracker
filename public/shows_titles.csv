@@ -1,104 +1,134 @@
-title,rating,watchedDate,notes,tags,rewatched
-Lanterns,9,,,,false
-Panchayat,9,,,,false
-Paatal Lok,8,,,,false
-FROM,7,,,,false
-One-Punch Man,N/A,,,,false
-Daredevil: Born Again,6,,,,false
-INVINCIBLE,8,,,,false
-A Knight of the Seven Kingdoms,7,,,,false
-Pluribus,8,,,,false
-The Last of Us,7,,,,false
-Kota Factory,8,,,,false
-Pantheon,6,,,,false
-Farzi,7,,,,false
-Murderbot,6,,,,false
-Presumed Innocent,9,,,,false
-The Mentalist,6,,,,false
-Cowboy Bebop,N/A,,,,false
-Severance,7,,,,false
-Secret Level,N/A,,,,false
-Pill,N/A,,,,false
-Normal People,N/A,,,,false
-Shōgun,8,,,,false
-House,N/A,,,,false
-"Love, Death & Robots",7,,,,false
-The Sandman,6,,,,false
-Mr. Robot,7,,,,false
-The Railway Men - The Untold Story of Bhopal 1984,N/A,,,,false
-Rick and Morty,6,,,,false
-The Hunt for Veerappan,N/A,,,,false
-The Witcher,8,,,,false
-Rise of Empires: Ottoman,N/A,,,,false
-The Sopranos,N/A,,,,false
-Curb Your Enthusiasm,7,,,,false
-Wednesday,6,,,,false
-Hellbound,N/A,,,,false
-TVF Tripling,6,,,,false
-Indian Predator: The Diary of a Serial Killer,N/A,,,,false
-House of the Dragon,7,,,,false
-Naruto,N/A,,,,false
-Demon Slayer: Kimetsu no Yaiba,N/A,,,,false
-Only Murders in the Building,7,,,,false
-The Terminal List,6,,,,false
-Stranger Things,8,,,,false
-Peaky Blinders,N/A,,,,false
-Gullak,8,,,,false
-True Detective,8,,,,false
-The Office,N/A,,,,false
-Squid Game,7,,,,false
-Narcos,N/A,,,,false
-What If...?,8,,,,false
-The Vampire Diaries,5,,,,false
-Sacred Games,6,,,,false
-The Walking Dead,5,,,,false
-Hannibal,6,,,,false
-Brooklyn Nine-Nine,7,,,,false
-Modern Family,7,,,,false
-Marvel's Agents of S.H.I.E.L.D.,6,,,,false
-Arrow,7,,,,false
-The Flash,6,,,,false
-Marvel Zombies,7,,,,false
-Spider-Noir,8,,,,false
-Operation Safed Sagar: The Untold Story of the Kargil War,9,,,,false
-The Boys,5,,,,false
-The Outsider,6,,,,false
-Peacemaker,6,,,,false
-Parasyte -the maxim-,6,,,,false
-The Penguin,8,,,,false
-Marvel's The Punisher,7,,,,false
-Arcane,8,,,,false
-Agatha All Along,7,,,,false
-Fullmetal Alchemist: Brotherhood,9,,,,false
-DAHMER - Monster: The Jeffrey Dahmer Story,7,,,,false
-Black Bird,8,,,,false
-Loki,7,,,,false
-Attack on Titan,8,,,,false
-Secret Invasion,2,,,,false
-The Detectives,8,,,,false
-1899,N/A,,,,false
-Better Call Saul,8,,,,false
-Friends,10,,,,false
-Game of Thrones,6,,,,false
-The Playlist,8,,,,false
-She-Hulk: Attorney at Law,1,,,,false
-Ms. Marvel,6,,,,false
-Man vs Bee,7,,,,false
-Moon Knight,8,,,,false
-The Silent Sea,7,,,,false
-Hawkeye,6,,,,false
-Turning Point: 9/11 and the War on Terror,9,,,,false
-The Falcon and the Winter Soldier,8,,,,false
-Money Heist,7,,,,false
-Dexter,N/A,,,,false
-Silicon Valley,7,,,,false
-WandaVision,7,,,,false
-Scam 1992: The Harshad Mehta Story,10,,,,false
-Dark,8,,,,false
-Sherlock,N/A,,,,false
-Prison Break,8,,,,false
-Marvel's Daredevil,9,,,,false
-Death Note,9,,,,false
-How I Met Your Mother,N/A,,,,false
-Breaking Bad,N/A,,,,false
-Chernobyl,8,,,,false
+title,rating,watchedDate,notes,tags,rewatched,year,imdb
+VisionQuest,N/A,,,,false,2026,tt23112594
+The Outsider,6,,,,false,2020,tt8550800
+Presumed Innocent,9,,,,false,2024,tt17677860
+Kota Factory,8,,,,false,2019,tt9432978
+Murderbot,6,,,,false,2025,tt30444310
+Narcos,N/A,,,,false,2015,tt2707408
+Farzi,7,,,,false,2023,tt15477488
+Marvel Zombies,7,,,,false,2025,tt16027014
+The Terminal List,6,,,,false,2022,tt11743610
+Pantheon,6,,,,false,2022,tt11680642
+Secret Level,N/A,,,,false,2024,tt33204697
+The Sandman,6,,,,false,2022,tt1751634
+What If...?,8,,,,false,2021,tt10168312
+The Penguin,8,,,,false,2024,tt15435876
+Hawkeye,6,,,,false,2021,tt10160804
+Hellbound,N/A,,,,false,2021,tt12235718
+House of the Dragon,7,,,,false,2022,tt11198330
+Paatal Lok,8,,,,false,2020,tt9680440
+Arrow,7,,,,false,2012,tt2193021
+Scam 1992 - The Harshad Mehta Story,10,,,,false,2020,tt12392504
+Severance,7,,,,false,2022,tt11280740
+She-Hulk: Attorney at Law,1,,,,false,2022,tt10857160
+Sherlock,N/A,,,,false,2010,tt1475582
+Shōgun,8,,,,false,2024,tt2788316
+Silicon Valley,7,,,,false,2014,tt2575988
+Spider-Noir,8,,,,false,2026,tt30460310
+Squid Game,7,,,,false,2021,tt10919420
+Stranger Things,8,,,,false,2016,tt4574334
+The Boys,5,,,,false,2019,tt1190634
+The Falcon and the Winter Soldier,8,,,,false,2021,tt9208876
+The Last of Us,7,,,,false,2023,tt3581920
+The Mentalist,6,,,,false,2008,tt1196946
+TVF Tripling,6,,,,false,2016,tt6005644
+WandaVision,7,,,,false,2021,tt9140560
+Daredevil: Born Again,6,,,,false,2025,tt18923754
+Dexter,N/A,,,,false,2006,tt0773262
+Friends,10,,,,false,1994,tt0108778
+FROM,7,,,,false,2022,tt9813792
+Fullmetal Alchemist: Brotherhood,9,,,,false,2009,tt1355642
+Game of Thrones,6,,,,false,2011,tt0944947
+How I Met Your Mother,N/A,,,,false,2005,tt0460649
+Lanterns,9,,,,false,2026,tt26545992
+Loki,7,,,,false,2021,tt9140554
+Man Vs Bee,7,,,,false,2022,tt13640670
+Marvel's The Punisher,7,,,,false,2017,tt5675620
+Moon Knight,8,,,,false,2022,tt10234724
+Panchayat,9,,,,false,2020,tt12004706
+Peacemaker,6,,,,false,2022,tt13146488
+Prison Break,8,,,,false,2005,tt0455275
+Rick and Morty,6,,,,false,2013,tt2861424
+Secret Invasion,2,,,,false,2023,tt13157618
+1899,N/A,,,,false,2022,tt9319668
+A Knight of the Seven Kingdoms,7,,,,false,2026,tt27497448
+Agatha All Along,7,,,,false,2024,tt15571732
+Arcane,8,,,,false,2021,tt11126994
+Attack on Titan,8,,,,false,2013,tt2560140
+Better Call Saul,8,,,,false,2015,tt3032476
+Black Bird,8,,,,false,2022,tt4301160
+Breaking Bad,N/A,,,,false,2008,tt0903747
+Pill,N/A,,,,false,2024,tt32729607
+The Railway Men - The Untold Story of Bhopal 1984,N/A,,,,false,2023,tt16296870
+The Hunt for Veerappan,N/A,,,,false,2023,tt28306965
+The Witcher,8,,,,false,2019,tt5180504
+Wednesday,6,,,,false,2022,tt13443470
+Indian Predator: The Diary of a Serial Killer,N/A,,,,false,2022,tt21811888
+Only Murders in the Building,7,,,,false,2021,tt11691774
+The Silent Sea,7,,,,false,2021,tt11570202
+Turning Point: 9/11 and the War on Terror,9,,,,false,2021,tt15260794
+Normal People,N/A,,,,false,2020,tt9059760
+The Detectives,N/A,,,,false,2018,tt7921292
+Rise of Empires: Ottoman,N/A,,,,false,2020,tt9244578
+Gullak,8,,,,false,2019,tt10530900
+Demon Slayer: Kimetsu no Yaiba,N/A,,,,false,2019,tt9335498
+"Love, Death & Robots",7,,,,false,2019,tt9561862
+The Flash,6,,,,false,2014,tt3107288
+Mr. Robot,7,,,,false,2015,tt4158110
+One-Punch Man,N/A,,,,false,2015,tt4508902
+Brooklyn Nine-Nine,7,,,,false,2013,tt2467372
+Parasyte -the maxim-,6,,,,false,2014,tt3358020
+Marvel's Agents of S.H.I.E.L.D.,6,,,,false,2013,tt2364582
+The Walking Dead,5,,,,false,2010,tt1520211
+True Detective,8,,,,false,2014,tt2356777
+Peaky Blinders,N/A,,,,false,2013,tt2442560
+Hannibal,6,,,,false,2013,tt2243973
+The Vampire Diaries,5,,,,false,2009,tt1405406
+Modern Family,7,,,,false,2009,tt1442437
+The Office,N/A,,,,false,2005,tt0386676
+House,N/A,,,,false,2004,tt0412142
+Naruto,N/A,,,,false,2002,tt0409591
+Curb Your Enthusiasm,7,,,,false,2000,tt0264235
+The Sopranos,N/A,,,,false,1999,tt0141842
+Cowboy Bebop,N/A,,,,false,1998,tt0213338
+Chernobyl,8,,,,false,2019,tt7366338
+DAHMER - Monster: The Jeffrey Dahmer Story,7,,,,false,2022,
+Dark,8,,,,false,2017,tt5753856
+Death Note,9,,,,false,2006,tt0877057
+Invincible,8,,,,false,2021,tt6741278
+Marvel's Daredevil,9,,,,false,2015,tt3322312
+Money Heist,7,,,,false,2017,tt6468322
+Ms. Marvel,6,,,,false,2022,tt10857164
+Operation Safed Sagar: The Untold Story of the Kargil War,9,,,,false,2026,tt36643714
+Pluribus,8,,,,false,2025,tt22202452
+Sacred Games,6,,,,false,2018,tt6077448
+The Playlist,8,,,,false,2022,tt11564258
+21 Jump Street,N/A,,,,false,1987,tt0092312
+Bad Education,N/A,,,,false,2012,tt2337840
+Behind Her Eyes,N/A,,,,false,2021,tt9698442
+Brother's Keeper,N/A,,,,false,1998,tt0168310
+Cape Fear,N/A,,,,false,2026,tt34675596
+Crash,N/A,,,,false,2018,tt9114372
+Don't F**k with Cats: Hunting an Internet Killer,N/A,,,,false,2019,tt11318602
+Fargo,N/A,,,,false,2014,tt2802850
+Harley Quinn,N/A,,,,false,2019,tt7658402
+Love,N/A,,,,false,2016,tt4061080
+Marianne,N/A,,,,false,2019,tt10875696
+Mindhunter,N/A,,,,false,2017,tt5290382
+O.J.: Made in America,N/A,,,,false,2016,tt5275892
+Reacher,N/A,,,,false,2022,tt9288030
+Sharp Objects,N/A,,,,false,2018,tt2649356
+Spencer,N/A,,,,false,1984,tt0086805
+Succession,N/A,,,,false,2018,tt7660850
+Supacell,N/A,,,,false,2024,tt16283758
+Ted Lasso,N/A,,,,false,2020,tt10986410
+The Body,N/A,,,,false,2026,tt8014982
+The Century of the Self,N/A,,,,false,2002,tt0432232
+The Detectives,8,,,,false,1959,tt0052463
+The Killing,N/A,,,,false,2011,tt1637727
+The Leftovers,N/A,,,,false,2014,tt2699128
+The Lord of the Rings: The Rings of Power,N/A,,,,false,2022,tt7631058
+The Outlaws,N/A,,,,false,2021,tt11646832
+The Sympathizer,N/A,,,,false,2024,tt14404618
+The Wire,N/A,,,,false,2002,tt0306414
+Triangle,N/A,,,,false,1981,tt0081951

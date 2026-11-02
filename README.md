@@ -1,134 +1,65 @@
 # 🎬 Subh's Movie Tracker
 
-A comprehensive personal movie tracking system that scrapes data from Must app, generates analytics, and creates beautiful visual reports. All data is stored in git-friendly CSV files for easy version control and historical tracking.
+A personal movie tracking system. [Trakt](https://trakt.tv) is the source of truth; a daily GitHub Action backs your Trakt profile up into git-friendly CSV files, a full JSON dump and a statistics report, so the git history is a complete record of what you watched and when.
+
+> Must app was the source until 2026-11; see the git history before that for the old scraper.
 
 ## ✨ Features
 
-### 🎯 Core Features
-- **Automatic Scraping**: Fetches movies, shows, and watchlist from Must app
-- **Three Lists**: Watched movies, Want-to-watch, and TV Shows
-- **Rating Tracking**: Captures your ratings for all content
-- **Automatic Backups**: Creates timestamped backups before each update
-- **Retry Logic**: Robust error handling with automatic retries
-- **Git-Friendly**: All data in CSV format, perfect for version control
-
-### 📊 Analytics & Reporting
-- **Statistics Dashboard**: Comprehensive docs/STATS.md with insights
-  - Total counts and averages
-  - Rating distributions with visual bars
-  - Top-rated content (8+ stars)
-  - Watching patterns by month/year
-  - Completion rates
-  - Tag analysis
-- **HTML Dashboard**: Beautiful visual report (`index.html`)
-  - Interactive charts
-  - Rating distribution graphs
-  - Top-rated tables
-  - Responsive design
-
-### 📝 Enhanced Data Tracking
-- **Watch Dates**: Track when you watched each movie
-- **Personal Notes**: Add reviews and comments
-- **Custom Tags**: Categorize with tags (e.g., "favorite", "mind-bending")
-- **Rewatch Tracking**: Mark movies you've watched multiple times
-
-### 🛠️ Technical Improvements
-- **Environment Variables**: Configurable via `.env` file
-- **Better Logging**: Timestamped, emoji-enhanced logs
-- **Error Recovery**: Graceful handling of network issues
-- **Incremental Updates**: Preserves user-added data on re-scrape
-- **Modular Code**: Clean, maintainable structure
+- **Daily Trakt backup** via GitHub Actions: watched movies, watchlist, shows, ratings and per-play watch dates
+- **Three CSV lists**: Watched movies, Want-to-watch, and TV Shows
+- **Full JSON dump** (`docs/trakt-backup.json`): every play, episode and rating with dates, which the CSVs can't hold
+- **Statistics**: `docs/STATS.md` with totals, rating distributions, top-rated titles and watching patterns
+- **Git-friendly**: stable ordering and no restamped dates, so each daily commit only shows real changes
+- **Safety check**: the job refuses to overwrite the backup if Trakt returns far fewer rows than before
 
 ## 🚀 Getting Started
 
-### Installation
+### Prerequisites
 
-#### Using Docker (Recommended)
+- Node.js 20+
+- A Trakt API client id ([create an app](https://trakt.tv/oauth/applications))
+- A **public** Trakt profile (the backup uses Trakt's public endpoints, so no login or tokens are needed)
 
-Quickly spin up the application without installing Node.js or libraries locally.
+### Install
 
 ```bash
-# Clone the repository
 git clone <your-repo-url>
 cd subh-movie-tracker
-
-# Create .env file
-cp .env.example .env
-
-# Build and start the container
-docker-compose up -d
-
-# View the app
-# Open http://localhost:3000 in your browser
-```
-
-To run the scraper manually using Docker:
-```bash
-docker-compose exec app npm run fetch
-```
-
-#### Manual Installation
-
-```bash
-# Clone the repository
-git clone <your-repo-url>
-cd subh-movie-tracker
-
-# Install dependencies
 npm install
-
-# Copy environment template (optional)
-# The script will work with defaults if .env doesn't exist
-# cp .env.example .env
+cp .env.example .env   # then set TRAKT_CLIENT_ID and TRAKT_USERNAME
 ```
 
-### First Run - Migrate Existing Data
-
-If you have existing CSV files, migrate them to the new schema:
+### Back up now
 
 ```bash
-npm run migrate
+npm run backup   # reads TRAKT_CLIENT_ID / TRAKT_USERNAME from .env
 ```
 
 This will:
-- Add new columns (watchedDate, notes, tags, etc.)
-- Create backups of original files
-- Preserve all existing data
+1. Fetch your watched, history, ratings and watchlist for movies and shows from Trakt
+2. Rewrite `public/watched_titles.csv`, `wants_titles.csv` and `shows_titles.csv` (keeping your notes/tags)
+3. Write `docs/trakt-backup.json`
+4. Regenerate `docs/STATS.md`
 
-### Usage
+If anything fails nothing is written and the command exits non-zero. Use `FORCE=true npm run backup` to skip the row-count safety check when a big drop is intentional.
 
-#### Fetch Latest Data
-```bash
-npm start
-# or
-npm run fetch
-```
-
-This will:
-1. Scrape watched movies, watchlist, and shows
-2. Back up existing CSV files
-3. Update CSV files (preserving your notes/tags)
-4. Generate statistics (docs/STATS.md)
-5. Create HTML dashboard (index.html)
-
-#### Generate Statistics Only
+#### Generate statistics only
 ```bash
 npm run stats
 ```
 
-Creates/updates `docs/STATS.md` with:
-- Total counts and averages
-- Rating distributions
-- Top-rated content
-- Watching patterns
-- Tag analysis
-
-#### Generate HTML Report Only
+#### Run the tests
 ```bash
-npm run report
+npm run test:backup
 ```
 
-Creates/updates `index.html` - open in browser to view beautiful visualizations.
+### Using Docker
+
+```bash
+docker-compose up -d            # the web app on http://localhost:3000
+docker-compose exec app npm run backup
+```
 
 ## 📁 Files Structure
 
@@ -137,24 +68,22 @@ subh-movie-tracker/
 ├── package.json              # Dependencies and scripts
 ├── .env                      # Configuration (not in git)
 ├── .env.example             # Configuration template
-├── index.html               # Generated HTML dashboard (if enabled)
-├── backups/                 # Timestamped backups (not in git)
+├── backups/                 # Optional local snapshots (not in git)
 ├── public/                  # The 3 canonical CSVs + Next.js static assets
 │   ├── watched_titles.csv   # Movies you've watched
 │   ├── wants_titles.csv     # Movies you want to watch
 │   └── shows_titles.csv     # TV shows you're tracking
 ├── docs/                    # Documentation, generated reports & archive
 │   ├── STATS.md             # Generated statistics report
+│   ├── trakt-backup.json    # Full Trakt dump (plays, episodes, ratings, watchlists)
 │   ├── supabase-schema.sql  # Supabase table definitions
 │   ├── migrations/          # One-off SQL migrations applied to Supabase
 │   └── archive/             # Old/dead generated artifacts
-│       └── index.html.old  # Previous HTML dashboard snapshot
-└── scraper/                  # The scrape → CSV → stats → Supabase-sync pipeline
-    ├── movies.js             # Main scraper script (Puppeteer)
-    ├── analytics.js          # Statistics generation
-    ├── htmlReport.js         # HTML dashboard generation
-    ├── migrate.js            # Data migration utility
-    └── sync-to-supabase.js   # Upserts CSVs into Supabase
+└── scraper/                  # Backup pipeline (never imported by the Next.js app)
+    ├── trakt-backup.js       # Trakt → CSVs + JSON dump + stats
+    ├── trakt-backup.test.js  # Unit tests (node --test)
+    ├── analytics.js          # docs/STATS.md generation
+    └── backfill-posters.js   # Manual Supabase poster backfill (not part of the daily job)
 ```
 
 ## 📊 CSV Schema
@@ -168,45 +97,28 @@ Each CSV file has the following columns:
 | `watchedDate` | When you watched it (YYYY-MM-DD) | "2025-01-15" |
 | `notes` | Your personal notes | "Amazing plot twists!" |
 | `tags` | Semicolon-separated tags | "favorite;mind-bending" |
-| `rewatched` | Have you rewatched it? | "true" or "false" |
+| `rewatched` | Played more than once on Trakt | "true" or "false" |
+| `year` | Release year (disambiguates remakes) | "2021" |
+| `imdb` | IMDb id | "tt1375666" |
 
 ### Editing CSV Files
 
 You can manually edit CSV files to:
 - Add notes and reviews
 - Add custom tags
-- Set watch dates
-- Mark items as rewatched
 
-**Important**: The scraper preserves these fields when updating!
+**Important**: `notes` and `tags` only exist in the CSVs (Trakt has no equivalent), and the backup preserves them when it rewrites the files. Everything else (title, rating, dates, rewatched) is overwritten from Trakt, so change those on Trakt, not in the CSV.
 
 ## ⚙️ Configuration
 
-Create a `.env` file to customize behavior:
+Environment variables for `npm run backup` (in `.env`, or repository secrets/workflow env in GitHub):
 
-```bash
-# Must App Username
-MUST_USERNAME=subhransu
-
-# Timeouts (milliseconds)
-PAGE_TIMEOUT=180000
-NAVIGATION_TIMEOUT=180000
-
-# Auto-scroll settings
-SCROLL_DISTANCE=100
-SCROLL_DELAY=100
-
-# Enable/Disable features
-FETCH_WATCHED=true
-FETCH_WANTS=true
-FETCH_SHOWS=true
-GENERATE_STATS=true
-GENERATE_HTML_REPORT=true
-
-# Backup settings
-CREATE_BACKUP=true
-BACKUP_DIR=backups
-```
+| Variable | Default | Purpose |
+|---|---|---|
+| `TRAKT_CLIENT_ID` | required | Trakt API client id |
+| `TRAKT_USERNAME` | `subhnet` | Public Trakt profile to back up |
+| `TRAKT_TIMEZONE` | `Asia/Kolkata` | Timezone used to turn watch times into dates |
+| `FORCE` | unset | `true` skips the "row count dropped" safety check |
 
 ## 🎨 Customization Ideas
 
@@ -237,11 +149,12 @@ Interstellar,10,...,Best movie ever! The soundtrack is incredible,...
 
 ## 🔄 Automation with GitHub Actions
 
-Your repository can run this automatically! The workflow:
-1. Runs on schedule (e.g., daily)
-2. Fetches latest data
-3. Commits changes back to repo
-4. Git history = complete tracking history!
+`.github/workflows/trakt-backup.yaml` runs daily at 00:00 UTC (and on demand from the Actions tab):
+1. Fetches your Trakt data
+2. Rewrites the CSVs, `docs/trakt-backup.json` and `docs/STATS.md`
+3. Commits any changes back to the repo, so git history = complete tracking history
+
+One-time setup: add a repository secret **`TRAKT_CLIENT_ID`** (Settings → Secrets and variables → Actions). The username is set in the workflow (`TRAKT_USERNAME`). Keep your Trakt profile public or the job will fail with a clear error.
 
 ## 📈 Statistics Examples
 
@@ -268,24 +181,20 @@ The `docs/STATS.md` file includes:
 
 ## 🎯 Best Practices
 
-1. **Regular Scraping**: Run daily to track changes
-2. **Git Commits**: Commit CSV changes to track history
+1. **Let the Action run daily**: the git history is the record
+2. **Edit on Trakt**: ratings, dates and watchlist changes belong on Trakt; only notes/tags are edited in the CSVs
 3. **Backup Folder**: Keep `backups/` in `.gitignore` (local only)
 4. **Add Metadata**: Regularly add notes and tags to your CSVs
 5. **Review Stats**: Check `docs/STATS.md` to discover patterns
 
 ## 🐛 Troubleshooting
 
-### Scraping Fails
-- Check your internet connection
-- Verify username in `.env` or code
-- Increase timeout values in `.env`
-- Check if Must app changed their HTML structure
+### Backup fails with HTTP 401/403/404
+- Check `TRAKT_CLIENT_ID` (a repository secret in GitHub)
+- Make sure the Trakt profile is public (Trakt → Settings → Privacy)
 
-### Migration Issues
-- Backup files are created automatically
-- Original files saved as `*_backup_pre_migration.csv`
-- Re-run `npm run migrate` if needed
+### "Refusing to overwrite the backup, row counts dropped"
+- Trakt returned much less than the committed CSVs, usually a partial API response. Re-run later, or `FORCE=true` if the drop is real
 
 ### Missing Dependencies
 ```bash
@@ -314,4 +223,4 @@ Subhransu
 
 **Happy Tracking! 🍿**
 
-*Generated and maintained with ❤️ by automated scraping*
+*Backed up daily from Trakt by GitHub Actions*

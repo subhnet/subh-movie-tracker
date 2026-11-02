@@ -25,8 +25,11 @@ import {
   X,
   AlertCircle,
   Clock,
+  Eye,
+  EyeOff,
 } from 'lucide-react';
 import './style.css';
+import { ReconcileView } from './Reconcile';
 
 type Media = {
   title?: string;
@@ -36,6 +39,8 @@ type Media = {
   rating?: number;
   listed_at?: string;
   rated_at?: string;
+  last_watched_at?: string;
+  plays?: number;
   movie?: any;
   show?: any;
 };
@@ -75,9 +80,13 @@ async function api<T = any>(path: string, init?: RequestInit): Promise<T> {
 function App() {
   const [connected, setConnected] = useState(false);
   const [device, setDevice] = useState<any>(null);
-  const [tab, setTab] = useState<'watchlist' | 'ratings' | 'lists'>('watchlist');
+  const [tab, setTab] = useState<'watchlist' | 'watched' | 'ratings' | 'lists' | 'reconcile'>('watchlist');
   const [kind, setKind] = useState<'movies' | 'shows'>('movies');
   const [watchlist, setWatchlist] = useState<{ movies: any[]; shows: any[] }>({
+    movies: [],
+    shows: [],
+  });
+  const [watched, setWatched] = useState<{ movies: any[]; shows: any[] }>({
     movies: [],
     shows: [],
   });
@@ -92,12 +101,14 @@ function App() {
 
   const [selected, setSelected] = useState<number[]>([]);
   const [query, setQuery] = useState('');
-  const [sortBy, setSortBy] = useState<'title-asc' | 'title-desc' | 'year-desc' | 'year-asc' | 'rating-desc'>('title-asc');
+  const [sortBy, setSortBy] = useState<
+    'title-asc' | 'title-desc' | 'year-desc' | 'year-asc' | 'rating-desc' | 'watched-desc' | 'watched-asc' | 'plays-desc'
+  >('title-asc');
   const [busy, setBusy] = useState(false);
   const [toasts, setToasts] = useState<Toast[]>([]);
 
   // Bulk action state
-  const [action, setAction] = useState<'rate' | 'unrate' | 'add' | 'remove'>('rate');
+  const [action, setAction] = useState<'rate' | 'unrate' | 'add' | 'remove' | 'mark-watched' | 'mark-unwatched'>('rate');
   const [targetRating, setTargetRating] = useState(8);
   const [targetListId, setTargetListId] = useState('');
   const [modalOpen, setModalOpen] = useState(false);
@@ -135,12 +146,14 @@ function App() {
   const refreshLibrary = async () => {
     setBusy(true);
     try {
-      const [w, r, l] = await Promise.all([
-        api<any>('/library/watchlist'),
+      const [w, wd, r, l] = await Promise.all([
+        api<any>('/library/watchlist?all=true'),
+        api<any>('/library/watched?all=true'),
         api<any>('/library/ratings'),
         api<any>('/library/lists'),
       ]);
       setWatchlist(w || { movies: [], shows: [] });
+      setWatched(wd || { movies: [], shows: [] });
       setRatings(r || { movies: [], shows: [] });
       setLists(Array.isArray(l) ? l : []);
       setSelected([]);
@@ -260,6 +273,7 @@ function App() {
       setConnected(false);
       setDevice(null);
       setWatchlist({ movies: [], shows: [] });
+      setWatched({ movies: [], shows: [] });
       setRatings({ movies: [], shows: [] });
       setLists([]);
       setSelected([]);
@@ -286,6 +300,13 @@ function App() {
         type: kind === 'movies' ? 'movie' : 'show',
       }));
     }
+    if (tab === 'watched') {
+      const src = watched[kind] || [];
+      return src.map((x: any) => ({
+        ...x,
+        type: kind === 'movies' ? 'movie' : 'show',
+      }));
+    }
     if (tab === 'ratings') {
       const src = ratings[kind] || [];
       return src.map((x: any) => ({
@@ -305,7 +326,7 @@ function App() {
         }));
     }
     return [];
-  }, [tab, kind, watchlist, ratings, activeList, activeListItems]);
+  }, [tab, kind, watchlist, watched, ratings, activeList, activeListItems]);
 
   // Normalized filtered and sorted list
   const filteredList = useMemo(() => {
@@ -317,6 +338,8 @@ function App() {
       rating: x.rating || (x as any).user_rating,
       listed_at: x.listed_at,
       rated_at: x.rated_at,
+      last_watched_at: (x as any).last_watched_at,
+      plays: (x as any).plays,
     }));
 
     if (query.trim()) {
@@ -340,6 +363,12 @@ function App() {
           return (a.year || 0) - (b.year || 0);
         case 'rating-desc':
           return (b.rating || 0) - (a.rating || 0);
+        case 'watched-desc':
+          return new Date(b.last_watched_at || 0).getTime() - new Date(a.last_watched_at || 0).getTime();
+        case 'watched-asc':
+          return new Date(a.last_watched_at || 0).getTime() - new Date(b.last_watched_at || 0).getTime();
+        case 'plays-desc':
+          return (b.plays || 0) - (a.plays || 0);
         default:
           return 0;
       }
@@ -406,6 +435,18 @@ function App() {
           body: JSON.stringify({ listId, type: kind, items }),
         });
         addToast(`Removed ${items.length} ${kind} from list`, 'success');
+      } else if (action === 'mark-unwatched') {
+        await api('/actions/watched/remove', {
+          method: 'POST',
+          body: JSON.stringify({ [kind]: items }),
+        });
+        addToast(`Removed ${items.length} ${kind} from watched history`, 'success');
+      } else if (action === 'mark-watched') {
+        await api('/actions/watched/add', {
+          method: 'POST',
+          body: JSON.stringify({ type: kind, items }),
+        });
+        addToast(`Marked ${items.length} ${kind} as watched`, 'success');
       }
 
       await refreshLibrary();
@@ -469,11 +510,19 @@ function App() {
         : lists.find((l) => String(l.ids.trakt) === targetListId)?.name || 'Custom List';
       return `Remove ${itemWord} from "${listName}"`;
     }
+    if (action === 'mark-unwatched') {
+      return `Remove ${itemWord} from Watched History (Mark Unwatched)`;
+    }
+    if (action === 'mark-watched') {
+      return `Mark ${itemWord} as Watched`;
+    }
     return '';
   };
 
   const watchlistMovieCount = watchlist.movies?.length || 0;
   const watchlistShowCount = watchlist.shows?.length || 0;
+  const watchedMovieCount = watched.movies?.length || 0;
+  const watchedShowCount = watched.shows?.length || 0;
   const ratingsMovieCount = ratings.movies?.length || 0;
   const ratingsShowCount = ratings.shows?.length || 0;
   const totalListsCount = lists.length;
@@ -503,6 +552,7 @@ function App() {
               setTab('watchlist');
               setActiveList(null);
               setSelected([]);
+              setSortBy('title-asc');
             }}
           >
             <Film size={18} />
@@ -513,11 +563,28 @@ function App() {
           </button>
 
           <button
+            className={`nav-item ${tab === 'watched' ? 'active' : ''}`}
+            onClick={() => {
+              setTab('watched');
+              setActiveList(null);
+              setSelected([]);
+              setSortBy('watched-desc');
+            }}
+          >
+            <Eye size={18} />
+            <span className="nav-label">Watched</span>
+            <span className="nav-count">
+              {watchedMovieCount + watchedShowCount}
+            </span>
+          </button>
+
+          <button
             className={`nav-item ${tab === 'ratings' ? 'active' : ''}`}
             onClick={() => {
               setTab('ratings');
               setActiveList(null);
               setSelected([]);
+              setSortBy('rating-desc');
             }}
           >
             <Star size={18} />
@@ -537,6 +604,19 @@ function App() {
             <List size={18} />
             <span className="nav-label">Custom Lists</span>
             <span className="nav-count">{totalListsCount}</span>
+          </button>
+
+          <div className="nav-group-title">TOOLS</div>
+          <button
+            className={`nav-item ${tab === 'reconcile' ? 'active' : ''}`}
+            onClick={() => {
+              setTab('reconcile');
+              setActiveList(null);
+              setSelected([]);
+            }}
+          >
+            <ShieldCheck size={18} />
+            <span className="nav-label">Verify Must Export</span>
           </button>
         </nav>
 
@@ -568,8 +648,10 @@ function App() {
             <span className="header-subtitle">MEDIA MANAGEMENT</span>
             <h1 className="header-title">
               {tab === 'watchlist' && 'Watchlist Library'}
+              {tab === 'watched' && 'Watched Collection'}
               {tab === 'ratings' && 'Your Ratings'}
               {tab === 'lists' && (activeList ? activeList.name : 'Custom Lists')}
+              {tab === 'reconcile' && 'Verify Must Export'}
             </h1>
           </div>
 
@@ -701,6 +783,8 @@ function App() {
               )}
             </div>
           </div>
+        ) : tab === 'reconcile' ? (
+          <ReconcileView api={api} addToast={addToast} onApplied={refreshLibrary} />
         ) : tab === 'lists' && !activeList ? (
           /* Custom Lists Grid */
           <div className="lists-view-container">
@@ -783,6 +867,8 @@ function App() {
                   <span className="segment-count">
                     {tab === 'watchlist'
                       ? watchlistMovieCount
+                      : tab === 'watched'
+                      ? watchedMovieCount
                       : tab === 'ratings'
                       ? ratingsMovieCount
                       : ''}
@@ -801,6 +887,8 @@ function App() {
                   <span className="segment-count">
                     {tab === 'watchlist'
                       ? watchlistShowCount
+                      : tab === 'watched'
+                      ? watchedShowCount
                       : tab === 'ratings'
                       ? ratingsShowCount
                       : ''}
@@ -831,6 +919,13 @@ function App() {
                   value={sortBy}
                   onChange={(e) => setSortBy(e.target.value as any)}
                 >
+                  {tab === 'watched' && (
+                    <>
+                      <option value="watched-desc">Last Watched (Newest)</option>
+                      <option value="watched-asc">Last Watched (Oldest)</option>
+                      <option value="plays-desc">Plays (Highest)</option>
+                    </>
+                  )}
                   <option value="title-asc">Title (A → Z)</option>
                   <option value="title-desc">Title (Z → A)</option>
                   <option value="year-desc">Year (Newest)</option>
@@ -862,7 +957,7 @@ function App() {
                 <div className="col-title">Title & Media</div>
                 <div className="col-year">Release</div>
                 <div className="col-extra">
-                  {tab === 'ratings' ? 'Rating' : 'Added Date'}
+                  {tab === 'ratings' ? 'Rating' : tab === 'watched' ? 'Watched Info' : 'Added Date'}
                 </div>
                 <div className="col-ids">Trakt ID</div>
               </div>
@@ -938,6 +1033,32 @@ function App() {
                               <strong>{item.rating}</strong>
                               <span className="max-rating">/10</span>
                             </div>
+                          ) : tab === 'watched' ? (
+                            <div className="watched-info-group">
+                              {item.plays !== undefined && (
+                                <span className="plays-badge" title={`${item.plays} plays`}>
+                                  <Eye size={12} />
+                                  <span>{item.plays} {item.plays === 1 ? 'play' : 'plays'}</span>
+                                </span>
+                              )}
+                              {item.last_watched_at && (
+                                <div className="date-display" title={`Last watched: ${new Date(item.last_watched_at).toLocaleString()}`}>
+                                  <Clock size={13} className="text-muted" />
+                                  <span>
+                                    {new Date(item.last_watched_at).getFullYear() > 1970
+                                      ? new Date(item.last_watched_at).toLocaleDateString(
+                                          undefined,
+                                          {
+                                            month: 'short',
+                                            day: 'numeric',
+                                            year: 'numeric',
+                                          }
+                                        )
+                                      : 'Watched'}
+                                  </span>
+                                </div>
+                              )}
+                            </div>
                           ) : item.listed_at ? (
                             <div className="date-display">
                               <Clock size={13} className="text-muted" />
@@ -990,6 +1111,8 @@ function App() {
                   <option value="unrate">🗑️ Remove Rating</option>
                   <option value="add">➕ Add to Custom List</option>
                   <option value="remove">➖ Remove from Custom List</option>
+                  <option value="mark-watched">👁️ Mark as Watched</option>
+                  <option value="mark-unwatched">❌ Remove from Watched History</option>
                 </select>
 
                 {action === 'rate' && (
@@ -1069,6 +1192,8 @@ function App() {
                     {action === 'unrate' && <Trash2 size={22} className="text-danger" />}
                     {action === 'add' && <Plus size={22} className="text-accent" />}
                     {action === 'remove' && <Trash2 size={22} className="text-danger" />}
+                    {action === 'mark-watched' && <Eye size={22} className="text-emerald" />}
+                    {action === 'mark-unwatched' && <EyeOff size={22} className="text-danger" />}
                   </div>
                   <div>
                     <strong>{getActionSummary()}</strong>

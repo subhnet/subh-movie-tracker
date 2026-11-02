@@ -4,49 +4,47 @@ Guidance for Claude Code (and future you) when working in this repo.
 
 ## What this is
 
-A personal movie/show tracker. Started as a Puppeteer scraper
-(`scraper/movies.js`) that pulls watched/want-to-watch/shows lists from the
-Must app into CSV files and generates a markdown stats report. It has since
-grown into a full Next.js app (`app/`) backed by Supabase, with the CSV/scraper
-pipeline still running daily as a historical/git-tracked data trail.
+A personal movie/show tracker. **Trakt is the source of truth** (the Must app
+was retired in 2026-11). A daily GitHub Action (`scraper/trakt-backup.js`) reads
+the public Trakt profile and writes the watched/want/shows CSVs, a full JSON
+dump and `docs/STATS.md`, then commits them, so **git log on those files is the
+watch history over time.** `trakt-bulk-manager/` is a separate local tool (Express
++ Vite) for bulk edits on Trakt and for the one-off Must-export reconcile.
 
-There are effectively two data paths — know which one you're touching:
+The repo also contains a Next.js app (`app/`) backed by Supabase. Know which
+data path you're touching:
 
-1. **Live app path (primary):** Next.js UI → `/api/user-movies` → Supabase.
-   This is what the deployed dashboard actually reads and writes
-   (`app/components/ClientDashboard.tsx` calls `/api/user-movies`).
-2. **CSV/scraper path (secondary, git history + fallback):** `scraper/movies.js`
-   scrapes Must → writes `public/watched_titles.csv` / `public/wants_titles.csv`
-   / `public/shows_titles.csv` → `scraper/analytics.js` generates
-   `docs/STATS.md` → `scraper/sync-to-supabase.js` upserts the CSVs into
-   Supabase. This whole chain runs daily via
-   `.github/workflows/fetch-titles.yaml` and commits the CSV/stat changes back
-   to the repo, so **git log on the CSVs and `docs/STATS.md` is the watch
-   history over time.** `/api/movies` and `/api/stats` read CSVs directly via
-   `lib/csv-reader.ts` but aren't called by any current page — treat them as
-   legacy/fallback, not the live data source.
+1. **Backup path (git history):** Trakt → `scraper/trakt-backup.js` →
+   `public/{watched,wants,shows}_titles.csv`, `docs/trakt-backup.json`,
+   `docs/STATS.md` → committed by `.github/workflows/trakt-backup.yaml`.
+2. **Live app path:** Next.js UI → `/api/user-movies` → Supabase
+   (`app/components/ClientDashboard.tsx`). **Nothing refreshes Supabase any more**
+   (`scraper/sync-to-supabase.js` was removed with the Must scraper), so the
+   deployed dashboard's data is frozen at the last Must-era sync until a new
+   Trakt→Supabase sync (or reading the CSVs/Trakt directly) is built.
+   `/api/movies` and `/api/stats` read the CSVs via `lib/csv-reader.ts` but
+   aren't called by any current page.
 
 ## Folder layout
 
 ```
 ├── app/                 # Next.js App Router (pages, API routes, components)
 ├── lib/                 # Server-side helpers for the app (supabase client, csv-reader, auth, ai-service)
-├── scraper/             # The scrape → CSV → stats → Supabase-sync pipeline
-│   ├── movies.js        # Puppeteer scraper entrypoint
+├── scraper/             # The Trakt → CSV/JSON → stats backup pipeline
+│   ├── trakt-backup.js  # Daily backup entrypoint (+ trakt-backup.test.js)
 │   ├── analytics.js     # docs/STATS.md generation
-│   ├── htmlReport.js    # Legacy index.html dashboard generation
-│   ├── migrate.js       # One-time CSV schema migration
-│   └── sync-to-supabase.js  # Upserts CSVs into Supabase
+│   └── backfill-posters.js  # Manual Supabase poster backfill, not scheduled
+├── trakt-bulk-manager/  # Local Trakt bulk-edit tool + Must-export reconcile (own README)
 ├── scripts/             # One-off/maintenance scripts (metadata refresh, debug), unrelated to scraper/
 ├── public/              # THE canonical home for watched/wants/shows_titles.csv, plus Next.js static assets
-├── docs/                # Docs, generated reports & dead artifacts (STATS.md, supabase-schema.sql, migrations/, archive/)
+├── docs/                # Docs & generated reports (STATS.md, trakt-backup.json, supabase-schema.sql, migrations/, archive/)
 ├── ios/                 # Capacitor iOS wrapper
-└── .github/workflows/fetch-titles.yaml   # Daily scrape → stats → Supabase sync → commit
+└── .github/workflows/trakt-backup.yaml   # Daily Trakt backup → commit
 ```
 
 `lib/` vs `scraper/` vs `scripts/` is a real distinction, not just naming:
 `lib/` is imported by the live Next.js app at request time; `scraper/` is the
-standalone Node pipeline invoked by `npm run fetch`/the GitHub Action and never
+standalone Node pipeline invoked by `npm run backup`/the GitHub Action and never
 imported by `app/`; `scripts/` is manually-run maintenance tooling invoked
 directly, never scheduled. `docs/` holds everything that isn't live
 code/data — including `docs/archive/` for dead generated artifacts (e.g.
@@ -74,11 +72,11 @@ CSVs *have* to be in `public/` for production to work at all, keeping a second
 copy in `data/` for "cleanliness" just meant two copies to keep in sync — and
 for a while they silently drifted (see git history around 2026-08-17 for the
 staleness incident this caused). `public/` is now the single source of truth:
-`scraper/movies.js` writes there directly, `lib/csv-reader.ts` reads only from
+`scraper/trakt-backup.js` writes there directly, `lib/csv-reader.ts` reads only from
 there, and there is no mirror/sync step anymore.
 
 If you ever change the CSV filenames or add a new CSV, update it in **three**
-places: `scraper/movies.js` (writer), `lib/csv-reader.ts` (reader), and
+places: `scraper/trakt-backup.js` (writer), `lib/csv-reader.ts` (reader), and
 `docker-compose.yml`'s volume mounts.
 
 ## Commands
@@ -87,33 +85,40 @@ places: `scraper/movies.js` (writer), `lib/csv-reader.ts` (reader), and
 npm run dev              # Next.js dev server
 npm run build / start     # Production build/serve
 
-npm run fetch             # Run the Puppeteer scraper (scraper/movies.js) — writes CSVs, docs/STATS.md
+npm run backup            # scraper/trakt-backup.js — Trakt → CSVs, docs/trakt-backup.json, docs/STATS.md (needs TRAKT_CLIENT_ID; profile must be public)
+npm run test:backup       # Unit tests for the backup script (node --test)
 npm run stats             # Regenerate docs/STATS.md only, from existing CSVs
-npm run report            # Regenerate index.html dashboard only (legacy, rarely used)
-npm run migrate           # One-time CSV schema migration (adds notes/tags/watchedDate cols)
 npm run refresh-metadata  # scripts/refresh-metadata.js — backfills poster/overview via TMDB
 npm run export-trakt      # scripts/export-trakt.js — builds Trakt CSV-import files in exports/trakt/ (gitignored); needs TMDB_API_KEY
 npm run export-simkl      # scripts/export-simkl.js — builds Simkl CSV-import files in exports/simkl/ (gitignored); shares TMDB lookups/cache via scripts/lib/tmdb-resolve.js
 ```
 
-`node scraper/sync-to-supabase.js` pushes the current `public/*.csv` files
-into Supabase (upsert, keyed by title+user) — this is what the GitHub Action
-runs after `scraper/movies.js`, requires `SUPABASE_URL` +
-`SUPABASE_SERVICE_ROLE_KEY`.
+The workflow needs one repo secret, `TRAKT_CLIENT_ID`. The username
+(`TRAKT_USERNAME`) is set in `.github/workflows/trakt-backup.yaml`. The script
+refuses to write (non-zero exit, nothing committed) if any Trakt fetch fails or
+a list shrinks by more than 10% versus the committed CSV; `FORCE=true` skips
+that check.
+
+The old Must scraper, HTML report, CSV migrator and `sync-to-supabase.js` were
+removed in 2026-11; recover them from git history (e.g. `git show
+<commit>:scraper/movies.js`) if ever needed.
 
 ## Data model notes
 
 - CSV columns, in on-disk order: `title, rating, watchedDate, notes, tags,
-  rewatched`. Rating is `1-10` or `N/A`. Tags are semicolon-separated. (The
-  writer previously passed `allColumns: true` to `ObjectsToCsv`, which
-  force-sorts columns alphabetically regardless of this order — fixed by
-  passing `allColumns: false` instead, since every row always has the same
-  keys already. Every reader parses by header name anyway, so this was
-  cosmetic, but don't reintroduce `allColumns: true` unless rows can have
-  inconsistent shapes.)
+  rewatched, year, imdb`. Rating is `1-10` or `N/A`. Tags are
+  semicolon-separated. `year`/`imdb` were added with the Trakt backup so
+  remakes sharing a title can be told apart; every reader parses by header
+  name, so extra columns are safe. `notes`/`tags` exist only in the CSVs (Trakt
+  has no equivalent) and are carried over across backups — by `imdb` when the
+  existing row has one, otherwise by title in file order. Everything else is
+  overwritten from Trakt on each run, so edit ratings/dates on Trakt, not in
+  the CSV. `watchedDate` is the latest play in `TRAKT_TIMEZONE` (default
+  Asia/Kolkata); `rewatched` means more than one play. Wants' `watchedDate` is
+  empty; shows' is empty too.
 - There used to be a `scrapedDate` column, removed 2026-08-17. It was
   restamped with today's date for *every* row on *every* scrape (see
-  `extractTitles` in `scraper/movies.js`), which meant every daily commit
+  the old Must scraper's `extractTitles`), which meant every daily commit
   rewrote every line of all three CSVs even when nothing about that row
   actually changed — turning the git history into noise instead of a useful
   diff-per-change log. It also silently broke `docs/STATS.md`'s "Recently
@@ -122,14 +127,11 @@ runs after `scraper/movies.js`, requires `SUPABASE_URL` +
   true add order. If you need "when was this added" again, key it off
   something that only changes when the row is genuinely new/different — don't
   restamp unconditionally.
-- Duplicate titles (e.g. a remake sharing its title with the original — Must
-  doesn't disambiguate by year) can legitimately appear more than once in the
-  same CSV with different ratings/notes. `saveTitlesToFile` in
-  `scraper/movies.js` matches duplicates to their prior row *positionally* (in
-  file order) rather than by a unique key, since Must gives no better
-  identifier — this preserves each duplicate's own notes/tags/watchedDate
-  across scrapes as long as Must's list order for that title stays stable.
-- Supabase is the real source of truth for the live app; see
+- Duplicate titles (e.g. a remake sharing its title with the original) can
+  legitimately appear more than once in the same CSV. Rows are sorted
+  deterministically (latest watch first, then title, then year) so daily
+  commits only show real changes — keep it that way.
+- Supabase backs the live app but is no longer refreshed (see top of this file); see
   `docs/supabase-schema.sql` for the table definitions and `docs/migrations/`
   for schema changes applied since (chronological, not auto-applied — run
   manually against Supabase when needed).
@@ -141,19 +143,16 @@ runs after `scraper/movies.js`, requires `SUPABASE_URL` +
 ## Exporting/backing up your data
 
 - The full watch history already lives in git — `git log -- public/watched_titles.csv`
-  (or `docs/STATS.md`) gives you a dated history of every scrape.
+  (or `docs/STATS.md`) gives you a dated history of every backup. `docs/trakt-backup.json` adds per-play dates, episode-level show history, ratings and watchlists.
 - For a point-in-time export, the three CSVs in `public/` are the whole
   dataset; they're plain CSV so they open directly in Sheets/Excel/Numbers.
-- `backups/` (gitignored) accumulates timestamped pre-scrape snapshots when
-  `CREATE_BACKUP=true` — safe to prune periodically, not required for recovery
-  since git history covers it.
+- `backups/` (gitignored) is an optional place for local snapshots — not
+  required for recovery since git history covers it.
 
 ## Known rough edges (not fixed, just flagged)
 
-- `docker-compose.yml` mounts `./index.html:/app/index.html`, but no
-  `index.html` currently exists at repo root (the GitHub Action runs with
-  `GENERATE_HTML_REPORT=false`). Harmless unless you re-enable HTML report
-  generation and expect Docker to pick it up.
+- `docker-compose.yml` still mounts `./index.html:/app/index.html` (the HTML
+  report generator was removed, so the file never exists). Harmless.
 - `/api/movies` and `/api/stats` (CSV-only, no Supabase) don't appear to be
   called from any current page — likely safe to remove later, but left as-is
   since they're not causing harm.

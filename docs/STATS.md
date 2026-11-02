@@ -1,78 +1,85 @@
 # 🎬 Movie Tracker Statistics
 
-*Last Updated: 10/31/2026, 3:16:33 AM*
+*Last Updated: 11/2/2026, 10:07:33 PM*
 
 ---
 
 ## 🍿 Watched Movies
 
-- **Total Watched:** 635
-- **Rated:** 630
-- **Unrated:** 5
-- **Average Rating:** 6.95/10
+- **Total Watched:** 696
+- **Rated:** 695
+- **Unrated:** 1
+- **Average Rating:** 7/10
+- **Rewatched:** 1
 
 ### Rating Distribution
 
-- **10★**: 16 ████
-- **9★**: 33 ███████
-- **8★**: 153 ███████████████████████████████
-- **7★**: 232 ███████████████████████████████████████████████
-- **6★**: 133 ███████████████████████████
-- **5★**: 40 ████████
-- **4★**: 14 ███
+- **10★**: 22 █████
+- **9★**: 39 ████████
+- **8★**: 167 ██████████████████████████████████
+- **7★**: 261 █████████████████████████████████████████████████████
+- **6★**: 141 █████████████████████████████
+- **5★**: 41 █████████
+- **4★**: 15 ███
 - **3★**: 6 ██
 - **2★**: 1 █
 - **1★**: 2 █
 
 ### 🌟 Top Rated (8+ Stars)
 
-1. **#Home** - 10★
-2. **12 Angry Men** - 10★
-3. **The Wild Robot** - 10★
-4. **Isle of Dogs** - 10★
-5. **Everything Everywhere All at Once** - 10★
-6. **The Batman** - 10★
-7. **Sholay** - 10★
-8. **The Pursuit of Happyness** - 10★
-9. **Ending the Knight** - 10★
-10. **The Prestige** - 10★
+1. **Home** - 10★
+2. **#Home** - 10★
+3. **12 Angry Men** - 10★
+4. **The Wild Robot** - 10★
+5. **Isle of Dogs** - 10★
+6. **Everything Everywhere All at Once** - 10★
+7. **The Batman** - 10★
+8. **Sholay** - 10★
+9. **The Pursuit of Happyness** - 10★
+10. **Avatar** - 10★
 
 ### 📅 Watching Patterns
 
-- **Movies with watch dates:** 635
-- **Most active month:** 2026-01 (306 movies)
+- **Movies with watch dates:** 696
+- **Most active month:** 2020-05 (260 movies)
 
 **By Year:**
-- 2026: 371 movies
-- 2025: 264 movies
+- 2026: 95 movies
+- 2025: 69 movies
+- 2024: 66 movies
+- 2023: 46 movies
+- 2022: 35 movies
+- 2021: 45 movies
+- 2020: 334 movies
+- 1970: 6 movies
 
 ## 📝 Want to Watch
 
-- **Total on Watchlist:** 239
+- **Total on Watchlist:** 232
 - **Pre-rated:** 0
-- **Completion Rate:** 72.7%
+- **Completion Rate:** 75.0%
 
 ## 📺 TV Shows
 
-- **Total Shows:** 103
+- **Total Shows:** 133
 - **Rated:** 81
 - **Average Rating:** 7.11/10
 
 ### Top Rated Shows
 
-1. **Friends** - 10★
-2. **Scam 1992: The Harshad Mehta Story** - 10★
-3. **Lanterns** - 9★
-4. **Panchayat** - 9★
-5. **Presumed Innocent** - 9★
+1. **Scam 1992 - The Harshad Mehta Story** - 10★
+2. **Friends** - 10★
+3. **Presumed Innocent** - 9★
+4. **Fullmetal Alchemist: Brotherhood** - 9★
+5. **Lanterns** - 9★
 
 ## 📊 Overall Summary
 
-- **Total Tracked Content:** 977
-- **Movies Watched:** 635
-- **Movies to Watch:** 239
-- **TV Shows:** 103
-- **Overall Average Rating:** 6.95/10
+- **Total Tracked Content:** 1061
+- **Movies Watched:** 696
+- **Movies to Watch:** 232
+- **TV Shows:** 133
+- **Overall Average Rating:** 7/10
 
 ---
 

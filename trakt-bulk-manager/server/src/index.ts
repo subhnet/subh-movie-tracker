@@ -4,6 +4,14 @@ import cors from "cors";
 import { mkdir, readFile, writeFile, chmod } from "node:fs/promises";
 import path from "node:path";
 import { z } from "zod";
+import { createTraktApi } from "./reconcile/client.js";
+import {
+  APPLICABLE,
+  applyReconcile,
+  previewReconcile,
+  writeReportFiles,
+  type Category,
+} from "./reconcile/index.js";
 
 const app = express();
 
@@ -340,11 +348,24 @@ app.post("/api/auth/disconnect", async (_req, res) => {
   res.json({ ok: true });
 });
 
-app.get("/api/library/watchlist", async (_req, res, next) => {
+app.get("/api/library/watchlist", async (req, res, next) => {
   try {
+    const fetchFn = req.query.all === "true" ? traktAll : trakt;
     const [movies, shows] = await Promise.all([
-      trakt("/sync/watchlist/movies"),
-      trakt("/sync/watchlist/shows"),
+      fetchFn("/sync/watchlist/movies"),
+      fetchFn("/sync/watchlist/shows"),
+    ]);
+    res.json({ movies, shows });
+  } catch (e) {
+    next(e);
+  }
+});
+app.get("/api/library/watched", async (req, res, next) => {
+  try {
+    const fetchFn = req.query.all === "true" ? traktAll : trakt;
+    const [movies, shows] = await Promise.all([
+      fetchFn("/sync/watched/movies"),
+      fetchFn("/sync/watched/shows"),
     ]);
     res.json({ movies, shows });
   } catch (e) {
@@ -465,12 +486,119 @@ app.post("/api/actions/list/remove", async (req, res, next) => {
     next(e);
   }
 });
+app.post("/api/actions/watched/add", async (req, res, next) => {
+  try {
+    const parsed = z
+      .object({
+        type: z.enum(["movies", "shows"]),
+        items: z.array(itemSchema).min(1).max(100),
+      })
+      .parse(req.body);
+    const payload = {
+      [parsed.type]: parsed.items.map((x) => ({ ids: x.ids })),
+    };
+    res.json(
+      await trakt("/sync/history", {
+        method: "POST",
+        body: JSON.stringify(payload),
+      }),
+    );
+  } catch (e) {
+    next(e);
+  }
+});
+app.post("/api/actions/watched/remove", async (req, res, next) => {
+  try {
+    const parsed = z
+      .object({
+        movies: z.array(itemSchema).optional(),
+        shows: z.array(itemSchema).optional(),
+      })
+      .refine((x) => (x.movies?.length || 0) + (x.shows?.length || 0) > 0)
+      .parse(req.body);
+    res.json(
+      await trakt("/sync/history/remove", {
+        method: "POST",
+        body: JSON.stringify(parsed),
+      }),
+    );
+  } catch (e) {
+    next(e);
+  }
+});
+
+const PROJECT_ROOT = path.resolve(process.cwd(), "../..");
+const reconcileSchema = z.object({
+  dir: z.string().optional(),
+  categories: z.array(z.string()).optional(),
+  limit: z.number().int().positive().optional(),
+  confirm: z.boolean().optional(),
+});
+let reconcileBusy = false;
+
+function resolveExportsDir(dir?: string) {
+  const resolved = path.resolve(PROJECT_ROOT, dir || "exports_2");
+  if (resolved !== PROJECT_ROOT && !resolved.startsWith(PROJECT_ROOT + path.sep)) {
+    throw new Error("Exports folder must be inside this repository.");
+  }
+  return resolved;
+}
+
+async function withReconcileLock<T>(fn: () => Promise<T>) {
+  if (reconcileBusy) throw new Error("A reconcile run is already in progress.");
+  reconcileBusy = true;
+  try {
+    return await fn();
+  } finally {
+    reconcileBusy = false;
+  }
+}
+
+function reconcileOptions(dir?: string) {
+  if (!tokens?.access_token) throw new Error("Connect your Trakt account first.");
+  return {
+    api: createTraktApi({ clientId: CLIENT_ID, getToken: () => tokens?.access_token }),
+    dir: resolveExportsDir(dir),
+    dataDir: DATA_DIR,
+  };
+}
+
+app.post("/api/reconcile/preview", async (req, res, next) => {
+  try {
+    const body = reconcileSchema.parse(req.body ?? {});
+    const { report } = await withReconcileLock(() => previewReconcile(reconcileOptions(body.dir)));
+    await writeReportFiles(DATA_DIR, report);
+    res.json(report);
+  } catch (e) {
+    next(e);
+  }
+});
+app.post("/api/reconcile/apply", async (req, res, next) => {
+  try {
+    const body = reconcileSchema.parse(req.body ?? {});
+    if (body.confirm !== true) throw new Error("Explicit confirmation required.");
+    const categories = (body.categories ?? []) as Category[];
+    const bad = categories.filter((c) => !APPLICABLE.includes(c));
+    if (!categories.length || bad.length) {
+      throw new Error(bad.length ? `Not applicable: ${bad.join(", ")}` : "Pick at least one category.");
+    }
+    // The diff is recomputed here so the client can never push an arbitrary payload.
+    const out = await withReconcileLock(() =>
+      applyReconcile({ ...reconcileOptions(body.dir), categories, limit: body.limit }),
+    );
+    res.json({ results: out.results, snapshot: path.basename(out.snapshot) });
+  } catch (e) {
+    next(e);
+  }
+});
 
 app.get("/api/backup", async (_req, res, next) => {
   try {
     const [
       watchlistMovies,
       watchlistShows,
+      watchedMovies,
+      watchedShows,
       ratings,
       lists,
       historyMovies,
@@ -478,6 +606,8 @@ app.get("/api/backup", async (_req, res, next) => {
     ] = await Promise.all([
       traktAll("/sync/watchlist/movies"),
       traktAll("/sync/watchlist/shows"),
+      traktAll("/sync/watched/movies"),
+      traktAll("/sync/watched/shows"),
       traktAll("/sync/ratings"),
       traktAll("/users/me/lists"),
       traktAll("/sync/history/movies"),
@@ -496,6 +626,7 @@ app.get("/api/backup", async (_req, res, next) => {
       schemaVersion: 2,
       exportedAt: new Date().toISOString(),
       watchlist: { movies: watchlistMovies, shows: watchlistShows },
+      watched: { movies: watchedMovies, shows: watchedShows },
       ratings,
       history: { movies: historyMovies, shows: historyShows },
       lists: listsWithItems,
