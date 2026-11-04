@@ -1,6 +1,6 @@
 {
  "username": "subhnet",
- "counts": {"watched":696,"wants":233,"shows":133},
+ "counts": {"watched":696,"wants":234,"shows":134},
  "movies": {
   "watched": [
     {"plays":1,"last_watched_at":"2026-11-02T00:06:00.000Z","movie":{"title":"Agent Sai Srinivasa Athreya","year":2019,"ids":{"trakt":454534,"imdb":"tt10214826","tmdb":610482}}},
@@ -330,7 +330,7 @@
     {"plays":1,"last_watched_at":"2021-11-07T12:00:00.000Z","movie":{"title":"Sanak","year":2021,"ids":{"trakt":626554,"imdb":"tt13912632","tmdb":790019}}},
     {"plays":1,"last_watched_at":"2021-11-07T12:00:00.000Z","movie":{"title":"Eternals","year":2021,"ids":{"trakt":372798,"imdb":"tt9032400","tmdb":524434}}},
     {"plays":1,"last_watched_at":"2021-11-04T12:00:00.000Z","movie":{"title":"F9","year":2021,"ids":{"trakt":226253,"imdb":"tt5433138","tmdb":385128}}},
-    {"plays":1,"last_watched_at":"2021-10-28T12:00:00.000Z","movie":{"title":"Sherlock: The Abominable Bride","year":2016,"ids":{"trakt":653955,"imdb":"tt3845232","tmdb":379170}}},
+    {"plays":1,"last_watched_at":"2021-10-28T12:00:00.000Z","movie":{"title":"Sherlock: The Abominable Bride","year":2016,"ids":{"trakt":653955,"imdb":"tt5284492","tmdb":379170}}},
     {"plays":1,"last_watched_at":"2021-10-23T12:00:00.000Z","movie":{"title":"Dune","year":2021,"ids":{"trakt":287071,"imdb":"tt1160419","tmdb":438631}}},
     {"plays":1,"last_watched_at":"2021-10-16T12:00:00.000Z","movie":{"title":"Venom: Let There Be Carnage","year":2021,"ids":{"trakt":429764,"imdb":"tt7097896","tmdb":580489}}},
     {"plays":1,"last_watched_at":"2021-10-03T12:00:00.000Z","movie":{"title":"Free Guy","year":2021,"ids":{"trakt":400704,"imdb":"tt6264654","tmdb":550988}}},
@@ -1028,7 +1028,7 @@
     {"id":14597174600,"watched_at":"2021-11-07T12:00:00.000Z","movie":{"title":"Eternals","year":2021,"ids":{"trakt":372798,"imdb":"tt9032400","tmdb":524434}}},
     {"id":14597174341,"watched_at":"2021-11-07T12:00:00.000Z","movie":{"title":"Sanak","year":2021,"ids":{"trakt":626554,"imdb":"tt13912632","tmdb":790019}}},
     {"id":14597174580,"watched_at":"2021-11-04T12:00:00.000Z","movie":{"title":"F9","year":2021,"ids":{"trakt":226253,"imdb":"tt5433138","tmdb":385128}}},
-    {"id":14597174647,"watched_at":"2021-10-28T12:00:00.000Z","movie":{"title":"Sherlock: The Abominable Bride","year":2016,"ids":{"trakt":653955,"imdb":"tt3845232","tmdb":379170}}},
+    {"id":14597174647,"watched_at":"2021-10-28T12:00:00.000Z","movie":{"title":"Sherlock: The Abominable Bride","year":2016,"ids":{"trakt":653955,"imdb":"tt5284492","tmdb":379170}}},
     {"id":14597174587,"watched_at":"2021-10-23T12:00:00.000Z","movie":{"title":"Dune","year":2021,"ids":{"trakt":287071,"imdb":"tt1160419","tmdb":438631}}},
     {"id":14597174611,"watched_at":"2021-10-16T12:00:00.000Z","movie":{"title":"Venom: Let There Be Carnage","year":2021,"ids":{"trakt":429764,"imdb":"tt7097896","tmdb":580489}}},
     {"id":14597174604,"watched_at":"2021-10-03T12:00:00.000Z","movie":{"title":"Free Guy","year":2021,"ids":{"trakt":400704,"imdb":"tt6264654","tmdb":550988}}},
@@ -1692,7 +1692,7 @@
     {"rating":8,"rated_at":"2026-11-01T19:56:21.000Z","movie":{"title":"2018","year":2023,"ids":{"trakt":692879,"imdb":"tt9006564","tmdb":866440}}},
     {"rating":6,"rated_at":"2026-11-01T19:56:21.000Z","movie":{"title":"Kantara","year":2022,"ids":{"trakt":686329,"imdb":"tt15327088","tmdb":858485}}},
     {"rating":7,"rated_at":"2026-11-01T19:56:21.000Z","movie":{"title":"Gladiator","year":2000,"ids":{"trakt":67,"imdb":"tt0172495","tmdb":98}}},
-    {"rating":8,"rated_at":"2026-11-01T19:56:21.000Z","movie":{"title":"Sherlock: The Abominable Bride","year":2016,"ids":{"trakt":653955,"imdb":"tt3845232","tmdb":379170}}},
+    {"rating":8,"rated_at":"2026-11-01T19:56:21.000Z","movie":{"title":"Sherlock: The Abominable Bride","year":2016,"ids":{"trakt":653955,"imdb":"tt5284492","tmdb":379170}}},
     {"rating":7,"rated_at":"2026-11-01T19:56:21.000Z","movie":{"title":"Seven Pounds","year":2008,"ids":{"trakt":6419,"imdb":"tt0814314","tmdb":11321}}},
     {"rating":7,"rated_at":"2026-11-01T19:56:21.000Z","movie":{"title":"Step Up Revolution","year":2012,"ids":{"trakt":64171,"imdb":"tt1800741","tmdb":85446}}},
     {"rating":8,"rated_at":"2026-11-01T19:56:21.000Z","movie":{"title":"Boyhood","year":2014,"ids":{"trakt":64085,"imdb":"tt1065073","tmdb":85350}}},
@@ -2097,6 +2097,7 @@
     {"rating":7,"rated_at":"2020-05-22T12:00:00.000Z","movie":{"title":"Don","year":2006,"ids":{"trakt":10693,"imdb":"tt0461936","tmdb":17501}}}
   ],
   "watchlist": [
+    {"listed_at":"2026-11-03T09:24:08.000Z","movie":{"title":"Baththa","year":2026,"ids":{"trakt":1243557,"imdb":"tt44090278","tmdb":1515692}}},
     {"listed_at":"2026-11-03T03:14:46.000Z","movie":{"title":"Wicker","year":2026,"ids":{"trakt":964934,"imdb":"tt29611136","tmdb":1195803}}},
     {"listed_at":"2026-11-02T14:34:03.000Z","movie":{"title":"Ace","year":2025,"ids":{"trakt":911277,"imdb":"tt27802912","tmdb":1132152}}},
     {"listed_at":"2026-11-02T14:34:03.000Z","movie":{"title":"O.J.: Made in America","year":2016,"ids":{"trakt":797047,"imdb":"tt5275892","tmdb":377462}}},
@@ -2334,7 +2335,7 @@
  },
  "shows": {
   "watched": [
-    {"plays":3,"last_watched_at":"2026-11-02T04:45:00.000Z","show":{"title":"VisionQuest","year":2026,"ids":{"trakt":199379,"imdb":"tt23112594","tmdb":213375}}},
+    {"plays":5,"last_watched_at":"2026-11-03T18:46:00.000Z","show":{"title":"VisionQuest","year":2026,"ids":{"trakt":199379,"imdb":"tt23112594","tmdb":213375}}},
     {"plays":10,"last_watched_at":"2026-11-02T04:00:00.000Z","show":{"title":"The Outsider","year":2020,"ids":{"trakt":154221,"imdb":"tt8550800","tmdb":84661}}},
     {"plays":8,"last_watched_at":"2026-11-02T03:58:00.000Z","show":{"title":"Presumed Innocent","year":2024,"ids":{"trakt":193143,"imdb":"tt17677860","tmdb":156933}}},
     {"plays":10,"last_watched_at":"2026-11-02T03:53:00.000Z","show":{"title":"Narcos","year":2015,"ids":{"trakt":94630,"imdb":"tt2707408","tmdb":63351}}},
@@ -2440,6 +2441,8 @@
     {"plays":41,"last_watched_at":"1970-01-01T00:00:00.000Z","show":{"title":"Money Heist","year":2017,"ids":{"trakt":118572,"imdb":"tt6468322","tmdb":71446}}}
   ],
   "history": [
+    {"id":14600907122,"watched_at":"2026-11-03T18:46:00.000Z","show":{"title":"VisionQuest","year":2026,"ids":{"trakt":199379,"imdb":"tt23112594","tmdb":213375}},"season":1,"episode":5},
+    {"id":14599669403,"watched_at":"2026-11-03T07:36:00.000Z","show":{"title":"VisionQuest","year":2026,"ids":{"trakt":199379,"imdb":"tt23112594","tmdb":213375}},"season":1,"episode":4},
     {"id":14596076577,"watched_at":"2026-11-02T04:45:00.000Z","show":{"title":"VisionQuest","year":2026,"ids":{"trakt":199379,"imdb":"tt23112594","tmdb":213375}},"season":1,"episode":1},
     {"id":14596092848,"watched_at":"2026-11-02T04:00:00.000Z","show":{"title":"The Outsider","year":2020,"ids":{"trakt":154221,"imdb":"tt8550800","tmdb":84661}},"season":1,"episode":10},
     {"id":14596092779,"watched_at":"2026-11-02T04:00:00.000Z","show":{"title":"The Outsider","year":2020,"ids":{"trakt":154221,"imdb":"tt8550800","tmdb":84661}},"season":1,"episode":9},
@@ -5177,6 +5180,8 @@
     {"id":14595082961,"watched_at":"1970-01-01T00:00:00.000Z","show":{"title":"Chernobyl","year":2019,"ids":{"trakt":145186,"imdb":"tt7366338","tmdb":87108}},"season":1,"episode":1}
   ],
   "ratings": [
+    {"rating":7,"rated_at":"2026-11-03T15:05:51.000Z","show":{"title":"How I Met Your Mother","year":2005,"ids":{"trakt":1095,"imdb":"tt0460649","tmdb":1100}}},
+    {"rating":10,"rated_at":"2026-11-03T15:04:20.000Z","show":{"title":"Breaking Bad","year":2008,"ids":{"trakt":1388,"imdb":"tt0903747","tmdb":1396}}},
     {"rating":7,"rated_at":"2026-11-01T19:59:11.000Z","show":{"title":"Mr. Robot","year":2015,"ids":{"trakt":93720,"imdb":"tt4158110","tmdb":62560}}},
     {"rating":9,"rated_at":"2026-11-01T19:59:11.000Z","show":{"title":"Marvel's Daredevil","year":2015,"ids":{"trakt":77938,"imdb":"tt3322312","tmdb":61889}}},
     {"rating":6,"rated_at":"2026-11-01T19:59:11.000Z","show":{"title":"Rick and Morty","year":2013,"ids":{"trakt":69829,"imdb":"tt2861424","tmdb":60625}}},
@@ -5260,6 +5265,7 @@
     {"rating":8,"rated_at":"2026-11-01T19:59:11.000Z","show":{"title":"Stranger Things","year":2016,"ids":{"trakt":104439,"imdb":"tt4574334","tmdb":66732}}}
   ],
   "watchlist": [
+    {"listed_at":"2026-11-03T17:20:24.000Z","show":{"title":"Supernatural","year":2005,"ids":{"trakt":1611,"imdb":"tt0460681","tmdb":1622}}},
     {"listed_at":"2026-11-02T03:54:37.000Z","show":{"title":"Reacher","year":2022,"ids":{"trakt":155536,"imdb":"tt9288030","tmdb":108978}}},
     {"listed_at":"2026-11-01T19:59:10.000Z","show":{"title":"Brother's Keeper","year":1998,"ids":{"trakt":9763,"imdb":"tt0168310","tmdb":9812}}},
     {"listed_at":"2026-11-01T19:59:10.000Z","show":{"title":"The Century of the Self","year":2002,"ids":{"trakt":61530,"imdb":"tt0432232","tmdb":75770}}},

@@ -1,6 +1,6 @@
 # 🎬 Movie Tracker Statistics
 
-*Last Updated: 11/3/2026, 4:59:04 AM*
+*Last Updated: 11/4/2026, 4:29:39 AM*
 
 ---
 
@@ -55,30 +55,30 @@
 
 ## 📝 Want to Watch
 
-- **Total on Watchlist:** 233
+- **Total on Watchlist:** 234
 - **Pre-rated:** 0
-- **Completion Rate:** 74.9%
+- **Completion Rate:** 74.8%
 
 ## 📺 TV Shows
 
-- **Total Shows:** 133
-- **Rated:** 81
-- **Average Rating:** 7.11/10
+- **Total Shows:** 134
+- **Rated:** 83
+- **Average Rating:** 7.14/10
 
 ### Top Rated Shows
 
 1. **Scam 1992 - The Harshad Mehta Story** - 10★
 2. **Friends** - 10★
-3. **Presumed Innocent** - 9★
-4. **Fullmetal Alchemist: Brotherhood** - 9★
-5. **Lanterns** - 9★
+3. **Breaking Bad** - 10★
+4. **Presumed Innocent** - 9★
+5. **Fullmetal Alchemist: Brotherhood** - 9★
 
 ## 📊 Overall Summary
 
-- **Total Tracked Content:** 1062
+- **Total Tracked Content:** 1064
 - **Movies Watched:** 696
-- **Movies to Watch:** 233
-- **TV Shows:** 133
+- **Movies to Watch:** 234
+- **TV Shows:** 134
 - **Overall Average Rating:** 7/10
 
 ---
