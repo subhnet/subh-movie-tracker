@@ -1,6 +1,6 @@
 # 🎬 Movie Tracker Statistics
 
-*Last Updated: 11/4/2026, 4:29:39 AM*
+*Last Updated: 11/5/2026, 4:46:28 AM*
 
 ---
 
@@ -10,7 +10,7 @@
 - **Rated:** 695
 - **Unrated:** 1
 - **Average Rating:** 7/10
-- **Rewatched:** 1
+- **Rewatched:** 2
 
 ### Rating Distribution
 
@@ -41,16 +41,16 @@
 ### 📅 Watching Patterns
 
 - **Movies with watch dates:** 696
-- **Most active month:** 2020-05 (260 movies)
+- **Most active month:** 2020-05 (259 movies)
 
 **By Year:**
-- 2026: 95 movies
+- 2026: 96 movies
 - 2025: 69 movies
 - 2024: 66 movies
 - 2023: 46 movies
 - 2022: 35 movies
 - 2021: 45 movies
-- 2020: 334 movies
+- 2020: 333 movies
 - 1970: 6 movies
 
 ## 📝 Want to Watch
@@ -62,8 +62,8 @@
 ## 📺 TV Shows
 
 - **Total Shows:** 134
-- **Rated:** 83
-- **Average Rating:** 7.14/10
+- **Rated:** 84
+- **Average Rating:** 7.15/10
 
 ### Top Rated Shows
 

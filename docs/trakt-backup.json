@@ -3,6 +3,7 @@
  "counts": {"watched":696,"wants":234,"shows":134},
  "movies": {
   "watched": [
+    {"plays":2,"last_watched_at":"2026-11-04T17:43:00.000Z","movie":{"title":"Blood Diamond","year":2006,"ids":{"trakt":911,"imdb":"tt0450259","tmdb":1372}}},
     {"plays":1,"last_watched_at":"2026-11-02T00:06:00.000Z","movie":{"title":"Agent Sai Srinivasa Athreya","year":2019,"ids":{"trakt":454534,"imdb":"tt10214826","tmdb":610482}}},
     {"plays":1,"last_watched_at":"2026-11-01T23:48:00.000Z","movie":{"title":"DC","year":2026,"ids":{"trakt":1213025,"imdb":"tt37501035","tmdb":1479832}}},
     {"plays":1,"last_watched_at":"2026-10-23T00:00:00.000Z","movie":{"title":"Rekhachithram","year":2025,"ids":{"trakt":1050545,"imdb":"tt32284154","tmdb":1290954}}},
@@ -442,7 +443,6 @@
     {"plays":1,"last_watched_at":"2020-05-24T12:00:00.000Z","movie":{"title":"The Man from U.N.C.L.E.","year":2015,"ids":{"trakt":126852,"imdb":"tt1638355","tmdb":203801}}},
     {"plays":1,"last_watched_at":"2020-05-24T12:00:00.000Z","movie":{"title":"Birdman or (The Unexpected Virtue of Ignorance)","year":2014,"ids":{"trakt":121489,"imdb":"tt2562232","tmdb":194662}}},
     {"plays":1,"last_watched_at":"2020-05-23T12:00:00.000Z","movie":{"title":"The Pursuit of Happyness","year":2006,"ids":{"trakt":933,"imdb":"tt0454921","tmdb":1402}}},
-    {"plays":1,"last_watched_at":"2020-05-23T12:00:00.000Z","movie":{"title":"Blood Diamond","year":2006,"ids":{"trakt":911,"imdb":"tt0450259","tmdb":1372}}},
     {"plays":1,"last_watched_at":"2020-05-23T12:00:00.000Z","movie":{"title":"X-Men: Days of Future Past","year":2014,"ids":{"trakt":87348,"imdb":"tt1877832","tmdb":127585}}},
     {"plays":1,"last_watched_at":"2020-05-23T12:00:00.000Z","movie":{"title":"Pitch Perfect","year":2012,"ids":{"trakt":79928,"imdb":"tt1981677","tmdb":114150}}},
     {"plays":1,"last_watched_at":"2020-05-23T12:00:00.000Z","movie":{"title":"Sholay","year":1975,"ids":{"trakt":7158,"imdb":"tt0073707","tmdb":12259}}},
@@ -701,6 +701,7 @@
     {"plays":1,"last_watched_at":"1970-01-01T00:00:00.000Z","movie":{"title":"Ballerina","year":2025,"ids":{"trakt":392717,"imdb":"tt7181546","tmdb":541671}}}
   ],
   "history": [
+    {"id":14603556048,"watched_at":"2026-11-04T17:43:00.000Z","movie":{"title":"Blood Diamond","year":2006,"ids":{"trakt":911,"imdb":"tt0450259","tmdb":1372}}},
     {"id":14595502064,"watched_at":"2026-11-02T00:06:00.000Z","movie":{"title":"Agent Sai Srinivasa Athreya","year":2019,"ids":{"trakt":454534,"imdb":"tt10214826","tmdb":610482}}},
     {"id":14595439161,"watched_at":"2026-11-01T23:48:00.000Z","movie":{"title":"DC","year":2026,"ids":{"trakt":1213025,"imdb":"tt37501035","tmdb":1479832}}},
     {"id":14594608145,"watched_at":"2026-10-23T00:00:00.000Z","movie":{"title":"Rekhachithram","year":2025,"ids":{"trakt":1050545,"imdb":"tt32284154","tmdb":1290954}}},
@@ -2335,7 +2336,7 @@
  },
  "shows": {
   "watched": [
-    {"plays":5,"last_watched_at":"2026-11-03T18:46:00.000Z","show":{"title":"VisionQuest","year":2026,"ids":{"trakt":199379,"imdb":"tt23112594","tmdb":213375}}},
+    {"plays":7,"last_watched_at":"2026-11-04T12:04:00.000Z","show":{"title":"VisionQuest","year":2026,"ids":{"trakt":199379,"imdb":"tt23112594","tmdb":213375}}},
     {"plays":10,"last_watched_at":"2026-11-02T04:00:00.000Z","show":{"title":"The Outsider","year":2020,"ids":{"trakt":154221,"imdb":"tt8550800","tmdb":84661}}},
     {"plays":8,"last_watched_at":"2026-11-02T03:58:00.000Z","show":{"title":"Presumed Innocent","year":2024,"ids":{"trakt":193143,"imdb":"tt17677860","tmdb":156933}}},
     {"plays":10,"last_watched_at":"2026-11-02T03:53:00.000Z","show":{"title":"Narcos","year":2015,"ids":{"trakt":94630,"imdb":"tt2707408","tmdb":63351}}},
@@ -2441,6 +2442,8 @@
     {"plays":41,"last_watched_at":"1970-01-01T00:00:00.000Z","show":{"title":"Money Heist","year":2017,"ids":{"trakt":118572,"imdb":"tt6468322","tmdb":71446}}}
   ],
   "history": [
+    {"id":14602934860,"watched_at":"2026-11-04T12:04:00.000Z","show":{"title":"VisionQuest","year":2026,"ids":{"trakt":199379,"imdb":"tt23112594","tmdb":213375}},"season":1,"episode":7},
+    {"id":14602934806,"watched_at":"2026-11-04T12:04:00.000Z","show":{"title":"VisionQuest","year":2026,"ids":{"trakt":199379,"imdb":"tt23112594","tmdb":213375}},"season":1,"episode":6},
     {"id":14600907122,"watched_at":"2026-11-03T18:46:00.000Z","show":{"title":"VisionQuest","year":2026,"ids":{"trakt":199379,"imdb":"tt23112594","tmdb":213375}},"season":1,"episode":5},
     {"id":14599669403,"watched_at":"2026-11-03T07:36:00.000Z","show":{"title":"VisionQuest","year":2026,"ids":{"trakt":199379,"imdb":"tt23112594","tmdb":213375}},"season":1,"episode":4},
     {"id":14596076577,"watched_at":"2026-11-02T04:45:00.000Z","show":{"title":"VisionQuest","year":2026,"ids":{"trakt":199379,"imdb":"tt23112594","tmdb":213375}},"season":1,"episode":1},
@@ -5180,6 +5183,7 @@
     {"id":14595082961,"watched_at":"1970-01-01T00:00:00.000Z","show":{"title":"Chernobyl","year":2019,"ids":{"trakt":145186,"imdb":"tt7366338","tmdb":87108}},"season":1,"episode":1}
   ],
   "ratings": [
+    {"rating":8,"rated_at":"2026-11-04T12:29:45.000Z","show":{"title":"VisionQuest","year":2026,"ids":{"trakt":199379,"imdb":"tt23112594","tmdb":213375}}},
     {"rating":7,"rated_at":"2026-11-03T15:05:51.000Z","show":{"title":"How I Met Your Mother","year":2005,"ids":{"trakt":1095,"imdb":"tt0460649","tmdb":1100}}},
     {"rating":10,"rated_at":"2026-11-03T15:04:20.000Z","show":{"title":"Breaking Bad","year":2008,"ids":{"trakt":1388,"imdb":"tt0903747","tmdb":1396}}},
     {"rating":7,"rated_at":"2026-11-01T19:59:11.000Z","show":{"title":"Mr. Robot","year":2015,"ids":{"trakt":93720,"imdb":"tt4158110","tmdb":62560}}},
