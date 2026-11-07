@@ -1,6 +1,6 @@
 {
  "username": "subhnet",
- "counts": {"watched":696,"wants":234,"shows":134},
+ "counts": {"watched":696,"wants":234,"shows":135},
  "movies": {
   "watched": [
     {"plays":2,"last_watched_at":"2026-11-04T17:43:00.000Z","movie":{"title":"Blood Diamond","year":2006,"ids":{"trakt":911,"imdb":"tt0450259","tmdb":1372}}},
@@ -2435,6 +2435,7 @@
     {"plays":6,"last_watched_at":"1970-01-01T00:00:00.000Z","show":{"title":"The Playlist","year":2022,"ids":{"trakt":198223,"imdb":"tt11564258","tmdb":210195}}},
     {"plays":32,"last_watched_at":"1970-01-01T00:00:00.000Z","show":{"title":"Invincible","year":2021,"ids":{"trakt":172648,"imdb":"tt6741278","tmdb":95557}}},
     {"plays":10,"last_watched_at":"1970-01-01T00:00:00.000Z","show":{"title":"DAHMER - Monster: The Jeffrey Dahmer Story","year":2022,"ids":{"trakt":167797,"imdb":null,"tmdb":113988}}},
+    {"plays":10,"last_watched_at":"1970-01-01T00:00:00.000Z","show":{"title":"The Family Man","year":2019,"ids":{"trakt":152467,"imdb":"tt9544034","tmdb":93352}}},
     {"plays":6,"last_watched_at":"1970-01-01T00:00:00.000Z","show":{"title":"Ms. Marvel","year":2022,"ids":{"trakt":151853,"imdb":"tt10857164","tmdb":92782}}},
     {"plays":5,"last_watched_at":"1970-01-01T00:00:00.000Z","show":{"title":"Chernobyl","year":2019,"ids":{"trakt":145186,"imdb":"tt7366338","tmdb":87108}}},
     {"plays":37,"last_watched_at":"1970-01-01T00:00:00.000Z","show":{"title":"Death Note","year":2006,"ids":{"trakt":13855,"imdb":"tt0877057","tmdb":13916}}},
@@ -4947,6 +4948,16 @@
     {"id":14597216161,"watched_at":"1999-01-11T03:00:00.000Z","show":{"title":"The Sopranos","year":1999,"ids":{"trakt":1389,"imdb":"tt0141842","tmdb":1398}},"season":1,"episode":1},
     {"id":14597215764,"watched_at":"1998-04-10T08:25:00.000Z","show":{"title":"Cowboy Bebop","year":1998,"ids":{"trakt":30857,"imdb":"tt0213338","tmdb":30991}},"season":1,"episode":2},
     {"id":14597215763,"watched_at":"1998-04-03T08:25:00.000Z","show":{"title":"Cowboy Bebop","year":1998,"ids":{"trakt":30857,"imdb":"tt0213338","tmdb":30991}},"season":1,"episode":1},
+    {"id":14608844525,"watched_at":"1970-01-01T00:00:00.000Z","show":{"title":"The Family Man","year":2019,"ids":{"trakt":152467,"imdb":"tt9544034","tmdb":93352}},"season":1,"episode":10},
+    {"id":14608844524,"watched_at":"1970-01-01T00:00:00.000Z","show":{"title":"The Family Man","year":2019,"ids":{"trakt":152467,"imdb":"tt9544034","tmdb":93352}},"season":1,"episode":9},
+    {"id":14608844523,"watched_at":"1970-01-01T00:00:00.000Z","show":{"title":"The Family Man","year":2019,"ids":{"trakt":152467,"imdb":"tt9544034","tmdb":93352}},"season":1,"episode":8},
+    {"id":14608844522,"watched_at":"1970-01-01T00:00:00.000Z","show":{"title":"The Family Man","year":2019,"ids":{"trakt":152467,"imdb":"tt9544034","tmdb":93352}},"season":1,"episode":7},
+    {"id":14608844521,"watched_at":"1970-01-01T00:00:00.000Z","show":{"title":"The Family Man","year":2019,"ids":{"trakt":152467,"imdb":"tt9544034","tmdb":93352}},"season":1,"episode":6},
+    {"id":14608844520,"watched_at":"1970-01-01T00:00:00.000Z","show":{"title":"The Family Man","year":2019,"ids":{"trakt":152467,"imdb":"tt9544034","tmdb":93352}},"season":1,"episode":5},
+    {"id":14608844519,"watched_at":"1970-01-01T00:00:00.000Z","show":{"title":"The Family Man","year":2019,"ids":{"trakt":152467,"imdb":"tt9544034","tmdb":93352}},"season":1,"episode":4},
+    {"id":14608844518,"watched_at":"1970-01-01T00:00:00.000Z","show":{"title":"The Family Man","year":2019,"ids":{"trakt":152467,"imdb":"tt9544034","tmdb":93352}},"season":1,"episode":3},
+    {"id":14608844517,"watched_at":"1970-01-01T00:00:00.000Z","show":{"title":"The Family Man","year":2019,"ids":{"trakt":152467,"imdb":"tt9544034","tmdb":93352}},"season":1,"episode":2},
+    {"id":14608844516,"watched_at":"1970-01-01T00:00:00.000Z","show":{"title":"The Family Man","year":2019,"ids":{"trakt":152467,"imdb":"tt9544034","tmdb":93352}},"season":1,"episode":1},
     {"id":14596299315,"watched_at":"1970-01-01T00:00:00.000Z","show":{"title":"Ms. Marvel","year":2022,"ids":{"trakt":151853,"imdb":"tt10857164","tmdb":92782}},"season":1,"episode":6},
     {"id":14596299314,"watched_at":"1970-01-01T00:00:00.000Z","show":{"title":"Ms. Marvel","year":2022,"ids":{"trakt":151853,"imdb":"tt10857164","tmdb":92782}},"season":1,"episode":5},
     {"id":14596299313,"watched_at":"1970-01-01T00:00:00.000Z","show":{"title":"Ms. Marvel","year":2022,"ids":{"trakt":151853,"imdb":"tt10857164","tmdb":92782}},"season":1,"episode":4},
