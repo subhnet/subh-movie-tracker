@@ -1,6 +1,6 @@
 {
  "username": "subhnet",
- "counts": {"watched":696,"wants":234,"shows":135},
+ "counts": {"watched":696,"wants":235,"shows":135},
  "movies": {
   "watched": [
     {"plays":2,"last_watched_at":"2026-11-04T17:43:00.000Z","movie":{"title":"Blood Diamond","year":2006,"ids":{"trakt":911,"imdb":"tt0450259","tmdb":1372}}},
@@ -2099,6 +2099,7 @@
     {"rating":7,"rated_at":"2020-05-22T12:00:00.000Z","movie":{"title":"Don","year":2006,"ids":{"trakt":10693,"imdb":"tt0461936","tmdb":17501}}}
   ],
   "watchlist": [
+    {"listed_at":"2026-11-07T14:21:16.000Z","movie":{"title":"Ramayana: Rise of a Legend","year":2026,"ids":{"trakt":491363,"imdb":"tt27988879","tmdb":656908}}},
     {"listed_at":"2026-11-03T09:24:08.000Z","movie":{"title":"Baththa","year":2026,"ids":{"trakt":1243557,"imdb":"tt44090278","tmdb":1515692}}},
     {"listed_at":"2026-11-03T03:14:46.000Z","movie":{"title":"Wicker","year":2026,"ids":{"trakt":964934,"imdb":"tt29611136","tmdb":1195803}}},
     {"listed_at":"2026-11-02T14:34:03.000Z","movie":{"title":"Ace","year":2025,"ids":{"trakt":911277,"imdb":"tt27802912","tmdb":1132152}}},
