@@ -1,8 +1,9 @@
 {
  "username": "subhnet",
- "counts": {"watched":696,"wants":235,"shows":135},
+ "counts": {"watched":697,"wants":234,"shows":135},
  "movies": {
   "watched": [
+    {"plays":1,"last_watched_at":"2026-11-11T17:00:00.000Z","movie":{"title":"Bo Burnham: Inside","year":2021,"ids":{"trakt":656566,"imdb":"tt14544192","tmdb":823754}}},
     {"plays":2,"last_watched_at":"2026-11-04T17:43:00.000Z","movie":{"title":"Blood Diamond","year":2006,"ids":{"trakt":911,"imdb":"tt0450259","tmdb":1372}}},
     {"plays":1,"last_watched_at":"2026-11-02T00:06:00.000Z","movie":{"title":"Agent Sai Srinivasa Athreya","year":2019,"ids":{"trakt":454534,"imdb":"tt10214826","tmdb":610482}}},
     {"plays":1,"last_watched_at":"2026-11-01T23:48:00.000Z","movie":{"title":"DC","year":2026,"ids":{"trakt":1213025,"imdb":"tt37501035","tmdb":1479832}}},
@@ -701,6 +702,7 @@
     {"plays":1,"last_watched_at":"1970-01-01T00:00:00.000Z","movie":{"title":"Ballerina","year":2025,"ids":{"trakt":392717,"imdb":"tt7181546","tmdb":541671}}}
   ],
   "history": [
+    {"id":14625133667,"watched_at":"2026-11-11T17:00:00.000Z","movie":{"title":"Bo Burnham: Inside","year":2021,"ids":{"trakt":656566,"imdb":"tt14544192","tmdb":823754}}},
     {"id":14603556048,"watched_at":"2026-11-04T17:43:00.000Z","movie":{"title":"Blood Diamond","year":2006,"ids":{"trakt":911,"imdb":"tt0450259","tmdb":1372}}},
     {"id":14595502064,"watched_at":"2026-11-02T00:06:00.000Z","movie":{"title":"Agent Sai Srinivasa Athreya","year":2019,"ids":{"trakt":454534,"imdb":"tt10214826","tmdb":610482}}},
     {"id":14595439161,"watched_at":"2026-11-01T23:48:00.000Z","movie":{"title":"DC","year":2026,"ids":{"trakt":1213025,"imdb":"tt37501035","tmdb":1479832}}},
@@ -2143,7 +2145,6 @@
     {"listed_at":"2026-11-01T19:58:11.000Z","movie":{"title":"Guy Ritchie's The Covenant","year":2023,"ids":{"trakt":706755,"imdb":"tt4873118","tmdb":882569}}},
     {"listed_at":"2026-11-01T19:58:11.000Z","movie":{"title":"Sisu","year":2022,"ids":{"trakt":671155,"imdb":"tt14846026","tmdb":840326}}},
     {"listed_at":"2026-11-01T19:58:11.000Z","movie":{"title":"The Holdovers","year":2023,"ids":{"trakt":671129,"imdb":"tt14849194","tmdb":840430}}},
-    {"listed_at":"2026-11-01T19:58:11.000Z","movie":{"title":"Bo Burnham: Inside","year":2021,"ids":{"trakt":656566,"imdb":"tt14544192","tmdb":823754}}},
     {"listed_at":"2026-11-01T19:58:11.000Z","movie":{"title":"Seven Psychopaths","year":2012,"ids":{"trakt":65319,"imdb":"tt1931533","tmdb":86838}}},
     {"listed_at":"2026-11-01T19:58:11.000Z","movie":{"title":"Memories of Murder","year":2003,"ids":{"trakt":6518,"imdb":"tt0353969","tmdb":11423}}},
     {"listed_at":"2026-11-01T19:58:11.000Z","movie":{"title":"The Fabelmans","year":2022,"ids":{"trakt":638767,"imdb":"tt14208870","tmdb":804095}}},
@@ -2338,7 +2339,7 @@
  },
  "shows": {
   "watched": [
-    {"plays":7,"last_watched_at":"2026-11-04T12:04:00.000Z","show":{"title":"VisionQuest","year":2026,"ids":{"trakt":199379,"imdb":"tt23112594","tmdb":213375}}},
+    {"plays":8,"last_watched_at":"2026-11-11T16:27:00.000Z","show":{"title":"VisionQuest","year":2026,"ids":{"trakt":199379,"imdb":"tt23112594","tmdb":213375}}},
     {"plays":10,"last_watched_at":"2026-11-02T04:00:00.000Z","show":{"title":"The Outsider","year":2020,"ids":{"trakt":154221,"imdb":"tt8550800","tmdb":84661}}},
     {"plays":8,"last_watched_at":"2026-11-02T03:58:00.000Z","show":{"title":"Presumed Innocent","year":2024,"ids":{"trakt":193143,"imdb":"tt17677860","tmdb":156933}}},
     {"plays":10,"last_watched_at":"2026-11-02T03:53:00.000Z","show":{"title":"Narcos","year":2015,"ids":{"trakt":94630,"imdb":"tt2707408","tmdb":63351}}},
@@ -2445,6 +2446,7 @@
     {"plays":41,"last_watched_at":"1970-01-01T00:00:00.000Z","show":{"title":"Money Heist","year":2017,"ids":{"trakt":118572,"imdb":"tt6468322","tmdb":71446}}}
   ],
   "history": [
+    {"id":14624700867,"watched_at":"2026-11-11T16:27:00.000Z","show":{"title":"VisionQuest","year":2026,"ids":{"trakt":199379,"imdb":"tt23112594","tmdb":213375}},"season":1,"episode":8},
     {"id":14602934860,"watched_at":"2026-11-04T12:04:00.000Z","show":{"title":"VisionQuest","year":2026,"ids":{"trakt":199379,"imdb":"tt23112594","tmdb":213375}},"season":1,"episode":7},
     {"id":14602934806,"watched_at":"2026-11-04T12:04:00.000Z","show":{"title":"VisionQuest","year":2026,"ids":{"trakt":199379,"imdb":"tt23112594","tmdb":213375}},"season":1,"episode":6},
     {"id":14600907122,"watched_at":"2026-11-03T18:46:00.000Z","show":{"title":"VisionQuest","year":2026,"ids":{"trakt":199379,"imdb":"tt23112594","tmdb":213375}},"season":1,"episode":5},
