@@ -1403,6 +1403,7 @@
     {"id":14596060924,"watched_at":"1970-01-01T00:00:00.000Z","movie":{"title":"Superman","year":2025,"ids":{"trakt":853702,"imdb":"tt5950044","tmdb":1061474}}}
   ],
   "ratings": [
+    {"rating":6,"rated_at":"2026-11-12T09:51:58.000Z","movie":{"title":"Bo Burnham: Inside","year":2021,"ids":{"trakt":656566,"imdb":"tt14544192","tmdb":823754}}},
     {"rating":8,"rated_at":"2026-11-05T11:33:37.000Z","movie":{"title":"Agent Sai Srinivasa Athreya","year":2019,"ids":{"trakt":454534,"imdb":"tt10214826","tmdb":610482}}},
     {"rating":5,"rated_at":"2026-11-02T03:41:43.000Z","movie":{"title":"K.G.F: Chapter 2","year":2022,"ids":{"trakt":436666,"imdb":"tt10698680","tmdb":587412}}},
     {"rating":4,"rated_at":"2026-11-02T03:41:02.000Z","movie":{"title":"Ballerina","year":2025,"ids":{"trakt":392717,"imdb":"tt7181546","tmdb":541671}}},
