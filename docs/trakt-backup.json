@@ -1,8 +1,9 @@
 {
  "username": "subhnet",
- "counts": {"watched":697,"wants":234,"shows":139},
+ "counts": {"watched":698,"wants":234,"shows":139},
  "movies": {
   "watched": [
+    {"plays":1,"last_watched_at":"2026-11-14T20:38:00.000Z","movie":{"title":"Good Will Hunting","year":1997,"ids":{"trakt":383,"imdb":"tt0119217","tmdb":489}}},
     {"plays":1,"last_watched_at":"2026-11-11T17:00:00.000Z","movie":{"title":"Bo Burnham: Inside","year":2021,"ids":{"trakt":656566,"imdb":"tt14544192","tmdb":823754}}},
     {"plays":2,"last_watched_at":"2026-11-04T17:43:00.000Z","movie":{"title":"Blood Diamond","year":2006,"ids":{"trakt":911,"imdb":"tt0450259","tmdb":1372}}},
     {"plays":1,"last_watched_at":"2026-11-02T00:06:00.000Z","movie":{"title":"Agent Sai Srinivasa Athreya","year":2019,"ids":{"trakt":454534,"imdb":"tt10214826","tmdb":610482}}},
@@ -702,6 +703,7 @@
     {"plays":1,"last_watched_at":"1970-01-01T00:00:00.000Z","movie":{"title":"Ballerina","year":2025,"ids":{"trakt":392717,"imdb":"tt7181546","tmdb":541671}}}
   ],
   "history": [
+    {"id":14634161189,"watched_at":"2026-11-14T20:38:00.000Z","movie":{"title":"Good Will Hunting","year":1997,"ids":{"trakt":383,"imdb":"tt0119217","tmdb":489}}},
     {"id":14625133667,"watched_at":"2026-11-11T17:00:00.000Z","movie":{"title":"Bo Burnham: Inside","year":2021,"ids":{"trakt":656566,"imdb":"tt14544192","tmdb":823754}}},
     {"id":14603556048,"watched_at":"2026-11-04T17:43:00.000Z","movie":{"title":"Blood Diamond","year":2006,"ids":{"trakt":911,"imdb":"tt0450259","tmdb":1372}}},
     {"id":14595502064,"watched_at":"2026-11-02T00:06:00.000Z","movie":{"title":"Agent Sai Srinivasa Athreya","year":2019,"ids":{"trakt":454534,"imdb":"tt10214826","tmdb":610482}}},
@@ -1403,6 +1405,7 @@
     {"id":14596060924,"watched_at":"1970-01-01T00:00:00.000Z","movie":{"title":"Superman","year":2025,"ids":{"trakt":853702,"imdb":"tt5950044","tmdb":1061474}}}
   ],
   "ratings": [
+    {"rating":8,"rated_at":"2026-11-14T20:39:04.000Z","movie":{"title":"Good Will Hunting","year":1997,"ids":{"trakt":383,"imdb":"tt0119217","tmdb":489}}},
     {"rating":6,"rated_at":"2026-11-12T09:51:58.000Z","movie":{"title":"Bo Burnham: Inside","year":2021,"ids":{"trakt":656566,"imdb":"tt14544192","tmdb":823754}}},
     {"rating":8,"rated_at":"2026-11-05T11:33:37.000Z","movie":{"title":"Agent Sai Srinivasa Athreya","year":2019,"ids":{"trakt":454534,"imdb":"tt10214826","tmdb":610482}}},
     {"rating":5,"rated_at":"2026-11-02T03:41:43.000Z","movie":{"title":"K.G.F: Chapter 2","year":2022,"ids":{"trakt":436666,"imdb":"tt10698680","tmdb":587412}}},
