@@ -1,6 +1,6 @@
 # 🎬 Movie Tracker Statistics
 
-*Last Updated: 11/15/2026, 4:26:21 AM*
+*Last Updated: 11/16/2026, 4:23:33 AM*
 
 ---
 
@@ -40,7 +40,7 @@
 
 ### 📅 Watching Patterns
 
-- **Movies with watch dates:** 698
+- **Movies with watch dates:** 692
 - **Most active month:** 2020-05 (259 movies)
 
 **By Year:**
@@ -51,7 +51,6 @@
 - 2022: 35 movies
 - 2021: 45 movies
 - 2020: 333 movies
-- 1970: 6 movies
 
 ## 📝 Want to Watch
 
