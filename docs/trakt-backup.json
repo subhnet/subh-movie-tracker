@@ -3,12 +3,6 @@
  "counts": {"watched":700,"wants":235,"shows":139},
  "movies": {
   "watched": [
-    {"plays":1,"last_watched_at":null,"movie":{"title":"Superman","year":2025,"ids":{"trakt":853702,"imdb":"tt5950044","tmdb":1061474}}},
-    {"plays":1,"last_watched_at":null,"movie":{"title":"Sam Bahadur","year":2023,"ids":{"trakt":647996,"imdb":"tt10786774","tmdb":814215}}},
-    {"plays":1,"last_watched_at":null,"movie":{"title":"Kahaani","year":2012,"ids":{"trakt":61981,"imdb":"tt1821480","tmdb":82825}}},
-    {"plays":1,"last_watched_at":null,"movie":{"title":"Troy","year":2004,"ids":{"trakt":527,"imdb":"tt0332452","tmdb":652}}},
-    {"plays":1,"last_watched_at":null,"movie":{"title":"K.G.F: Chapter 2","year":2022,"ids":{"trakt":436666,"imdb":"tt10698680","tmdb":587412}}},
-    {"plays":1,"last_watched_at":null,"movie":{"title":"Ballerina","year":2025,"ids":{"trakt":392717,"imdb":"tt7181546","tmdb":541671}}},
     {"plays":1,"last_watched_at":"2026-11-17T14:57:00.000Z","movie":{"title":"Baththa","year":2026,"ids":{"trakt":1243557,"imdb":"tt44090278","tmdb":1515692}}},
     {"plays":1,"last_watched_at":"2026-11-14T20:38:00.000Z","movie":{"title":"Good Will Hunting","year":1997,"ids":{"trakt":383,"imdb":"tt0119217","tmdb":489}}},
     {"plays":1,"last_watched_at":"2026-11-11T17:00:00.000Z","movie":{"title":"Bo Burnham: Inside","year":2021,"ids":{"trakt":656566,"imdb":"tt14544192","tmdb":823754}}},
@@ -702,15 +696,15 @@
     {"plays":1,"last_watched_at":"2020-05-22T12:00:00.000Z","movie":{"title":"Don","year":2006,"ids":{"trakt":10693,"imdb":"tt0461936","tmdb":17501}}},
     {"plays":1,"last_watched_at":"2020-05-22T12:00:00.000Z","movie":{"title":"Pirates of the Caribbean: Dead Men Tell No Tales","year":2017,"ids":{"trakt":106667,"imdb":"tt1790809","tmdb":166426}}},
     {"plays":1,"last_watched_at":"2020-05-22T12:00:00.000Z","movie":{"title":"Interstellar","year":2014,"ids":{"trakt":102156,"imdb":"tt0816692","tmdb":157336}}},
-    {"plays":1,"last_watched_at":"2003-05-02T00:00:00.000Z","movie":{"title":"X2","year":2003,"ids":{"trakt":23300,"imdb":"tt0290334","tmdb":36658}}}
+    {"plays":1,"last_watched_at":"2003-05-02T00:00:00.000Z","movie":{"title":"X2","year":2003,"ids":{"trakt":23300,"imdb":"tt0290334","tmdb":36658}}},
+    {"plays":1,"last_watched_at":"1970-01-01T00:00:00.000Z","movie":{"title":"Superman","year":2025,"ids":{"trakt":853702,"imdb":"tt5950044","tmdb":1061474}}},
+    {"plays":1,"last_watched_at":"1970-01-01T00:00:00.000Z","movie":{"title":"Sam Bahadur","year":2023,"ids":{"trakt":647996,"imdb":"tt10786774","tmdb":814215}}},
+    {"plays":1,"last_watched_at":"1970-01-01T00:00:00.000Z","movie":{"title":"Kahaani","year":2012,"ids":{"trakt":61981,"imdb":"tt1821480","tmdb":82825}}},
+    {"plays":1,"last_watched_at":"1970-01-01T00:00:00.000Z","movie":{"title":"Troy","year":2004,"ids":{"trakt":527,"imdb":"tt0332452","tmdb":652}}},
+    {"plays":1,"last_watched_at":"1970-01-01T00:00:00.000Z","movie":{"title":"K.G.F: Chapter 2","year":2022,"ids":{"trakt":436666,"imdb":"tt10698680","tmdb":587412}}},
+    {"plays":1,"last_watched_at":"1970-01-01T00:00:00.000Z","movie":{"title":"Ballerina","year":2025,"ids":{"trakt":392717,"imdb":"tt7181546","tmdb":541671}}}
   ],
   "history": [
-    {"id":14596066263,"watched_at":null,"movie":{"title":"K.G.F: Chapter 2","year":2022,"ids":{"trakt":436666,"imdb":"tt10698680","tmdb":587412}}},
-    {"id":14596065612,"watched_at":null,"movie":{"title":"Ballerina","year":2025,"ids":{"trakt":392717,"imdb":"tt7181546","tmdb":541671}}},
-    {"id":14596065461,"watched_at":null,"movie":{"title":"Sam Bahadur","year":2023,"ids":{"trakt":647996,"imdb":"tt10786774","tmdb":814215}}},
-    {"id":14596062167,"watched_at":null,"movie":{"title":"Troy","year":2004,"ids":{"trakt":527,"imdb":"tt0332452","tmdb":652}}},
-    {"id":14596061492,"watched_at":null,"movie":{"title":"Kahaani","year":2012,"ids":{"trakt":61981,"imdb":"tt1821480","tmdb":82825}}},
-    {"id":14596060924,"watched_at":null,"movie":{"title":"Superman","year":2025,"ids":{"trakt":853702,"imdb":"tt5950044","tmdb":1061474}}},
     {"id":1000000465234,"watched_at":"2026-11-17T14:57:00.000Z","movie":{"title":"Baththa","year":2026,"ids":{"trakt":1243557,"imdb":"tt44090278","tmdb":1515692}}},
     {"id":14634161189,"watched_at":"2026-11-14T20:38:00.000Z","movie":{"title":"Good Will Hunting","year":1997,"ids":{"trakt":383,"imdb":"tt0119217","tmdb":489}}},
     {"id":14625133667,"watched_at":"2026-11-11T17:00:00.000Z","movie":{"title":"Bo Burnham: Inside","year":2021,"ids":{"trakt":656566,"imdb":"tt14544192","tmdb":823754}}},
@@ -1406,7 +1400,13 @@
     {"id":14597174330,"watched_at":"2020-05-22T12:00:00.000Z","movie":{"title":"Drishyam","year":2015,"ids":{"trakt":222144,"imdb":"tt4430212","tmdb":352173}}},
     {"id":14597174328,"watched_at":"2020-05-22T12:00:00.000Z","movie":{"title":"The Jungle Book","year":2016,"ids":{"trakt":176503,"imdb":"tt3040964","tmdb":278927}}},
     {"id":14597174318,"watched_at":"2020-05-22T12:00:00.000Z","movie":{"title":"Don","year":2006,"ids":{"trakt":10693,"imdb":"tt0461936","tmdb":17501}}},
-    {"id":1000000441236,"watched_at":"2003-05-02T00:00:00.000Z","movie":{"title":"X2","year":2003,"ids":{"trakt":23300,"imdb":"tt0290334","tmdb":36658}}}
+    {"id":1000000441236,"watched_at":"2003-05-02T00:00:00.000Z","movie":{"title":"X2","year":2003,"ids":{"trakt":23300,"imdb":"tt0290334","tmdb":36658}}},
+    {"id":14596066263,"watched_at":"1970-01-01T00:00:00.000Z","movie":{"title":"K.G.F: Chapter 2","year":2022,"ids":{"trakt":436666,"imdb":"tt10698680","tmdb":587412}}},
+    {"id":14596065612,"watched_at":"1970-01-01T00:00:00.000Z","movie":{"title":"Ballerina","year":2025,"ids":{"trakt":392717,"imdb":"tt7181546","tmdb":541671}}},
+    {"id":14596065461,"watched_at":"1970-01-01T00:00:00.000Z","movie":{"title":"Sam Bahadur","year":2023,"ids":{"trakt":647996,"imdb":"tt10786774","tmdb":814215}}},
+    {"id":14596062167,"watched_at":"1970-01-01T00:00:00.000Z","movie":{"title":"Troy","year":2004,"ids":{"trakt":527,"imdb":"tt0332452","tmdb":652}}},
+    {"id":14596061492,"watched_at":"1970-01-01T00:00:00.000Z","movie":{"title":"Kahaani","year":2012,"ids":{"trakt":61981,"imdb":"tt1821480","tmdb":82825}}},
+    {"id":14596060924,"watched_at":"1970-01-01T00:00:00.000Z","movie":{"title":"Superman","year":2025,"ids":{"trakt":853702,"imdb":"tt5950044","tmdb":1061474}}}
   ],
   "ratings": [
     {"rating":10,"rated_at":"2026-11-17T14:58:19.000Z","movie":{"title":"Baththa","year":2026,"ids":{"trakt":1243557,"imdb":"tt44090278","tmdb":1515692}}},
