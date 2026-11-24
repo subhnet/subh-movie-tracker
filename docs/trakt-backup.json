@@ -1,8 +1,9 @@
 {
  "username": "subhnet",
- "counts": {"watched":706,"wants":237,"shows":141},
+ "counts": {"watched":708,"wants":237,"shows":141},
  "movies": {
   "watched": [
+    {"plays":1,"last_watched_at":"2026-11-23T17:36:00.000Z","movie":{"title":"Heart of the Beast","year":2026,"ids":{"trakt":1025172,"imdb":"tt7526136","tmdb":1263337}}},
     {"plays":1,"last_watched_at":"2026-11-17T14:57:00.000Z","movie":{"title":"Baththa","year":2026,"ids":{"trakt":1243557,"imdb":"tt44090278","tmdb":1515692}}},
     {"plays":1,"last_watched_at":"2026-11-14T20:38:00.000Z","movie":{"title":"Good Will Hunting","year":1997,"ids":{"trakt":383,"imdb":"tt0119217","tmdb":489}}},
     {"plays":1,"last_watched_at":"2026-11-11T17:00:00.000Z","movie":{"title":"Bo Burnham: Inside","year":2021,"ids":{"trakt":656566,"imdb":"tt14544192","tmdb":823754}}},
@@ -13,6 +14,7 @@
     {"plays":1,"last_watched_at":"2026-10-17T00:00:00.000Z","movie":{"title":"Bethlehem Kudumba Unit","year":2026,"ids":{"trakt":1237164,"imdb":"tt37535100","tmdb":1508168}}},
     {"plays":1,"last_watched_at":"2026-10-11T00:00:00.000Z","movie":{"title":"Mortal Kombat II","year":2026,"ids":{"trakt":746852,"imdb":"tt17490712","tmdb":931285}}},
     {"plays":1,"last_watched_at":"2026-10-05T00:00:00.000Z","movie":{"title":"Ohh My Dog","year":2026,"ids":{"trakt":1381602,"imdb":"tt36626888","tmdb":1727563}}},
+    {"plays":1,"last_watched_at":"2026-10-01T07:25:00.000Z","movie":{"title":"Dridam","year":2026,"ids":{"trakt":1362712,"imdb":"tt35518410","tmdb":912378}}},
     {"plays":1,"last_watched_at":"2026-09-29T00:00:00.000Z","movie":{"title":"DAMaN","year":2022,"ids":{"trakt":823594,"imdb":"tt17592606","tmdb":1024350}}},
     {"plays":1,"last_watched_at":"2026-09-22T00:00:00.000Z","movie":{"title":"G.D.N","year":2026,"ids":{"trakt":1221397,"imdb":"tt35712605","tmdb":1489543}}},
     {"plays":1,"last_watched_at":"2026-09-20T00:00:00.000Z","movie":{"title":"Home","year":2021,"ids":{"trakt":503040,"imdb":"tt10353704","tmdb":669666}}},
@@ -711,6 +713,7 @@
     {"plays":1,"last_watched_at":"1970-01-01T00:00:00.000Z","movie":{"title":"Ballerina","year":2025,"ids":{"trakt":392717,"imdb":"tt7181546","tmdb":541671}}}
   ],
   "history": [
+    {"id":1000001727009,"watched_at":"2026-11-23T17:36:00.000Z","movie":{"title":"Heart of the Beast","year":2026,"ids":{"trakt":1025172,"imdb":"tt7526136","tmdb":1263337}}},
     {"id":1000000465234,"watched_at":"2026-11-17T14:57:00.000Z","movie":{"title":"Baththa","year":2026,"ids":{"trakt":1243557,"imdb":"tt44090278","tmdb":1515692}}},
     {"id":14634161189,"watched_at":"2026-11-14T20:38:00.000Z","movie":{"title":"Good Will Hunting","year":1997,"ids":{"trakt":383,"imdb":"tt0119217","tmdb":489}}},
     {"id":14625133667,"watched_at":"2026-11-11T17:00:00.000Z","movie":{"title":"Bo Burnham: Inside","year":2021,"ids":{"trakt":656566,"imdb":"tt14544192","tmdb":823754}}},
@@ -721,6 +724,7 @@
     {"id":14594608164,"watched_at":"2026-10-17T00:00:00.000Z","movie":{"title":"Bethlehem Kudumba Unit","year":2026,"ids":{"trakt":1237164,"imdb":"tt37535100","tmdb":1508168}}},
     {"id":14594608211,"watched_at":"2026-10-11T00:00:00.000Z","movie":{"title":"Mortal Kombat II","year":2026,"ids":{"trakt":746852,"imdb":"tt17490712","tmdb":931285}}},
     {"id":14594608168,"watched_at":"2026-10-05T00:00:00.000Z","movie":{"title":"Ohh My Dog","year":2026,"ids":{"trakt":1381602,"imdb":"tt36626888","tmdb":1727563}}},
+    {"id":1000001648958,"watched_at":"2026-10-01T07:25:00.000Z","movie":{"title":"Dridam","year":2026,"ids":{"trakt":1362712,"imdb":"tt35518410","tmdb":912378}}},
     {"id":14594608220,"watched_at":"2026-09-29T00:00:00.000Z","movie":{"title":"DAMaN","year":2022,"ids":{"trakt":823594,"imdb":"tt17592606","tmdb":1024350}}},
     {"id":14594608163,"watched_at":"2026-09-22T00:00:00.000Z","movie":{"title":"G.D.N","year":2026,"ids":{"trakt":1221397,"imdb":"tt35712605","tmdb":1489543}}},
     {"id":14594608192,"watched_at":"2026-09-20T00:00:00.000Z","movie":{"title":"Home","year":2021,"ids":{"trakt":503040,"imdb":"tt10353704","tmdb":669666}}},
@@ -1421,6 +1425,7 @@
     {"id":14596060924,"watched_at":"1970-01-01T00:00:00.000Z","movie":{"title":"Superman","year":2025,"ids":{"trakt":853702,"imdb":"tt5950044","tmdb":1061474}}}
   ],
   "ratings": [
+    {"rating":7,"rated_at":"2026-11-23T17:36:48.000Z","movie":{"title":"Heart of the Beast","year":2026,"ids":{"trakt":1025172,"imdb":"tt7526136","tmdb":1263337}}},
     {"rating":10,"rated_at":"2026-11-17T14:58:19.000Z","movie":{"title":"Baththa","year":2026,"ids":{"trakt":1243557,"imdb":"tt44090278","tmdb":1515692}}},
     {"rating":8,"rated_at":"2026-11-14T20:39:04.000Z","movie":{"title":"Good Will Hunting","year":1997,"ids":{"trakt":383,"imdb":"tt0119217","tmdb":489}}},
     {"rating":6,"rated_at":"2026-11-12T09:51:58.000Z","movie":{"title":"Bo Burnham: Inside","year":2021,"ids":{"trakt":656566,"imdb":"tt14544192","tmdb":823754}}},
@@ -2122,6 +2127,7 @@
     {"rating":7,"rated_at":"2020-05-22T12:00:00.000Z","movie":{"title":"Don","year":2006,"ids":{"trakt":10693,"imdb":"tt0461936","tmdb":17501}}}
   ],
   "watchlist": [
+    {"listed_at":"2026-11-23T12:07:55.000Z","movie":{"title":"Godzilla Minus Zero","year":2026,"ids":{"trakt":1128581,"imdb":"tt34384661","tmdb":1381071}}},
     {"listed_at":"2026-11-22T18:44:17.000Z","movie":{"title":"One Battle After Another","year":2025,"ids":{"trakt":848797,"imdb":"tt30144839","tmdb":1054867}}},
     {"listed_at":"2026-11-22T18:37:17.000Z","movie":{"title":"Drishyam: The Conclusion","year":2026,"ids":{"trakt":1030577,"imdb":"tt27050858","tmdb":1269325}}},
     {"listed_at":"2026-11-22T18:35:53.000Z","movie":{"title":"Transformers One","year":2024,"ids":{"trakt":542273,"imdb":"tt8864596","tmdb":698687}}},
@@ -2356,7 +2362,6 @@
     {"listed_at":"2026-11-01T19:58:10.000Z","movie":{"title":"Secret Window","year":2004,"ids":{"trakt":1041,"imdb":"tt0363988","tmdb":1586}}},
     {"listed_at":"2026-11-01T19:58:10.000Z","movie":{"title":"It's a Wonderful Life","year":1946,"ids":{"trakt":1040,"imdb":"tt0038650","tmdb":1585}}},
     {"listed_at":"2026-11-01T19:58:10.000Z","movie":{"title":"Disclosure Day","year":2026,"ids":{"trakt":1036433,"imdb":"tt15047880","tmdb":1275779}}},
-    {"listed_at":"2026-11-01T19:58:10.000Z","movie":{"title":"Heart of the Beast","year":2026,"ids":{"trakt":1025172,"imdb":"tt7526136","tmdb":1263337}}},
     {"listed_at":"2026-11-01T19:58:10.000Z","movie":{"title":"Eternity","year":2025,"ids":{"trakt":1020977,"imdb":"tt24950660","tmdb":1259102}}},
     {"listed_at":"2026-11-01T19:58:10.000Z","movie":{"title":"Predator: Badlands","year":2025,"ids":{"trakt":1006226,"imdb":"tt31227572","tmdb":1242898}}}
   ]
